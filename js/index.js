@@ -1,5 +1,4 @@
 window.onload = function() {
-  
   hideTip('wo');
   checkVerticalView();
   

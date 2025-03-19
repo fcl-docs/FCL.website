@@ -36,7 +36,7 @@ img {
 code {
   background-color: #00f4;
   border: 1px solid #00f8;
-  margin: 0 1ch 0 1ch;
+  margin: 0 0.5ch 0 0.5ch;
 }
 
 mark {
@@ -47,8 +47,8 @@ mark {
 
 input {
   margin: 1rem;
-  background-color: #044;
-  box-shadow: 0 1px 0 #fff8, 0 -1px 0 #0008;
+  background-color: #444;
+  box-shadow: 0 1px 0 #fff4, 0 -1px 0 #0008;
   color: #fff;
   border: unset;
 }
@@ -66,8 +66,8 @@ input:focus {
 
 button {
   margin: 1rem;
-  background-color: #044;
-  box-shadow: 0 1px 0 #0008, 0 -1px 0 #fff8;
+  background-color: #444;
+  box-shadow: 0 1px 0 #0008, 0 -1px 0 #fff4;
   color: #fff;
   border: unset;
 }
@@ -77,16 +77,23 @@ button:hover {
 }
 
 button:active {
-  box-shadow: 0 1px 0 #fff8, 0 -1px 0 #0008;
+  box-shadow: 0 1px 0 #fff4, 0 -1px 0 #0008;
   
 }
 
 td {
-  box-shadow: 0 1px 0 #044, 1px 0 0 #044;
+  /*box-shadow: 0 1px 0 #888, 1px 0 0 #888;*/
+  border: 1px solid #888;
 }
+
+  tr:first-child td, tr:first-child th { border-top: none; }    /* 首行顶部无边框 */
+  tr:last-child td, tr:last-child th { border-bottom: none; }   /* 末行底部无边框 */
+  td:first-child, th:first-child { border-left: none; }         /* 首列左侧无边框 */
+  td:last-child, th:last-child { border-right: none; }         /* 末列右侧无边框 */
 
 table {
   border-collapse: collapse;
+  border: none;
   width: 100%;
 }
 
@@ -98,6 +105,11 @@ table {
   width: calc(25% + 1rem);
   overflow-y: scroll;
   transition: width 0.5s ease-in-out;
+  direction: rtl;
+}
+
+.sidebar div {
+  direction: ltr;
 }
 
 .sidebarExpand {
@@ -134,8 +146,8 @@ table {
 
 .window {
   margin: 1rem;
-  background-color: #022;
-  border: 1px solid #044;
+  background-color: #444;
+  border: 1px solid #888;
   box-shadow: 0 2px 0 #00000080;
 }
 
@@ -143,22 +155,22 @@ table {
   position: sticky;
   top: 0;
   z-index: 114;
-  background-color: #044;
+  background-color: #888;
   box-shadow: 0 2px 0 #00000080;
 }
 
 .level2 {
-  top: 1.4rem;
+  top: 1.5rem;
   z-index: 113;
 }
 
 .level3 {
-  top: 2.8rem;
+  top: 3rem;
   z-index: 112;
 }
 
 .level4 {
-  top: 4.2rem;
+  top: 4.5rem;
   z-index: 111;
 }
 
@@ -193,11 +205,11 @@ table {
   /* 斜线 */
   background:
     repeating-linear-gradient(-45deg,
-      #011,
-      #011 0.5rem,
-      #022 0.5rem,
-      #022 1rem);
-  border: 1px solid #044;
+      #222,
+      #222 0.5rem,
+      #444 0.5rem,
+      #444 1rem);
+  border: 1px solid #888;
 }
 
 .diagonalYellow {
@@ -242,8 +254,8 @@ table {
 .nav hr {
   height: 1px;
   margin: 0;
-  background-color: #044;
-  color: #040;
+  background-color: #888;
+  color: #888;
   border: unset;
   box-shadow: 0 2px 0 #00000080;
 }
