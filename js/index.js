@@ -108,6 +108,7 @@ function checkVerticalView() {
   console.log('视口宽：' + viewportWidth);
   if (viewportHeight > viewportWidth) {
     sidebarContainer.insertAdjacentHTML('beforeend', tipHTML);
+    hideSidebar('H');
     console.log('视口为竖屏：是')
     // sidebarElement.classList.add('sidebarVertical');
     // mainElement.classList.add('mainVertical');
