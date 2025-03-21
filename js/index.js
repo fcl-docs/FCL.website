@@ -58,19 +58,41 @@ function expandSidebar(isExpand) {
   const sidebarElement = document.querySelector('.sidebar');
   const mainElement = document.querySelector('.main');
   const expandButton = document.getElementById('expandSidebar');
+  const hideButton = document.getElementById('hideSidebar');
   const contractButton = document.getElementById('contractSidebar');
   if (isExpand === 'E') {
     sidebarElement.classList.add('sidebarExpand');
     mainElement.classList.add('mainExpand');
     expandButton.style.display = 'none';
+    hideButton.style.display = 'none';
     contractButton.style.display = 'block';
     console.log('侧边栏展开：是');
   } else {
     sidebarElement.classList.remove('sidebarExpand');
     mainElement.classList.remove('mainExpand');
     expandButton.style.display = 'block';
+    hideButton.style.display = 'block';
     contractButton.style.display = 'none';
     console.log('侧边栏展开：否');
+  }
+}
+
+function hideSidebar(isHide) {
+  const sidebarElement = document.querySelector('.sidebar');
+  const mainElement = document.querySelector('.main');
+  const tipHtml = '<meta charset="UTF-8"><div class="diagonal window" id="sidebarHideTip"><div class="windowTitle"><span>侧边栏已隐藏</span></div><button onclick="hideSidebar(&quot;D&quot;)" id="showSidebar">显示侧边栏</button></p></div>'
+  const tipElement = document.getElementById('sidebarHideTip');
+  if (isHide === 'H') {
+    sidebarElement.classList.add('sidebarHide');
+    mainElement.classList.add('mainFull');
+    mainElement.insertAdjacentHTML('afterbegin', tipHtml);
+    console.log('侧边栏隐藏：是');
+  } else {
+    sidebarElement.classList.remove('sidebarHide');
+    mainElement.classList.remove('mainFull');
+    tipElement.remove();
+    tipElement = null;
+    console.log('侧边栏隐藏：否');
   }
 }
 
@@ -80,7 +102,7 @@ function checkVerticalView() {
   const sidebarElement = document.querySelector('.sidebar');
   const mainElement = document.querySelector('.main');
   const sidebarContainer = document.getElementById('sidebar');
-  const tipHTML = '<meta charset="UTF-8"><div class="diagonal window" id="verticalTip"><div class="windowTitle"><span>视口宽度小于视口高度</span></div><p>视口高度较小，可能会导致侧边栏显示不全或异常。<br><button onclick="expandSidebar(&quot;E&quot;)" id="expandSidebar">展开侧边栏</button> <button onclick="expandSidebar(&quot;C&quot;)" id="contractSidebar" style="display: none">收起侧边栏</button></p></div>'
+  const tipHTML = '<meta charset="UTF-8"><div class="diagonal window" id="verticalTip"><div class="windowTitle"><span>视口宽度小于视口高度</span></div><p>视口高度较小，可能会导致侧边栏显示不全或异常。<br><button onclick="expandSidebar(&quot;E&quot;)" id="expandSidebar">展开侧边栏</button> <button onclick="expandSidebar(&quot;C&quot;)" id="contractSidebar" style="display: none">收起侧边栏</button><button onclick="hideSidebar(&quot;H&quot;)" id="hideSidebar">隐藏侧边栏</button> <button onclick="hideSidebar(&quot;D&quot;)" id="showSidebar" style="display: none">显示侧边栏</button></p></div>'
   
   console.log('视口高：' + viewportHeight);
   console.log('视口宽：' + viewportWidth);

@@ -104,7 +104,7 @@ table {
   height: 100%;
   width: calc(25% + 1rem);
   overflow-y: scroll;
-  transition: width 0.5s ease-in-out;
+  transition: all 0.5s ease-in-out;
   direction: rtl;
 }
 
@@ -123,6 +123,10 @@ table {
   width: 100%;
 }
 
+.sidebarHide {
+  left: calc(-25% - 1rem);
+}
+
 .main {
   position: fixed;
   top: 0;
@@ -130,7 +134,7 @@ table {
   height: 100%;
   width: 75%;
   overflow-y: scroll;
-  transition: left 0.5s ease-in-out;
+  transition: all 0.5s ease-in-out;
 }
 
 .mainExpand {
@@ -141,6 +145,13 @@ table {
   top: 33%;
   left: 0;
   height: 66%;
+  width: 100%;
+}
+
+.mainFull {
+  top: 0;
+  left: 0;
+  height: 100%;
   width: 100%;
 }
 
@@ -266,4 +277,10 @@ table {
 
 .hide {
   display: none;
+}
+
+.sidebarHideTip {
+  position: fixed;
+  bottom: 1rem;
+  left: 1rem;
 }
