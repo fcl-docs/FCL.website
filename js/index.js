@@ -80,7 +80,7 @@ function expandSidebar(isExpand) {
 function hideSidebar(isHide) {
   const sidebarElement = document.querySelector('.sidebar');
   const mainElement = document.querySelector('.main');
-  const tipHtml = '<meta charset="UTF-8"><div class="diagonal window" id="sidebarHideTip"><div class="windowTitle"><span>侧边栏已隐藏</span></div><button onclick="hideSidebar(&quot;D&quot;)" id="showSidebar">显示侧边栏</button></p></div>'
+  const tipHtml = '<meta charset="UTF-8"><div class="diagonal window" id="sidebarHideTip"><div class="windowTitle"><span>侧边栏已隐藏</span></div><button onclick="hideSidebar(&quot;D&quot;)" id="showSidebar">显示侧边栏</button></div>'
   const tipElement = document.getElementById('sidebarHideTip');
   if (isHide === 'H') {
     sidebarElement.classList.add('sidebarHide');
