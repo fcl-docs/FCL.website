@@ -628,12 +628,26 @@
 <script>
   window.addEventListener('DOMContentLoaded', () => {
     const table = document.getElementById('versionMap').getElementsByTagName('tbody')[0];
-    table.innerHTML = `<tr><td colspan="7">加载中...</td></tr>`; // 加载提示
+    table.innerHTML = `<tr><td colspan="7">加载中...</td></tr>`;
+
+    const escapeHTML = str => str.replace(/[&<>"']/g, m => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[m]));
     
-    const escapeHTML = str => str.replace(/[&<>"']/g, m => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' } [m]));
-    
-    fetch('https://raw.kkgithub.com/FCL-Team/FoldCraftLauncher/refs/heads/main/version_map.json')
-      .then(response => response.json())
+    const primaryUrl = 'https://raw.githubusercontent.com/FCL-Team/FoldCraftLauncher/refs/heads/main/version_map.json';
+    const mirrorUrl = 'https://raw.kkgithub.com/FCL-Team/FoldCraftLauncher/refs/heads/main/version_map.json';
+
+    fetch(primaryUrl)
+      .then(response => {
+        if (!response.ok) throw new Error('主站响应异常');
+        return response.json();
+      })
+      .catch(error => {
+        console.warn('主站请求失败，尝试镜像站:', error);
+        return fetch(mirrorUrl)
+          .then(response => {
+            if (!response.ok) throw new Error('镜像站响应异常');
+            return response.json();
+          });
+      })
       .then(data => {
         table.innerHTML = ''; // 清空加载提示
         const fragment = document.createDocumentFragment();
@@ -650,8 +664,8 @@
             version.versionName || '',
             version.date || '',
             descText,
-            version.netdiskUrl ? `<a href="${escapeHTML(version.netdiskUrl)}" target="_blank"></a>` : '无',
-            version.url ? `<a href="${escapeHTML(version.url)}" target="_blank"></a>` : '无'
+            version.netdiskUrl ? `<a href="${escapeHTML(version.netdiskUrl)}" target="_blank">网盘</a>` : '无',
+            version.url ? `<a href="${escapeHTML(version.url)}" target="_blank">直连</a>` : '无'
           ];
           
           cellsContent.forEach(content => {
@@ -671,5 +685,4 @@
       });
   });
 </script>
-
 </html>
