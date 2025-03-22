@@ -109,39 +109,37 @@
             部分链接来源于网络，如有侵犯您的权益，请在<a href="https://github.com/XiaoluoFoxington/FCL.website/issues" target="_blank">此网站的GitHub仓库</a>提出Issue。
           </p>
         </div>
-        
-        <div class="window">
-          <table id="versionMap">
-            <thead class="windowTitle level3">
-              <tr>
-                <th>
-                  类型
-                </th>
-                <th>
-                  版本代码
-                </th>
-                <th>
-                  版本号
-                </th>
-                <th>
-                  日期
-                </th>
-                <th>
-                  更新说明
-                </th>
-                <th>
-                  网盘链接
-                </th>
-                <th>
-                  下载地址
-                </th>
-              </tr>
-            </thead>
-            <tbody>
-            </tbody>
-          </table>
-          
-        </div>
+          <div class="window">
+            <table id="versionMap">
+              <thead class="windowTitle level3">
+                <tr>
+                  <th>
+                    类型
+                  </th>
+                  <th>
+                    版本代码
+                  </th>
+                  <th>
+                    版本号
+                  </th>
+                  <th>
+                    日期
+                  </th>
+                  <th>
+                    更新说明
+                  </th>
+                  <th>
+                    夸克网盘下载（多个架构）
+                  </th>
+                  <th>
+                    GitHub下载（all）
+                  </th>
+                </tr>
+              </thead>
+              <tbody>
+              </tbody>
+            </table>
+          </div>
         
         <div class="window">
           <table style="word-break: break-all;">
@@ -630,39 +628,46 @@
 <script>
   window.addEventListener('DOMContentLoaded', () => {
     const table = document.getElementById('versionMap').getElementsByTagName('tbody')[0];
+    table.innerHTML = `<tr><td colspan="7">加载中...</td></tr>`; // 加载提示
     
-    // 获取并处理版本数据
-    fetch('https://raw.githubusercontent.com/FCL-Team/FoldCraftLauncher/refs/heads/main/version_map.json')
+    const escapeHTML = str => str.replace(/[&<>"']/g, m => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' } [m]));
+    
+    fetch('https://raw.kkgithub.com/FCL-Team/FoldCraftLauncher/refs/heads/main/version_map.json')
       .then(response => response.json())
       .then(data => {
+        table.innerHTML = ''; // 清空加载提示
+        const fragment = document.createDocumentFragment();
+        
         data.forEach(version => {
-          const row = table.insertRow();
+          const row = document.createElement('tr');
+          const descObj = version.description.find(d => d.lang === 'zh_CN') ||
+            version.description.find(d => d.lang === 'en') || { text: '暂无描述' };
+          const descText = escapeHTML(descObj.text).replace(/\n/g, '<br><br>');
           
-          // 获取中文描述（如果没有则用英文）
-          const description = version.description.find(d => d.lang === 'zh_CN') ||
-            version.description.find(d => d.lang === 'en');
-          const descText = description.text.replace(/\n/g, '<br><br>');
-          
-          // 创建表格单元格
-          const cells = [
-            version.type,
-            version.versionCode,
-            version.versionName,
-            version.date,
+          const cellsContent = [
+            version.type || '',
+            version.versionCode || '',
+            version.versionName || '',
+            version.date || '',
             descText,
-            version.netdiskUrl ? `<a href="${version.netdiskUrl}" target="_blank">网盘下载</a>` : '无',
-            version.url ? `<a href="${version.url}" target="_blank">下载安装包</a>` : '无'
+            version.netdiskUrl ? `<a href="${escapeHTML(version.netdiskUrl)}" target="_blank"></a>` : '无',
+            version.url ? `<a href="${escapeHTML(version.url)}" target="_blank"></a>` : '无'
           ];
           
-          cells.forEach((content, index) => {
-            const cell = row.insertCell(index);
+          cellsContent.forEach(content => {
+            const cell = document.createElement('td');
             cell.innerHTML = content;
+            row.appendChild(cell);
           });
+          
+          fragment.appendChild(row);
         });
+        
+        table.appendChild(fragment);
       })
       .catch(error => {
-        console.error('加载版本数据失败:', error);
-        table.innerHTML = `<tr><td colspan="7" class="diagonalRed">加载数据失败，请检查网络连接或绕过GFW。</td></tr>`;
+        console.error('加载失败:', error);
+        table.innerHTML = `<tr><td colspan="7" class="diagonalRed">数据加载失败，请检查网络或绕过GFW。</td></tr>`;
       });
   });
 </script>
