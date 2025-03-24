@@ -4,6 +4,8 @@ body {
   color: #fff;
   padding: 0;
   margin: 0;
+
+  color-scheme: dark;
 }
 
 iframe {
