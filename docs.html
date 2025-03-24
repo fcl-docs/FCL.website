@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+
+<html lang="zh-CN">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <link rel="stylesheet" href="/css/index.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/github-markdown-css@5.1.0/github-markdown.min.css">
+  
+  <script src="/js/index.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+  
+  <title>FCL官方文档 < docs.html</title>
+</head>
+
+<body>
+  <div class="sidebar" id="sidebar">
+    <div>
+      <div class="diagonal window">
+        <div class="windowTitle">
+          <span>页面信息</span>
+        </div>
+        <table>
+          <tr>
+            <td>
+              文件
+            </td>
+            <td>
+              /docs .html
+            </td>
+          </tr>
+          <tr>
+            <td>
+              标题
+            </td>
+            <td>
+              FCL官方文档
+            </td>
+          </tr>
+          <tr>
+            <td>
+              创建时间
+            </td>
+            <td>
+              2025年3月24日20时06分
+            </td>
+          </tr>
+          <tr>
+            <td>
+              修改时间
+            </td>
+            <td>
+              2025年3月24日20时06分
+            </td>
+          </tr>
+        </table>
+      </div>
+    </div>
+    
+    <div class="yellow window" id="JStip">
+      
+      <div class="yellowT windowTitle">
+        <span>启用 JavaScript</span>
+      </div>
+      <p>
+        请启用JavaScript以 获得此网站的最佳浏览体验。侧边栏无法显示，可手动查看：<a href="/page/content/sidebar.html">/page/content/sidebar.html</a>。
+      </p>
+    </div>
+    
+    <div class="yellow window" id="windowOnloadtip">
+      <div class="yellowT windowTitle">
+        <span>等待 window.onload</span>
+      </div>
+      <p>
+        网页资源正在加载，可能导致侧边栏、图片等资源无显示。如此提示长时间未消失，请尝试启用JavaScript或绕过GFW。
+      </p>
+    </div>
+    
+    <div class="yellow window" id="DOMtip">
+      <div class="yellowT windowTitle">
+        <span>等待 DOMContentLoaded</span>
+      </div>
+      <p>
+        网页正在加载，可能导致网页显示异常。如此提示长时间未消失，请尝试启用JavaScript或更换浏览器。
+      </p>
+    </div>
+    
+  </div>
+  
+  <div class="main">
+    <div class="window">
+      <div class="windowTitle">
+        <span>/docs.html > FCL官方文档</span>
+      </div>
+      
+      <div class="window">
+        <div class="windowTitle level2">
+          <span>目录</span>
+        </div>
+        <div id="docsIndex">
+          
+        </div>
+      </div>
+      
+      <div class="window">
+        <div class="windowTitle level2">
+          <span>内容</span>
+        </div>
+        <div id="docsContent" class="markdown-body">
+          
+        </div>
+      </div>
+      
+      <div class="diagonal window">
+        <div class="windowTitle level2">
+          <span>debug</span>
+        </div>
+        <a href="/page/debug/elements.html">view all elements</a>
+      </div>
+      
+      
+    </div>
+  </div>
+</body>
+
+<script>
+  // 获取数据并填充到指定容器
+  fetch('https://raw.kkgithub.com/FCL-Team/FCL-Docs/refs/heads/main/index.json')
+    .then(response => response.json())
+    .then(data => {
+      const container = document.getElementById('docsIndex');
+      
+      // 遍历每个分类
+      data.forEach(category => {
+        if (!category.visible) return;
+        
+        // 创建分类容器
+        const categoryDiv = document.createElement('div');
+        categoryDiv.className = 'category';
+        
+        // 添加分类标题（优先显示英文）
+        const categoryName = category.displayName.find(d => d.lang === 'en')?.name || category.displayName[0]?.name;
+        const heading = document.createElement('p');
+        heading.textContent = categoryName;
+        categoryDiv.appendChild(heading);
+        
+        // 创建项目容器
+        const itemsContainer = document.createElement('div');
+        itemsContainer.className = 'items';
+        
+        // 遍历每个项目
+        category.item.forEach(item => {
+          const itemDiv = document.createElement('button');
+          
+          // 修复点1：正确绑定点击事件（使用匿名函数）
+          itemDiv.onclick = () => {
+            // 修复点2：修正路径拼接（添加/main）
+            loadDocs(`https://raw.kkgithub.com/FCL-Team/FCL-Docs/refs/heads/main${item.path}`);
+          };
+          
+          const title = document.createElement('p');
+          title.textContent = item.title;
+          
+          const subtitle = document.createElement('p');
+          subtitle.textContent = item.subtitle;
+          
+          const author = document.createElement('p');
+          author.className = 'author';
+          author.textContent = `作者：${item.author}`;
+          
+          // 修复点3：删除无效的link变量，直接添加元素
+          itemDiv.appendChild(title);
+          itemDiv.appendChild(subtitle);
+          itemDiv.appendChild(author);
+          
+          itemsContainer.appendChild(itemDiv);
+        });
+        
+        categoryDiv.appendChild(itemsContainer);
+        container.appendChild(categoryDiv);
+      });
+    })
+    .catch(error => {
+      console.error('数据获取失败:', error);
+      document.getElementById('docsIndex').innerHTML = '<div class=\'diagonalRed\'>数据加载失败，请检查网络或绕过GFW。</div>';
+    });
+  
+  function loadDocs(rawSrc) {
+    const container = document.getElementById('docsContent');
+    container.innerHTML = '<div>加载中...</div>';
+    
+    fetch(rawSrc)
+      .then(response => {
+        if (!response.ok) throw new Error(`HTTP错误 ${response.status}`);
+        return response.text();
+      })
+      .then(markdownText => {
+        // 阶段1：处理原始Markdown的路径
+        const processedMD = markdownText.replace(
+          /(!?\[.*?]\()((?!https?:\/\/)([./]*)([^)]+))(\))/gi,
+          (match, prefix, pathPart, prefixSlash, actualPath, suffix) => {
+            const baseURL = 'https://raw.kkgithub.com/FCL-Team/FCL-Docs/refs/heads/main';
+            
+            let fullPath;
+            if (actualPath.startsWith('/')) {
+              fullPath = `${baseURL}${actualPath}`;
+            } else if (actualPath.startsWith('../')) {
+              fullPath = `${baseURL}/${actualPath.replace(/^(\.\.\/)+/, '')}`;
+            } else {
+              fullPath = `${baseURL}/${actualPath}`;
+            }
+            
+            // 清理路径中的重复斜杠（保留协议部分）
+            return `${prefix}${fullPath.replace(/([^:])\/+/g, '$1/')}${suffix}`;
+          }
+        );
+        
+        // 阶段2：转换为HTML
+        let parsedHTML = marked.parse(processedMD);
+        
+        // 阶段3：安全过滤
+        if (window.DOMPurify) {
+          parsedHTML = DOMPurify.sanitize(parsedHTML);
+        }
+        
+        container.innerHTML = parsedHTML;
+      })
+      .catch(err => {
+        console.error('加载失败:', err);
+        container.innerHTML = `
+<div class="diagonalRed">
+  <p>文档加载失败</p>
+  <p>错误类型: ${err.name}</p>
+  <p>详细信息: ${err.message}</p>
+</div>`;
+      });
+  }
+</script>
+
+</html>
