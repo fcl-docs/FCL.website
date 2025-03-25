@@ -13,6 +13,11 @@ iframe {
   width: 100%;
 }
 
+li {
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
 a {
   color: #fff;
 }
@@ -173,6 +178,9 @@ table {
   z-index: 114;
   background-color: #888;
   box-shadow: 0 2px 0 #00000080;
+
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .level2 {
