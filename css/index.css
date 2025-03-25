@@ -43,14 +43,12 @@ code {
   background-color: #00f4;
   border: 1px solid #00f8;
   margin: 0 0.5ch 0 0.5ch;
-  vertical-align: middle;
 }
 
 mark {
   color: #ff0;
   background-color: #ff08;
   border: 1px solid #ff0;
-  vertical-align: middle;
 }
 
 input {
