@@ -112,37 +112,70 @@
             您可能需要<mark>清除浏览缓存</mark>才能获取最新版本信息。
           </p>
         </div>
-          <div class="window">
-            <table id="versionMap">
-              <thead class="windowTitle level3">
-                <tr>
-                  <th>
-                    类型
-                  </th>
-                  <th>
-                    版本代码
-                  </th>
-                  <th>
-                    版本号
-                  </th>
-                  <th>
-                    日期
-                  </th>
-                  <th>
-                    更新说明
-                  </th>
-                  <th>
-                    夸克网盘下载（多个架构）
-                  </th>
-                  <th>
-                    GitHub下载（all）
-                  </th>
-                </tr>
-              </thead>
-              <tbody>
-              </tbody>
-            </table>
-          </div>
+        <div class="window">
+          <table id="versionMap">
+            <thead class="windowTitle level3">
+              <tr>
+                <th>
+                  类型
+                </th>
+                <th>
+                  版本代码
+                </th>
+                <th>
+                  版本号
+                </th>
+                <th>
+                  日期
+                </th>
+                <th>
+                  更新说明
+                </th>
+                <th>
+                  夸克网盘下载（多个架构）
+                </th>
+                <th>
+                  GitHub下载（all）
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+            </tbody>
+          </table>
+        </div>
+        
+        <!--
+        <div class="window">
+          <table style="word-break: break-all;">
+            <thead class="windowTitle level3">
+              <tr>
+                <th>
+                  站长花钱买的直链
+                </th>
+                <th>
+                  版本
+                </th>
+                <th>
+                  架构
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>
+                  <a href="" target="_blank"></a>
+                </td>
+                <td>
+                  1.2.1.6
+                </td>
+                <td>
+                  arm-v8a
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        -->
         
         <div class="window">
           <table style="word-break: break-all;">
@@ -634,12 +667,12 @@
   window.addEventListener('DOMContentLoaded', () => {
     const table = document.getElementById('versionMap').getElementsByTagName('tbody')[0];
     table.innerHTML = `<tr><td colspan="7">加载中...</td></tr>`;
-
-    const escapeHTML = str => str.replace(/[&<>"']/g, m => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[m]));
+    
+    const escapeHTML = str => str.replace(/[&<>"']/g, m => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' } [m]));
     
     const primaryUrl = 'https://raw.githubusercontent.com/FCL-Team/FoldCraftLauncher/refs/heads/main/version_map.json';
     const mirrorUrl = 'https://raw.kkgithub.com/FCL-Team/FoldCraftLauncher/refs/heads/main/version_map.json';
-
+    
     fetch(primaryUrl)
       .then(response => {
         if (!response.ok) throw new Error('主站响应异常');
@@ -690,4 +723,5 @@
       });
   });
 </script>
+
 </html>
