@@ -126,37 +126,29 @@
 </body>
 
 <script>
-  // 获取数据并填充到指定容器
   fetch('https://raw.kkgithub.com/FCL-Team/FCL-Docs/refs/heads/main/index.json')
     .then(response => response.json())
     .then(data => {
       const container = document.getElementById('docsIndex');
       
-      // 遍历每个分类
       data.forEach(category => {
         if (!category.visible) return;
         
-        // 创建分类容器
         const categoryDiv = document.createElement('div');
         categoryDiv.className = 'category';
         
-        // 添加分类标题（优先显示英文）
         const categoryName = category.displayName.find(d => d.lang === 'en')?.name || category.displayName[0]?.name;
         const heading = document.createElement('p');
         heading.textContent = categoryName;
         categoryDiv.appendChild(heading);
         
-        // 创建项目容器
         const itemsContainer = document.createElement('div');
         itemsContainer.className = 'items';
         
-        // 遍历每个项目
         category.item.forEach(item => {
           const itemDiv = document.createElement('button');
           
-          // 修复点1：正确绑定点击事件（使用匿名函数）
           itemDiv.onclick = () => {
-            // 修复点2：修正路径拼接（添加/main）
             loadDocs(`https://raw.kkgithub.com/FCL-Team/FCL-Docs/refs/heads/main${item.path}`);
           };
           
@@ -170,7 +162,6 @@
           author.className = 'author';
           author.textContent = `作者：${item.author}`;
           
-          // 修复点3：删除无效的link变量，直接添加元素
           itemDiv.appendChild(title);
           itemDiv.appendChild(subtitle);
           itemDiv.appendChild(author);
@@ -197,7 +188,6 @@
         return response.text();
       })
       .then(markdownText => {
-        // 阶段1：处理原始Markdown的路径
         const processedMD = markdownText.replace(
           /(!?\[.*?]\()((?!https?:\/\/)([./]*)([^)]+))(\))/gi,
           (match, prefix, pathPart, prefixSlash, actualPath, suffix) => {
@@ -217,10 +207,8 @@
           }
         );
         
-        // 阶段2：转换为HTML
         let parsedHTML = marked.parse(processedMD);
         
-        // 阶段3：安全过滤
         if (window.DOMPurify) {
           parsedHTML = DOMPurify.sanitize(parsedHTML);
         }
