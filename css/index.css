@@ -43,12 +43,14 @@ code {
   background-color: #00f4;
   border: 1px solid #00f8;
   margin: 0 0.5ch 0 0.5ch;
+  vertical-align: middle;
 }
 
 mark {
   color: #ff0;
   background-color: #ff08;
   border: 1px solid #ff0;
+  vertical-align: middle;
 }
 
 input {
@@ -101,6 +103,18 @@ table {
   border-collapse: collapse;
   border: none;
   width: 100%;
+}
+
+span {
+  vertical-align: middle;
+}
+
+.tag {
+  background-color: #444;
+  border: 1px solid #888;
+  font-size: 0.8rem;
+  margin: auto 0.5ch;
+  vertical-align: middle;
 }
 
 .markdown-body img {
@@ -223,6 +237,11 @@ table {
 
 .blueT {
   background-color: #008;
+}
+
+.green {
+  background-color: #040;
+  border: 1px solid #080;
 }
 
 .diagonal {
