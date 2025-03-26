@@ -47,10 +47,10 @@ function hideTip(tip) {
   var domt = document.getElementById('DOMtip');
   if (tip === 'wo') {
     wot.style.display = 'none';
-    jst.style.display = 'none';
   }
   if (tip === 'dom') {
     domt.style.display = 'none';
+    jst.style.display = 'none';
   }
 }
 
@@ -91,7 +91,6 @@ function hideSidebar(isHide) {
     sidebarElement.classList.remove('sidebarHide');
     mainElement.classList.remove('mainFull');
     tipElement.remove();
-    tipElement = null;
     console.log('侧边栏隐藏：否');
   }
 }

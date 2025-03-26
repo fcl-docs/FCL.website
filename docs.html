@@ -174,13 +174,13 @@
       });
     })
     .catch(error => {
-      console.error('数据获取失败:', error);
-      document.getElementById('docsIndex').innerHTML = '<div class=\'diagonalRed\'>数据加载失败，请检查网络或绕过GFW。</div>';
+      console.error('失败于获取文档索引', error);
+      document.getElementById('docsIndex').innerHTML = '<div class=\'diagonalRed\'>加载失败，请检查网络或绕过GFW。<br>${error}</div>';
     });
   
   function loadDocs(rawSrc) {
     const container = document.getElementById('docsContent');
-    container.innerHTML = '<div>加载中...</div>';
+    container.innerHTML = '<div>正在加载</div>';
     
     fetch(rawSrc)
       .then(response => {
@@ -202,7 +202,6 @@
               fullPath = `${baseURL}/${actualPath}`;
             }
             
-            // 清理路径中的重复斜杠（保留协议部分）
             return `${prefix}${fullPath.replace(/([^:])\/+/g, '$1/')}${suffix}`;
           }
         );
@@ -216,13 +215,8 @@
         container.innerHTML = parsedHTML;
       })
       .catch(err => {
-        console.error('加载失败:', err);
-        container.innerHTML = `
-<div class="diagonalRed">
-  <p>文档加载失败</p>
-  <p>错误类型: ${err.name}</p>
-  <p>详细信息: ${err.message}</p>
-</div>`;
+        console.error('失败于加载文档内容：', err);
+        container.innerHTML = `<div class="diagonalRed">加载失败，请检查网络或绕过GFW<br>错误类型: ${err.name}<br>详细信息: ${err.message}</div>`;
       });
   }
 </script>
