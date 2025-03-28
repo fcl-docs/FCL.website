@@ -45,6 +45,18 @@ code {
   margin: 0 0.5ch 0 0.5ch;
 }
 
+pre {
+  font-family: monospace;
+  overflow-x: auto;
+  margin: 0;
+}
+
+pre code {
+  background: unset;
+  border: unset;
+  margin: 0;
+}
+
 mark {
   color: #ff0;
   background-color: #ff08;
@@ -281,6 +293,7 @@ span {
       #004 0.5rem,
       #004 1rem);
   border: 1px solid #008;
+  font-family: monospace;
 }
 
 .nav {
