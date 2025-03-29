@@ -13,7 +13,9 @@ window.onload = function() {
   hideTip('wo');
   checkVerticalView();
   
-  console.log('window.onload：完成')
+  console.log('window.onload：完成');
+  
+  console.error('再送你一个');
 };
 
 document.addEventListener('DOMContentLoaded', function() {
@@ -23,7 +25,7 @@ document.addEventListener('DOMContentLoaded', function() {
   hideTip('dom');
   
   
-  console.log('DOMContentLoaded：完成')
+  console.log('DOMContentLoaded：完成');
 });
 
 window.addEventListener('resize', function() {
