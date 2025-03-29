@@ -725,14 +725,20 @@ SHA256: 81:cd:3d:14:fc:3a:aa:79:d7:83:8e:eb:66:aa:50:3f:b9:47:14:07:df:d0:8b:3d:
     
     fetch(primaryUrl)
       .then(response => {
-        if (!response.ok) throw new Error('失败于响应GitHub');
+        console.log('加载版本信息：GitHub响应：' + response.status);
+        if (!response.ok) {
+          throw new Error('失败于响应GitHub');
+        }
         return response.json();
       })
       .catch(error => {
-        console.warn('失败于响应GitHub，尝试kkgithub：', error);
+        console.warn('加载版本信息：GitHub响应失败，尝试kkGitHub：', error);
         return fetch(mirrorUrl)
           .then(response => {
-            if (!response.ok) throw new Error('失败于响应kkgithub');
+            console.log('加载版本信息：kkGitHub响应：' + response.status);
+            if (!response.ok) {
+              throw new Error('失败于响应kkGitHub');
+            }
             return response.json();
           });
       })
@@ -768,7 +774,7 @@ SHA256: 81:cd:3d:14:fc:3a:aa:79:d7:83:8e:eb:66:aa:50:3f:b9:47:14:07:df:d0:8b:3d:
         table.appendChild(fragment);
       })
       .catch(error => {
-        console.error('失败于加载FCL最新版本信息：', error);
+        console.error('加载版本信息：', error);
         table.innerHTML = `<tr><td colspan="7" class="diagonalRed">加载失败，请检查网络或绕过GFW。<br>${error}</td></tr>`;
       });
   });

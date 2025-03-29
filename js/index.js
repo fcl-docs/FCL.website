@@ -1,14 +1,29 @@
+//  __   __                       ___                    ____                                   __                      
+// /\ \ /\ \  __                 /\_ \                  /\  _`\              __                /\ \__                   
+// \ `\`\/'/'/\_\     __      ___\//\ \    __  __    ___\ \ \L\_\___   __  _/\_\    ___      __\ \ ,_\   ___     ___    
+//  `\/ > <  \/\ \  /'__`\   / __`\\ \ \  /\ \/\ \  / __`\ \  _\/ __`\/\ \/'\/\ \ /' _ `\  /'_ `\ \ \/  / __`\ /' _ `\  
+//     \/'/\`\\ \ \/\ \L\.\_/\ \L\ \\_\ \_\ \ \_\ \/\ \L\ \ \ \/\ \L\ \/>  </\ \ \/\ \/\ \/\ \L\ \ \ \_/\ \L\ \/\ \/\ \ 
+//     /\_\\ \_\ \_\ \__/.\_\ \____//\____\\ \____/\ \____/\ \_\ \____//\_/\_\\ \_\ \_\ \_\ \____ \ \__\ \____/\ \_\ \_\
+//     \/_/ \/_/\/_/\/__/\/_/\/___/ \/____/ \/___/  \/___/  \/_/\/___/ \//\/_/ \/_/\/_/\/_/\/___L\ \/__/\/___/  \/_/\/_/
+//                                                                                           /\____/                    
+//                                                                                           \_/__/                     
+
 window.onload = function() {
+  
   hideTip('wo');
   checkVerticalView();
   
+  console.log('window.onload：完成')
 };
 
 document.addEventListener('DOMContentLoaded', function() {
+  console.error('送你一个错误');
   
   loadSidebar();
   hideTip('dom');
   
+  
+  console.log('DOMContentLoaded：完成')
 });
 
 window.addEventListener('resize', function() {
@@ -23,6 +38,7 @@ function loadSidebar() {
   if (sidebarContainer) {
     fetch('/page/content/sidebar.html')
       .then(response => {
+        console.log('加载侧边栏：' + response.status)
         if (!response.ok) {
           throw new Error(`HTTP error! status: ${response.status}`);
         }
@@ -30,13 +46,14 @@ function loadSidebar() {
       })
       .then(html => {
         sidebarContainer.insertAdjacentHTML('beforeend', html);
+        console.log('加载侧边栏：完成')
       })
       .catch(error => {
-        console.error('错误于加载侧边栏:', error);
+        console.error('加载侧边栏：', error);
         sidebarContainer.insertAdjacentHTML('beforeend', errorHtmlS + '<br>' + error + errorHtmlE);
       });
   } else {
-    console.warn('警告于无法找到侧边栏容器');
+    console.warn('加载侧边栏：找不到容器');
   }
   
 }
@@ -66,14 +83,14 @@ function expandSidebar(isExpand) {
     expandButton.style.display = 'none';
     hideButton.style.display = 'none';
     contractButton.style.display = 'block';
-    console.log('侧边栏展开：是');
+    console.log('展开侧边栏：是');
   } else {
     sidebarElement.classList.remove('sidebarExpand');
     mainElement.classList.remove('mainExpand');
     expandButton.style.display = 'block';
     hideButton.style.display = 'block';
     contractButton.style.display = 'none';
-    console.log('侧边栏展开：否');
+    console.log('展开侧边栏：否');
   }
 }
 
@@ -86,12 +103,12 @@ function hideSidebar(isHide) {
     sidebarElement.classList.add('sidebarHide');
     mainElement.classList.add('mainFull');
     mainElement.insertAdjacentHTML('afterbegin', tipHtml);
-    console.log('侧边栏隐藏：是');
+    console.log('隐藏侧边栏：是');
   } else {
     sidebarElement.classList.remove('sidebarHide');
     mainElement.classList.remove('mainFull');
     tipElement.remove();
-    console.log('侧边栏隐藏：否');
+    console.log('隐藏侧边栏：否');
   }
 }
 
