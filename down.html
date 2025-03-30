@@ -4,7 +4,7 @@
 
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="/css/index.css">
   <script src="/js/index.js"></script>
   <title>下载FCL：强大开源的MC Java版安卓启动器 < down.html</title>
@@ -90,42 +90,53 @@
         <span>/down.html > 下载FCL：强大开源的MC Java版安卓启动器</span>
       </div>
       
+      <div class="yellow window">
+        <div class="yellowT windowTitle level2">
+          <span>注意</span>
+        </div>
+        
+        <p>
+          请根据自己的手机CPU架构选择对应的版本，不知道的无脑选择<code>all</code>。
+        </p>
+        
+        <div class="window">
+          <table>
+            <thead class="windowTitle level3">
+              <tr>
+                <th>系统版本</th>
+                <th>设备架构</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr style="text-align: center;">
+                <td data-os-ver>...</td>
+                <td data-device-arch>...</td>
+              </tr>
+              <tr>
+                <td colspan="2">系统版本和设备架构信息通过浏览器的UserAgent获取，仅供参考。若与你的设备实际信息不匹配请以实际信息为准。</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        
+        <p>
+          <code>多个</code>表示该链接内可选择架构。
+        </p>
+        
+        <p>
+          部分链接来源于网络，如有侵犯您的权益，请在<a href="https://github.com/fcl-docs/FCL.website/issues" target="_blank">此网站的GitHub仓库</a>提出Issue。
+        </p>
+        
+        <p>
+          您可能需要<mark>清除浏览缓存</mark>才能获取最新版本信息。
+        </p>
+      </div>
+      
       <div class="window">
         <div class="windowTitle level2">
           <span>下载FCL</span>
         </div>
         
-        <div class="yellow window">
-          <div class="yellowT windowTitle level3">
-            <span>注意</span>
-          </div>
-          <p>
-            请根据自己的手机CPU架构选择对应的版本，不知道的无脑选择<code>all</code>。
-          </p>
-          <p>
-            <table class="diagonal window" style="margin-left: 0.4rem; max-width: 80%;">
-              <thead class="windowTitle level4"><tr>
-                <th>系统版本</th>
-                <th>设备架构</th>
-              </tr></thead>
-              <tbody><tr style="text-align: center;">
-                <td data-os-ver>...</td>
-                <td data-device-arch>...</td>
-              </tr>
-              </tbody>
-            </table>
-            <sup>注：系统版本和设备架构信息通过浏览器的UserAgent获取，仅供参考。若与你的设备实际信息不匹配请以实际信息为准。</sup>
-          </p>
-          <p>
-            <code>多个</code>表示该链接内可选择架构。
-          </p>
-          <p>
-            部分链接来源于网络，如有侵犯您的权益，请在<a href="https://github.com/fcl-docs/FCL.website/issues" target="_blank">此网站的GitHub仓库</a>提出Issue。
-          </p>
-          <p>
-            您可能需要<mark>清除浏览缓存</mark>才能获取最新版本信息。
-          </p>
-        </div>
         <div class="window">
           <table id="versionMap">
             <thead class="windowTitle level3">
@@ -799,25 +810,25 @@ SHA256: a1:23:fa:d9:a5:03:fa:e3:16:f0:47:6a:19:e5:7e:ae:59:0f:16:55:69:5f:17:d4:
         console.error('加载版本信息：', error);
         table.innerHTML = `<tr><td colspan="7" class="diagonalRed">加载失败，请检查网络或绕过GFW。<br>${error}</td></tr>`;
       });
-
-      import('/js/device-checker.js').then(async(module) => {
-        const dataOsVer = document.querySelector('[data-os-ver]');
-        const dataDeviceArch = document.querySelector('[data-device-arch]');
-        try {
-          const info = await module.check();
-          dataOsVer.textContent = info.osVer;
-          dataDeviceArch.textContent = info.arch;
-          console.log('设备检查成功：', info);
-        } catch(e) {
-          switch(e.message) {
-            case 'cannot-get-ua':
-              dataOsVer.textContent = '获取失败';
-              dataDeviceArch.textContent = '不能得到User-Agent';
-              break;
-          }
-          console.error('设备检查失败：', e.message);
+    
+    import('/js/device-checker.js').then(async (module) => {
+      const dataOsVer = document.querySelector('[data-os-ver]');
+      const dataDeviceArch = document.querySelector('[data-device-arch]');
+      try {
+        const info = await module.check();
+        dataOsVer.textContent = info.osVer;
+        dataDeviceArch.textContent = info.arch;
+        console.log('获取设备信息：', info);
+      } catch (e) {
+        switch (e.message) {
+          case 'cannot-get-ua':
+            dataOsVer.textContent = '获取失败';
+            dataDeviceArch.textContent = '不能得到User-Agent';
+            break;
         }
-      });
+        console.error('获取设备信息：', e.message);
+      }
+    });
   });
 </script>
 
