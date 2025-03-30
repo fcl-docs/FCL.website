@@ -7,8 +7,10 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="/css/index.css">
   <script src="/js/index.js"></script>
-  <title>
-    所有元素 < elements.html < debug < page < / </title>
+  <title>所有元素 < elements.html < debug < page < / </title>
+      
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github-dark.min.css">
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
 </head>
 
 <body>
@@ -179,35 +181,6 @@
           </p>
         </div>
         
-        <div class="blue window">
-          <div class="blueT windowTitle level3">
-            <span>CSS</span>
-          </div>
-          <pre><code>body {
-  background-color: #010;
-  font-size: 1rem;
-  color: #fff;
-  padding: 0;
-  margin: 0;
-  color-scheme: dark;
-}</code></pre>
-        </div>
-        
-        <div class="blue window">
-          <div class="blueT windowTitle level3">
-            <span>JavaScript</span>
-          </div>
-          <pre><code>//  __   __                       ___                    ____                                   __                      
-// /\ \ /\ \  __                 /\_ \                  /\  _`\              __                /\ \__                   
-// \ `\`\/'/'/\_\     __      ___\//\ \    __  __    ___\ \ \L\_\___   __  _/\_\    ___      __\ \ ,_\   ___     ___    
-//  `\/ &gt; &lt;  \/\ \  /'__`\   / __`\\ \ \  /\ \/\ \  / __`\ \  _\/ __`\/\ \/'\/\ \ /' _ `\  /'_ `\ \ \/  / __`\ /' _ `\  
-//     \/'/\`\\ \ \/\ \L\.\_/\ \L\ \\_\ \_\ \ \_\ \/\ \L\ \ \ \/\ \L\ \/&gt;  &lt;/\ \ \/\ \/\ \/\ \L\ \ \ \_/\ \L\ \/\ \/\ \ 
-//     /\_\\ \_\ \_\ \__/.\_\ \____//\____\\ \____/\ \____/\ \_\ \____//\_/\_\\ \_\ \_\ \_\ \____ \ \__\ \____/\ \_\ \_\
-//     \/_/ \/_/\/_/\/__/\/_/\/___/ \/____/ \/___/  \/___/  \/_/\/___/ \//\/_/ \/_/\/_/\/_/\/___L\ \/__/\/___/  \/_/\/_/
-//                                                                                           /\____/                    
-//                                                                                           \_/__/                     </code></pre>
-        </div>
-        
         <div class="diagonalBlue window">
           <div class="blueT windowTitle level3">
             <span>蓝色斜线框</span>
@@ -215,6 +188,81 @@
           <p>
             这是一段测试文本
           </p>
+        </div>
+        
+        <div class="code window">
+          <div class="codeT windowTitle level3">
+            <span></span>
+          </div>
+          <pre><code class="language-"></code></pre>
+        </div>
+        
+        <div class="code window">
+          <div class="codeT windowTitle level3">
+            <span>CSS</span>
+          </div>
+          <pre><code class="language-html">&lt;!DOCTYPE HTML&gt;
+&lt;html&gt;
+&lt;head&gt;
+  &lt;title&gt;Test Page&lt;/title&gt;
+  &lt;meta charset="UTF-8"&gt;
+&lt;/head&gt;
+&lt;body&gt;
+  &lt;h1 data-test="title"&gt;Hello World&lt;/h1&gt;
+  &lt;button onclick="alert('Clicked!')"&gt;Click me&lt;/button&gt;
+&lt;/body&gt;
+&lt;/html&gt;</code></pre>
+        </div>
+        
+        <div class="code window">
+          <div class="codeT windowTitle level3">
+            <span>CSS</span>
+          </div>
+          <pre><code class="language-css">@media (max-width: 768px) {
+  .container {
+    --main-color: #ff0000;
+    display: flex;
+    flex-direction: column;
+  }
+
+  #special::after {
+    content: "▶";
+    color: hsl(120deg 100% 50%);
+  }
+}</code></pre>
+        </div>
+        
+        <div class="code window">
+          <div class="codeT windowTitle level3">
+            <span>JS</span>
+          </div>
+          <pre><code class="language-js">function debounce(fn, delay = 300) {
+  let timer;
+  return (...args) => {
+    clearTimeout(timer);
+    timer = setTimeout(() => {
+      fn.apply(this, args);
+    }, delay);
+  };
+}
+
+const PI = 3.1415926;
+const data = [1, 2, 3].map(n => n * 2);</code></pre>
+        </div>
+        
+        <div class="code window">
+          <div class="codeT windowTitle level3">
+            <span>plaintext</span>
+          </div>
+          <pre><code class="language-plaintext">  __   __                       ___                    ____                                   __                      
+ /\ \ /\ \  __                 /\_ \                  /\  _`\              __                /\ \__                   
+ \ `\`\/'/'/\_\     __      ___\//\ \    __  __    ___\ \ \L\_\___   __  _/\_\    ___      __\ \ ,_\   ___     ___    
+  `\/ &gt; &lt;  \/\ \  /'__`\   / __`\\ \ \  /\ \/\ \  / __`\ \  _\/ __`\/\ \/'\/\ \ /' _ `\  /'_ `\ \ \/  / __`\ /' _ `\  
+     \/'/\`\\ \ \/\ \L\.\_/\ \L\ \\_\ \_\ \ \_\ \/\ \L\ \ \ \/\ \L\ \/&gt;  &lt;/\ \ \/\ \/\ \/\ \L\ \ \ \_/\ \L\ \/\ \/\ \ 
+     /\_\\ \_\ \_\ \__/.\_\ \____//\____\\ \____/\ \____/\ \_\ \____//\_/\_\\ \_\ \_\ \_\ \____ \ \__\ \____/\ \_\ \_\
+     \/_/ \/_/\/_/\/__/\/_/\/___/ \/____/ \/___/  \/___/  \/_/\/___/ \//\/_/ \/_/\/_/\/_/\/___L\ \/__/\/___/  \/_/\/_/
+                                                                                           /\____/                    
+                                                                                           \_/__/                     </code></pre>
         </div>
         
         <div class="yellow window">

@@ -13,6 +13,8 @@ window.onload = function() {
   hideTip('wo');
   checkVerticalView();
   
+  hljs.highlightAll();
+  
   console.log('window.onload：完成');
   
   console.error('再送你一个');

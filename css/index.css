@@ -249,6 +249,15 @@ span {
   background-color: #008;
 }
 
+.code {
+  background-color: rgb(13, 17, 23);
+  border: 1px solid rgb(26, 34, 46);
+}
+
+.codeT {
+  background-color: rgb(26, 34, 46);
+}
+
 .green {
   background-color: #040;
   border: 1px solid #080;
