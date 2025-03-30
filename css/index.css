@@ -336,3 +336,25 @@ span {
   bottom: 1rem;
   left: 1rem;
 }
+
+@media screen and (max-width: 768px) {
+  /* page zoom for mobile devices */
+  @supports (zoom: 1) {
+    body {
+      /* 0.5 is best */
+      zoom: 0.5;
+    }
+  }
+  @supports not (zoom: 1) {
+    html {
+      width: 100vw;
+      height: 100vh;
+    }
+    body {
+      transform: scale(0.5);
+      transform-origin: 0 0;
+      width: calc(100% / 0.5);
+      height: calc(100% / 0.5);
+    }
+  }
+}
