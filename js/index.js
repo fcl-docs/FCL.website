@@ -24,6 +24,30 @@ document.addEventListener('DOMContentLoaded', function() {
   loadSidebar();
   hideTip('dom');
   
+  document.querySelectorAll('.blue.window pre').forEach(pre => {
+    console.log('内容复制：' + pre);
+    pre.addEventListener('click', async () => {
+      const code = pre.querySelector('code');
+      const title = pre.closest('.blue.window').querySelector('.blueT span');
+      
+      try {
+        await navigator.clipboard.writeText(code.textContent);
+        
+        const range = document.createRange();
+        range.selectNodeContents(code);
+        const selection = window.getSelection();
+        selection.removeAllRanges();
+        selection.addRange(range);
+        
+        const originalText = title.textContent;
+        title.textContent = '✓ 复制成功';
+        setTimeout(() => title.textContent = originalText, 1000);
+        
+      } catch (err) {
+        console.error('内容复制：', err);
+      }
+    });
+  });
   
   console.log('DOMContentLoaded：完成');
 });
