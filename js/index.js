@@ -11,7 +11,6 @@
 window.onload = function() {
   
   hideTip('wo');
-  checkVerticalView();
   
   hljs.highlightAll();
   console.log('时间：' + new Date());
@@ -47,6 +46,9 @@ document.addEventListener('DOMContentLoaded', function() {
   console.error('送你一个错误');
   
   loadSidebar();
+  
+  checkVerticalView();
+  
   hideTip('dom');
   
 document.querySelectorAll('.code.window pre').forEach(pre => {
