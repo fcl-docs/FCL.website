@@ -14,6 +14,8 @@ window.onload = function() {
   checkVerticalView();
   
   hljs.highlightAll();
+  console.log('今天：' + new Date());
+  console.log('愚人节：' + isTodayDate(4, 1));
   
   console.log('window.onload：完成');
   
@@ -166,4 +168,9 @@ function checkVerticalView() {
     // mainElement.classList.remove('mainVertical');
   }
   
+}
+
+function isTodayDate(month, day) {
+  const today = new Date();
+  return today.getMonth() === month - 1 && today.getDate() === day;
 }
