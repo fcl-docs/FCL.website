@@ -1,0 +1,59 @@
+name: 赞助提交
+description: 用户赞助信息提交模板
+title: "赞助：[昵称]，[金额]"
+labels: ["赞助"]
+body:
+  - type: input
+    id: sponsor-name
+    attributes:
+      label: "您的昵称"
+      description: "请输入您的昵称"
+    validations:
+      required: true
+
+  - type: input
+    id: amount
+    attributes:
+      label: "赞助金额"
+      description: "请输入实际支付金额（单位：¥）"
+      placeholder: "例：10"
+    validations:
+      required: true
+
+  - type: input
+    id: transaction-id
+    attributes:
+      label: "支付单号"
+      description: "支付平台生成的交易ID（可选）"
+      placeholder: "例：4200002631202504041145141919"
+
+  - type: input
+    id: github-username
+    attributes:
+      label: "您的GitHub用户名"
+      description: "（可选）"
+
+  - type: input
+    id: email
+    attributes:
+      label: "联系邮箱"
+      description: "（可选）"
+      placeholder: "例：contact@example.com"
+
+  - type: textarea
+    id: message
+    attributes:
+      label: "留言"
+      description: "想对开发者说的话（可选）"
+      render: markdown
+
+  - type: checkboxes
+    id: show
+    attributes:
+      label: "在赞助类别中显示"
+      description: "是否在网站的关于页面展示您的信息？"
+      options:
+        - label: 您的昵称
+        - label: 赞助金额
+        - label: 您的GitHub用户名
+        - label: 留言
