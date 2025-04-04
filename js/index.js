@@ -49,30 +49,68 @@ document.addEventListener('DOMContentLoaded', function() {
   loadSidebar();
   hideTip('dom');
   
-  document.querySelectorAll('.code.window pre').forEach(pre => {
-    console.log('内容复制：' + pre);
-    pre.addEventListener('click', async () => {
-      const code = pre.querySelector('code');
-      const title = pre.closest('.code.window').querySelector('.codeT span');
+document.querySelectorAll('.code.window pre').forEach(pre => {
+  console.log('代码复制：' + pre);
+  pre.addEventListener('click', async () => {
+    console.log('代码复制：已被点击');
+    
+    const codeWindow = pre.closest('.code.window');
+    if (!codeWindow) {
+      console.warn('代码复制：未找到.code.window父容器');
+      return;
+    }
+    
+    const code = pre.querySelector('code');
+    const title = codeWindow.querySelector('.codeT span');
+    if (!code || !title) {
+      console.warn(code ? '代码复制：未找到标题元素' : '代码复制：未找到代码元素');
+      return;
+    }
+    
+    try {
+      await navigator.clipboard.writeText(code.textContent);
+      console.log('代码复制：成功');
       
-      try {
-        await navigator.clipboard.writeText(code.textContent);
-        
-        const range = document.createRange();
-        range.selectNodeContents(code);
-        const selection = window.getSelection();
+      const range = document.createRange();
+      range.selectNodeContents(code);
+      const selection = window.getSelection();
+      selection.removeAllRanges();
+      selection.addRange(range);
+      console.log('代码复制：已选中代码');
+      
+      const originalText = title.textContent;
+      title.textContent = '✓ 复制成功';
+      console.log(`代码复制：标题更新`);
+      
+      setTimeout(() => {
+        title.textContent = originalText;
         selection.removeAllRanges();
-        selection.addRange(range);
-        
-        const originalText = title.textContent;
-        title.textContent = '✓ 复制成功';
-        setTimeout(() => title.textContent = originalText, 1000);
-        
-      } catch (err) {
-        console.error('内容复制：', err);
+        console.log('代码复制：状态重置');
+      }, 1000);
+      
+    } catch (err) {
+      console.error('代码复制：', err);
+      const originalText = title.textContent;
+      title.textContent = '✗ 复制失败';
+      
+      setTimeout(() => {
+        title.textContent = originalText;
+        console.log('代码复制：状态重置');
+      }, 1000);
+      
+      if (!navigator.clipboard) {
+        console.warn('代码复制：尝试降级复制方案');
+        const textarea = document.createElement('textarea');
+        textarea.value = code.textContent;
+        document.body.appendChild(textarea);
+        textarea.select();
+        document.execCommand('copy');
+        document.body.removeChild(textarea);
+        console.log('代码复制：降级复制方案成功');
       }
-    });
+    }
   });
+});
   
   console.log('DOMContentLoaded：完成');
 });
