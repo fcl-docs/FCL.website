@@ -49,11 +49,11 @@ document.addEventListener('DOMContentLoaded', function() {
   loadSidebar();
   hideTip('dom');
   
-  document.querySelectorAll('.blue.window pre').forEach(pre => {
+  document.querySelectorAll('.code.window pre').forEach(pre => {
     console.log('内容复制：' + pre);
     pre.addEventListener('click', async () => {
       const code = pre.querySelector('code');
-      const title = pre.closest('.blue.window').querySelector('.blueT span');
+      const title = pre.closest('.code.window').querySelector('.codeT span');
       
       try {
         await navigator.clipboard.writeText(code.textContent);
