@@ -14,8 +14,29 @@ window.onload = function() {
   checkVerticalView();
   
   hljs.highlightAll();
-  console.log('今天：' + new Date());
-  console.log('愚人节：' + isTodayDate(4, 1));
+  console.log('时间：' + new Date());
+  
+  if (isTodayDate(4, 1)) {
+    const HTML = `
+      <div class="yellow window">
+        <div class="yellowT windowTitle">
+          <span>注意！</span>
+        </div>
+        <p>
+          由于经费不足，此站将会在今天（4月1日）晚上（23时）关停！
+        </p>
+        <p style="opacity: 0.1;">
+          愚人节快乐qwq！
+        </p>
+      </div>
+      `;
+    document.querySelectorAll('.main').forEach(container => {
+      container.insertAdjacentHTML('afterbegin', HTML);
+    });
+    console.log('愚人节：是');
+  } else {
+    console.log('愚人节：否');
+  }
   
   console.log('window.onload：完成');
   
