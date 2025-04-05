@@ -342,7 +342,8 @@ span {
   @supports (zoom: 1) {
     body {
       /* 0.5 is best */
-      zoom: 0.5;
+      /* but i think 2/3 is best qwq */
+      zoom: calc(2 / 3);
     }
   }
   @supports not (zoom: 1) {
