@@ -804,7 +804,7 @@ SHA256: 31:66:09:77:fb:fe:e2:49:3c:20:fd:4f:a3:e5:a8:8f:a0:b1:2a:29:a3:69:4c:ec:
           const descText = escapeHTML(descObj.text).replace(/\n/g, '<br><br>');
           const date = parseRelativeDate(version.date) || '';
 
-          console.debug(`original date: ${version.date}, relative date: ${date}`);
+          console.debug(`加载版本信息：原始日期：${version.date}，相对日期：${date}`);
           
           const cellsContent = [
             version.type || '',
