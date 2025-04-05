@@ -86,6 +86,19 @@
         <span>/down.html > 下载FCL：强大开源的MC Java版安卓启动器</span>
       </div>
       
+      <div class="diagonal window">
+        <div class="windowTitle level2">
+          <span>赞助</span>
+        </div>
+        <p>
+          此站完全属于公益性质。我们始终坚守“0广告，0套路”，让更多人体验到开源社区的美好。如果您认为此站点对您有帮助且您<mark>有能力并经济独立</mark>，可考虑<a href="/file/picture/赞助.png" target="_blank">赞助我（微信支付）</a>。赞助后您可以在<a href="https://github.com/fcl-docs/FCL.website/issues" target="_blank">此网站的GitHub仓库</a>提出Issue并附上截图和您的信息，我们会显示在<a href="/about.html">关于</a>页面。
+        </p>
+        <p>
+          其它下载站点的赞助方式请自行访问相应的站点。
+        </p>
+      </div>
+      
+      
       <div class="yellow window">
         <div class="yellowT windowTitle level2">
           <span>注意</span>
@@ -167,23 +180,11 @@
         
         <div class="code window">
           <div class="codeT windowTitle level3">
-            <span>CHECKSUM (1.2.1.8 all)</span>
+            <span>CHECKSUM (all v1.2.1.8)</span>
           </div>
           <pre><code class="language-plaintext">MD5   : 3d:df:5f:d2:9f:ff:7b:b2:66:f4:c5:95:b5:2c:2a:20
 SHA1  : 92:c3:09:fd:98:9a:4f:14:4a:8b:74:ac:58:e9:cd:2a:ce:49:7a:8f
 SHA256: 31:66:09:77:fb:fe:e2:49:3c:20:fd:4f:a3:e5:a8:8f:a0:b1:2a:29:a3:69:4c:ec:04:53:c5:9a:eb:14:c8:73</code></pre>
-        </div>
-        
-        <div class="diagonal window">
-          <div class="windowTitle level3">
-            <span>赞助</span>
-          </div>
-          <p>
-            此站完全属于公益性质。我们始终坚守“0广告，0套路”，让更多人体验到开源社区的美好。如果您认为此站点对您有帮助且您<mark>有能力并经济独立</mark>，可考虑<a href="/file/picture/赞助.png" target="_blank">赞助我（微信支付）</a>。赞助后您可以在<a href="https://github.com/fcl-docs/FCL.website/issues" target="_blank">此网站的GitHub仓库</a>提出Issue并附上截图和您的信息，我们会显示在<a href="/about.html">关于</a>页面。
-          </p>
-          <p>
-            其它下载站点的赞助方式请自行访问相应的站点。
-          </p>
         </div>
         
         <div class="window">
@@ -506,6 +507,37 @@ SHA256: 31:66:09:77:fb:fe:e2:49:3c:20:fd:4f:a3:e5:a8:8f:a0:b1:2a:29:a3:69:4c:ec:
             <thead class="windowTitle level3">
               <tr>
                 <th>
+                  直链（站长提供，点击即可下载，最方便）
+                </th>
+                <th>
+                  渲染器
+                </th>
+                <th>
+                  版本
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>
+                  <a href="https://vip.123pan.cn/1811746932/10962247" target="_blank">https://vip.123pan.cn/1811746932/10962247</a>
+                </td>
+                <td>
+                  MobileGlues
+                </td>
+                <td>
+                  1.2.3
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        
+        <div class="window">
+          <table style="word-break: break-all;">
+            <thead class="windowTitle level3">
+              <tr>
+                <th>
                   链接
                 </th>
                 <th>
@@ -650,6 +682,16 @@ SHA256: 31:66:09:77:fb:fe:e2:49:3c:20:fd:4f:a3:e5:a8:8f:a0:b1:2a:29:a3:69:4c:ec:
           </table>
           
         </div>
+        
+        <div class="code window">
+          <div class="codeT windowTitle level3">
+            <span>CHECKSUM (MobileGlues v1.2.3)</span>
+          </div>
+          <pre><code class="language-plaintext">MD5   : 74:00:fb:c5:c8:4a:46:6b:d7:9c:e1:54:33:95:c7:3e
+SHA1  : d2:73:73:8c:5d:f2:01:95:28:b6:a4:72:a1:bc:99:29:0d:29:dc:1d
+SHA256: be:06:41:3f:94:ba:2b:e4:98:ba:36:45:d3:89:c6:59:1f:8c:62:0f:e2:1b:52:ed:7e:a0:e3:1a:42:93:5c:16</code></pre>
+        </div>
+        
       </div>
       
       <div class="window">
@@ -765,15 +807,15 @@ SHA256: 31:66:09:77:fb:fe:e2:49:3c:20:fd:4f:a3:e5:a8:8f:a0:b1:2a:29:a3:69:4c:ec:
       const date = new Date(dateStr);
       const now = new Date();
       const diff = ((now - date) / 1000);
-      return diff < 60? `${Math.floor(diff)} 秒前`:
-        diff < 3600? `${Math.floor(diff / 60)} 分钟前`:
-        diff < 86400? `${Math.floor(diff / 3600)} 小时前`:
-        diff < 604800? `${Math.floor(diff / 86400)} 天前`:
-        diff < 2419200? `${Math.floor(diff / 604800)} 周前`:
-        diff < 29030400? `${Math.floor(diff / 2419200)} 个月前`:
+      return diff < 60 ? `${Math.floor(diff)} 秒前` :
+        diff < 3600 ? `${Math.floor(diff / 60)} 分钟前` :
+        diff < 86400 ? `${Math.floor(diff / 3600)} 小时前` :
+        diff < 604800 ? `${Math.floor(diff / 86400)} 天前` :
+        diff < 2419200 ? `${Math.floor(diff / 604800)} 周前` :
+        diff < 29030400 ? `${Math.floor(diff / 2419200)} 个月前` :
         date.toLocaleDateString();
     }
-
+    
     fetch(primaryUrl)
       .then(response => {
         console.log('加载版本信息：GitHub响应：' + response.status);
@@ -803,7 +845,7 @@ SHA256: 31:66:09:77:fb:fe:e2:49:3c:20:fd:4f:a3:e5:a8:8f:a0:b1:2a:29:a3:69:4c:ec:
             version.description.find(d => d.lang === 'en') || { text: '暂无描述' };
           const descText = escapeHTML(descObj.text).replace(/\n/g, '<br><br>');
           const date = parseRelativeDate(version.date) || '';
-
+          
           console.debug(`加载版本信息：原始日期：${version.date}，相对日期：${date}`);
           
           const cellsContent = [
