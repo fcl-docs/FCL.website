@@ -306,7 +306,6 @@ span {
       #004 0.5rem,
       #004 1rem);
   border: 1px solid #008;
-  font-family: monospace;
 }
 
 .diagonalGreen {
@@ -317,7 +316,6 @@ span {
       #040 0.5rem,
       #040 1rem);
   border: 1px solid #080;
-  font-family: monospace;
 }
 
 .nav {
