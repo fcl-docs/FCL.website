@@ -8,6 +8,87 @@
 //                                                                                           /\____/                    
 //                                                                                           \_/__/                     
 
+document.addEventListener('DOMContentLoaded', function() {
+  const verifyBtn = document.getElementById('verifyBtn');
+  
+  console.error('送你一个错误');
+  
+  loadSidebar();
+  
+  checkVerticalView();
+  
+  hideTip('dom');
+  
+  if(verifyBtn){
+    verifyBtn.addEventListener('click', directLinkVerify);
+  };
+
+  document.querySelectorAll('.code.window pre').forEach(pre => {
+    console.log('代码复制：' + pre);
+    pre.addEventListener('click', async () => {
+      console.log('代码复制：已被点击');
+      
+      const codeWindow = pre.closest('.code.window');
+      if (!codeWindow) {
+        console.warn('代码复制：未找到.code.window父容器');
+        return;
+      }
+      
+      const code = pre.querySelector('code');
+      const title = codeWindow.querySelector('.codeT span');
+      if (!code || !title) {
+        console.warn(code ? '代码复制：未找到标题元素' : '代码复制：未找到代码元素');
+        return;
+      }
+      
+      try {
+        await navigator.clipboard.writeText(code.textContent);
+        console.log('代码复制：成功');
+        
+        const range = document.createRange();
+        range.selectNodeContents(code);
+        const selection = window.getSelection();
+        selection.removeAllRanges();
+        selection.addRange(range);
+        console.log('代码复制：已选中代码');
+        
+        const originalText = title.textContent;
+        title.textContent = '✓ 复制成功';
+        console.log(`代码复制：标题更新`);
+        
+        setTimeout(() => {
+          title.textContent = originalText;
+          selection.removeAllRanges();
+          console.log('代码复制：状态重置');
+        }, 1000);
+        
+      } catch (err) {
+        console.error('代码复制：', err);
+        const originalText = title.textContent;
+        title.textContent = '✗ 复制失败';
+        
+        setTimeout(() => {
+          title.textContent = originalText;
+          console.log('代码复制：状态重置');
+        }, 1000);
+        
+        if (!navigator.clipboard) {
+          console.warn('代码复制：尝试降级复制方案');
+          const textarea = document.createElement('textarea');
+          textarea.value = code.textContent;
+          document.body.appendChild(textarea);
+          textarea.select();
+          document.execCommand('copy');
+          document.body.removeChild(textarea);
+          console.log('代码复制：降级复制方案成功');
+        }
+      }
+    });
+  });
+  
+  console.log('DOMContentLoaded：完成');
+});
+
 window.onload = function() {
   
   hideTip('wo');
@@ -41,81 +122,6 @@ window.onload = function() {
   
   console.error('再送你一个');
 };
-
-document.addEventListener('DOMContentLoaded', function() {
-  console.error('送你一个错误');
-  
-  loadSidebar();
-  
-  checkVerticalView();
-  
-  hideTip('dom');
-  
-document.querySelectorAll('.code.window pre').forEach(pre => {
-  console.log('代码复制：' + pre);
-  pre.addEventListener('click', async () => {
-    console.log('代码复制：已被点击');
-    
-    const codeWindow = pre.closest('.code.window');
-    if (!codeWindow) {
-      console.warn('代码复制：未找到.code.window父容器');
-      return;
-    }
-    
-    const code = pre.querySelector('code');
-    const title = codeWindow.querySelector('.codeT span');
-    if (!code || !title) {
-      console.warn(code ? '代码复制：未找到标题元素' : '代码复制：未找到代码元素');
-      return;
-    }
-    
-    try {
-      await navigator.clipboard.writeText(code.textContent);
-      console.log('代码复制：成功');
-      
-      const range = document.createRange();
-      range.selectNodeContents(code);
-      const selection = window.getSelection();
-      selection.removeAllRanges();
-      selection.addRange(range);
-      console.log('代码复制：已选中代码');
-      
-      const originalText = title.textContent;
-      title.textContent = '✓ 复制成功';
-      console.log(`代码复制：标题更新`);
-      
-      setTimeout(() => {
-        title.textContent = originalText;
-        selection.removeAllRanges();
-        console.log('代码复制：状态重置');
-      }, 1000);
-      
-    } catch (err) {
-      console.error('代码复制：', err);
-      const originalText = title.textContent;
-      title.textContent = '✗ 复制失败';
-      
-      setTimeout(() => {
-        title.textContent = originalText;
-        console.log('代码复制：状态重置');
-      }, 1000);
-      
-      if (!navigator.clipboard) {
-        console.warn('代码复制：尝试降级复制方案');
-        const textarea = document.createElement('textarea');
-        textarea.value = code.textContent;
-        document.body.appendChild(textarea);
-        textarea.select();
-        document.execCommand('copy');
-        document.body.removeChild(textarea);
-        console.log('代码复制：降级复制方案成功');
-      }
-    }
-  });
-});
-  
-  console.log('DOMContentLoaded：完成');
-});
 
 window.addEventListener('resize', function() {
   // checkVerticalView();
@@ -237,8 +243,7 @@ function isTodayDate(month, day) {
 }
 
 function directLinkVerify() {
-  const input = document.getElementById('verifyInput').value;
-  const btn = document.getElementById('verifyBtn'); // 获取按钮元素
+  const input = document.getElementById('verifyInput');
   const answer = '2.3';
   const FCLhtml = `
               <tr>
@@ -307,20 +312,22 @@ function directLinkVerify() {
   `;
   const MGcontent = document.getElementById('directLinkMGcontent');
   const verifyFrom = document.getElementById('verifyFrom');
+  const verifyFail = document.getElementById('verifyFail');
   const verifyFinish = document.getElementById('verifyFinish');
   
   console.log('人机验证：答案：' + answer);
-  if (input === answer) {
+  if (input.value === answer) {
     FCLcontent.innerHTML = FCLhtml;
     MGcontent.innerHTML = MGhtml;
     verifyFrom.remove();
     verifyFinish.classList.remove('hide');
     console.log('人机验证：通过');
   } else {
-    btn.innerText = '回答错误！';
+    input.value = '';
+    verifyFail.classList.remove('hide');
     setTimeout(() => {
-      btn.innerText = '验证';
-    }, 1000);
+      verifyFail.classList.add('hide');
+    }, 3000);
     console.log('人机验证：失败');
   }
 }

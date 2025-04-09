@@ -97,7 +97,17 @@
           在<a href="./about.html" target="_blank">关于页面</a>中，洛狐的头像图片大小有多大（单位：MiB）（不需要输入单位）？
         </p>
         <input id="verifyInput">
-        <button id="verifyBtn" onclick="directLinkVerify();">验证</button>
+        <button id="verifyBtn">验证</button>
+        
+        <div class="diagonalRed window hide" id="verifyFail">
+          <div class="redT windowTitle level3">
+            <span>错误</span>
+          </div>
+          <p>
+            回答错误，验证失败。
+          </p>
+        </div>
+        
       </div>
       
       <div class="diagonalGreen window hide" id="verifyFinish">

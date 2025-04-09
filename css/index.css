@@ -194,6 +194,7 @@ span {
   background-color: #444;
   border: 1px solid #888;
   box-shadow: 0 2px 0 #00000080;
+  transition: all 1s ease-in-out;
 }
 
 .windowTitle {
