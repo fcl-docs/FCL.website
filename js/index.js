@@ -235,3 +235,92 @@ function isTodayDate(month, day) {
   const today = new Date();
   return today.getMonth() === month - 1 && today.getDate() === day;
 }
+
+function directLinkVerify() {
+  const input = document.getElementById('verifyInput').value;
+  const btn = document.getElementById('verifyBtn'); // 获取按钮元素
+  const answer = '2.3';
+  const FCLhtml = `
+              <tr>
+                <td>
+                  <a href="https://vip.123pan.cn/1811746932/11073320" target="_blank">https://vip.123pan.cn/1811746932/11073320</a>
+                </td>
+                <td>
+                  1.2.1.9
+                </td>
+                <td>
+                  all
+                </td>
+              </tr>
+              <tr class="toggleRow" onclick="toggleHistory(this)">
+                <td colspan="3">
+                  <span class="toggleText">展开历史版本</span>
+                </td>
+              </tr>
+              <tr class="historyRow">
+                <td>
+                  <a href="https://vip.123pan.cn/1811746932/11013197" target="_blank">https://vip.123pan.cn/1811746932/11013197</a>
+                </td>
+                <td>
+                  1.2.1.8
+                </td>
+                <td>
+                  all
+                </td>
+              </tr>
+              <tr class="historyRow">
+                <td>
+                  <a href="https://vip.123pan.cn/1811746932/10927783" target="_blank">https://vip.123pan.cn/1811746932/10927783</a>
+                </td>
+                <td>
+                  1.2.1.7
+                </td>
+                <td>
+                  arm64-v8a
+                </td>
+              </tr>
+              <tr class="historyRow">
+                <td>
+                  <a href="https://vip.123pan.cn/1811746932/10843347" target="_blank">https://vip.123pan.cn/1811746932/10843347</a>
+                </td>
+                <td>
+                  1.2.1.6
+                </td>
+                <td>
+                  arm64-v8a
+                </td>
+              </tr>
+  `;
+  const FCLcontent = document.getElementById('directLinkFCLcontent');
+  const MGhtml = `
+              <tr>
+                <td>
+                  <a href="https://vip.123pan.cn/1811746932/10962247" target="_blank">https://vip.123pan.cn/1811746932/10962247</a>
+                </td>
+                <td>
+                  MobileGlues
+                </td>
+                <td>
+                  1.2.3
+                </td>
+              </tr>
+  `;
+  const MGcontent = document.getElementById('directLinkMGcontent');
+  const verifyFrom = document.getElementById('verifyFrom');
+  const verifyFinish = document.getElementById('verifyFinish');
+  
+  console.log('人机验证：答案：' + answer);
+  if (input === answer) {
+    FCLcontent.innerHTML = FCLhtml;
+    MGcontent.innerHTML = MGhtml;
+    verifyFrom.remove();
+    verifyFinish.classList.remove('hide');
+    console.log('人机验证：通过');
+  } else {
+    btn.innerText = '回答错误！';
+    setTimeout(() => {
+      btn.innerText = '验证';
+    }, 1000);
+    console.log('人机验证：失败');
+  }
+}

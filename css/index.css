@@ -263,6 +263,10 @@ span {
   border: 1px solid #080;
 }
 
+.greenT {
+  background-color: #080;
+}
+
 .diagonal {
   /* 斜线 */
   background:
@@ -302,6 +306,17 @@ span {
       #004 0.5rem,
       #004 1rem);
   border: 1px solid #008;
+  font-family: monospace;
+}
+
+.diagonalGreen {
+  background:
+    repeating-linear-gradient(-45deg,
+      #020,
+      #020 0.5rem,
+      #040 0.5rem,
+      #040 1rem);
+  border: 1px solid #080;
   font-family: monospace;
 }
 
