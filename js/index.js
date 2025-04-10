@@ -19,10 +19,10 @@ document.addEventListener('DOMContentLoaded', function() {
   
   hideTip('dom');
   
-  if(verifyBtn){
+  if (verifyBtn) {
     verifyBtn.addEventListener('click', directLinkVerify);
   };
-
+  
   document.querySelectorAll('.code.window pre').forEach(pre => {
     console.log('代码复制：' + pre);
     pre.addEventListener('click', async () => {
@@ -93,7 +93,10 @@ window.onload = function() {
   
   hideTip('wo');
   
-  hljs.highlightAll();
+  if (typeof hljs !== 'undefined' && hljs.highlightAll) {
+    hljs.highlightAll();
+  }
+  
   console.log('时间：' + new Date());
   
   if (isTodayDate(4, 1)) {
