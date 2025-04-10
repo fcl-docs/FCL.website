@@ -272,50 +272,50 @@ span {
   /* 斜线 */
   background:
     repeating-linear-gradient(-45deg,
-      #222,
-      #222 0.5rem,
-      #444 0.5rem,
-      #444 1rem);
+      #333,
+      #333 0.5rem,
+      #555 0.5rem,
+      #555 1rem);
   border: 1px solid #888;
 }
 
 .diagonalYellow {
   background:
     repeating-linear-gradient(-45deg,
-      #220,
-      #220 0.5rem,
-      #440 0.5rem,
-      #440 1rem);
+      #330,
+      #330 0.5rem,
+      #550 0.5rem,
+      #550 1rem);
   border: 1px solid #880;
 }
 
 .diagonalRed {
   background:
     repeating-linear-gradient(-45deg,
-      #200,
-      #200 0.5rem,
-      #400 0.5rem,
-      #400 1rem);
+      #300,
+      #300 0.5rem,
+      #500 0.5rem,
+      #500 1rem);
   border: 1px solid #800;
 }
 
 .diagonalBlue {
   background:
     repeating-linear-gradient(-45deg,
-      #002,
-      #002 0.5rem,
-      #004 0.5rem,
-      #004 1rem);
+      #003,
+      #003 0.5rem,
+      #005 0.5rem,
+      #005 1rem);
   border: 1px solid #008;
 }
 
 .diagonalGreen {
   background:
     repeating-linear-gradient(-45deg,
-      #020,
-      #020 0.5rem,
-      #040 0.5rem,
-      #040 1rem);
+      #030,
+      #030 0.5rem,
+      #050 0.5rem,
+      #050 1rem);
   border: 1px solid #080;
 }
 
