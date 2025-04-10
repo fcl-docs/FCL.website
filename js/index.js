@@ -8,16 +8,27 @@
 //                                                                                           /\____/                    
 //                                                                                           \_/__/                     
 
+// ----------------------------------------------------------------------------------------------------
+
+const showRandomError = true;
+// 控制是否在控制台显示随机错误
+const enableFoolDay = true;
+// 控制是否启用愚人节内容
+
+// ----------------------------------------------------------------------------------------------------
+
 document.addEventListener('DOMContentLoaded', function() {
   const verifyBtn = document.getElementById('verifyBtn');
-  
-  console.error('送你一个错误');
   
   loadSidebar();
   
   checkVerticalView();
   
   hideTip('dom');
+  
+  if (showRandomError === true) {
+    generateRandomError();
+  }
   
   if (verifyBtn) {
     verifyBtn.addEventListener('click', directLinkVerify);
@@ -53,7 +64,7 @@ document.addEventListener('DOMContentLoaded', function() {
         console.log('代码复制：已选中代码');
         
         const originalText = title.textContent;
-        title.textContent = '✓ 复制成功';
+        title.textContent = '✓ 复制成功: ' + originalText;
         console.log(`代码复制：标题更新`);
         
         setTimeout(() => {
@@ -65,7 +76,7 @@ document.addEventListener('DOMContentLoaded', function() {
       } catch (err) {
         console.error('代码复制：', err);
         const originalText = title.textContent;
-        title.textContent = '✗ 复制失败';
+        title.textContent = '✗ 复制失败: ' + originalText;
         
         setTimeout(() => {
           title.textContent = originalText;
@@ -86,20 +97,34 @@ document.addEventListener('DOMContentLoaded', function() {
     });
   });
   
-  console.log('DOMContentLoaded：完成');
+  window.addEventListener('resize', function() {
+    console.log('window.resize：开始');
+    
+    checkVerticalView();
+  });
+  
+  console.log('document.DOMContentLoaded：完成');
 });
 
 window.onload = function() {
   
   hideTip('wo');
   
+  
   if (typeof hljs !== 'undefined' && hljs.highlightAll) {
     hljs.highlightAll();
+    console.log('hljs：' + typeof hljs);
+  } else {
+    console.warn('hljs：' + typeof hljs);
+  }
+  
+  if (showRandomError === true) {
+    generateRandomError();
   }
   
   console.log('时间：' + new Date());
   
-  if (isTodayDate(4, 1)) {
+  if (isTodayDate(4, 1) && enableFoolDay === true) {
     const HTML = `
       <div class="yellow window">
         <div class="yellowT windowTitle">
@@ -123,12 +148,7 @@ window.onload = function() {
   
   console.log('window.onload：完成');
   
-  console.error('再送你一个');
 };
-
-window.addEventListener('resize', function() {
-  // checkVerticalView();
-});
 
 function loadSidebar() {
   const sidebarContainer = document.getElementById('sidebar');
@@ -169,6 +189,11 @@ function hideTip(tip) {
     domt.style.display = 'none';
     jst.style.display = 'none';
   }
+  
+  if (showRandomError === true) {
+    generateRandomError();
+  }
+  
 }
 
 function expandSidebar(isExpand) {
@@ -181,6 +206,12 @@ function expandSidebar(isExpand) {
     sidebarElement.classList.add('sidebarExpand');
     mainElement.classList.add('mainExpand');
     expandButton.style.display = 'none';
+    
+    if (showRandomError === true) {
+      generateRandomError();
+    }
+    
+    
     hideButton.style.display = 'none';
     contractButton.style.display = 'block';
     console.log('展开侧边栏：是');
@@ -207,7 +238,9 @@ function hideSidebar(isHide) {
   } else {
     sidebarElement.classList.remove('sidebarHide');
     mainElement.classList.remove('mainFull');
-    tipElement.remove();
+    if (tipElement) {
+      tipElement.remove();
+    }
     console.log('隐藏侧边栏：否');
   }
 }
@@ -215,6 +248,11 @@ function hideSidebar(isHide) {
 function checkVerticalView() {
   const viewportHeight = window.innerHeight;
   const viewportWidth = window.innerWidth;
+  
+  if (showRandomError === true) {
+    generateRandomError();
+  }
+  
   const sidebarElement = document.querySelector('.sidebar');
   const mainElement = document.querySelector('.main');
   const sidebarContainer = document.getElementById('sidebar');
@@ -233,6 +271,7 @@ function checkVerticalView() {
     if (tipElement) {
       tipElement.style.display = 'none';
     }
+    hideSidebar('E');
     console.log('视口为竖屏：否')
     // sidebarElement.classList.remove('sidebarVertical');
     // mainElement.classList.remove('mainVertical');
@@ -318,6 +357,10 @@ function directLinkVerify() {
   const verifyFail = document.getElementById('verifyFail');
   const verifyFinish = document.getElementById('verifyFinish');
   
+  if (showRandomError === true) {
+    generateRandomError();
+  }
+  
   console.log('人机验证：答案：' + answer);
   if (input.value === answer) {
     FCLcontent.innerHTML = FCLhtml;
@@ -333,4 +376,23 @@ function directLinkVerify() {
     }, 3000);
     console.log('人机验证：失败');
   }
+}
+
+function generateRandomError() {
+  const errorMessages = [
+    "知道你小子打开了控制台。",
+    "送你一个错误。",
+    "随机送给有缘人一个错误。",
+    "这是一个错误，你别管是什么错误，是个错误就对了。",
+    "洛狐是傻逼。",
+    "求赞助awa，洛狐真的没钱了。",
+    "阿巴阿巴。",
+    "qwq",
+    "awa"
+  ];
+  
+  const randomIndex = Math.floor(Math.random() * errorMessages.length);
+  const errorMessage = errorMessages[randomIndex];
+  
+  console.error(errorMessage);
 }
