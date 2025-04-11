@@ -10,10 +10,22 @@
 
 // ----------------------------------------------------------------------------------------------------
 
-const showRandomError = true;
-// 控制是否在控制台显示随机错误
+const printRandomError = true;
+// 控制是否在控制台打印随机错误
 const enableFoolDay = true;
 // 控制是否启用愚人节内容
+  const errorMessages = [
+    "知道你小子打开了控制台。",
+    "送你一个错误。",
+    "随机送给有缘人一个错误。",
+    "这是一个错误，你别管是什么错误，是个错误就对了。",
+    "洛狐是傻逼。",
+    "求赞助awa，洛狐真的没钱了。",
+    "阿巴阿巴。",
+    "qwq",
+    "awa"
+  ];
+// 随机错误合集
 const verifyQuestions = [
   '在 <a href="./index.html" target="_blank">首页</a> → 为什么选择FCL？ → 开源 的板块中，<mark>第 5 个字</mark>是什么？',
   '在 <a href="./about.html" target="_blank">关于</a>页面 中，<mark>晚梦的头像图片大小</mark>是多少？（单位：MiB，不需要输入单位）',
@@ -47,7 +59,7 @@ document.addEventListener('DOMContentLoaded', function() {
   
   hideTip('dom');
   
-  if (showRandomError === true) {
+  if (printRandomError === true) {
     generateRandomError();
   }
   
@@ -143,7 +155,7 @@ window.onload = function() {
     console.warn('hljs：' + typeof hljs);
   }
   
-  if (showRandomError === true) {
+  if (printRandomError === true) {
     generateRandomError();
   }
   
@@ -215,7 +227,7 @@ function hideTip(tip) {
     jst.style.display = 'none';
   }
   
-  if (showRandomError === true) {
+  if (printRandomError === true) {
     generateRandomError();
   }
   
@@ -232,7 +244,7 @@ function expandSidebar(isExpand) {
     mainElement.classList.add('mainExpand');
     expandButton.style.display = 'none';
     
-    if (showRandomError === true) {
+    if (printRandomError === true) {
       generateRandomError();
     }
     
@@ -274,7 +286,7 @@ function checkVerticalView() {
   const viewportHeight = window.innerHeight;
   const viewportWidth = window.innerWidth;
   
-  if (showRandomError === true) {
+  if (printRandomError === true) {
     generateRandomError();
   }
   
@@ -326,7 +338,7 @@ function directLinkVerify(thenDo) {
   const verifyFail = document.getElementById('verifyFail');
   const verifyFinish = document.getElementById('verifyFinish');
   
-  if (showRandomError === true) {
+  if (printRandomError === true) {
     generateRandomError();
   }
   
@@ -421,18 +433,6 @@ function showDirectLink() {
 }
 
 function generateRandomError() {
-  const errorMessages = [
-    "知道你小子打开了控制台。",
-    "送你一个错误。",
-    "随机送给有缘人一个错误。",
-    "这是一个错误，你别管是什么错误，是个错误就对了。",
-    "洛狐是傻逼。",
-    "求赞助awa，洛狐真的没钱了。",
-    "阿巴阿巴。",
-    "qwq",
-    "awa"
-  ];
-  
   const randomIndex = Math.floor(Math.random() * errorMessages.length);
   const errorMessage = errorMessages[randomIndex];
   
