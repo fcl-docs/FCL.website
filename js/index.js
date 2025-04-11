@@ -286,7 +286,7 @@ function isTodayDate(month, day) {
 
 function directLinkVerify() {
   const input = document.getElementById('verifyInput');
-  const answer = '2.3';
+  const answer = '在';
   const FCLhtml = `
               <tr>
                 <td>
