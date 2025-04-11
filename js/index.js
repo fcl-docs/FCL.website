@@ -16,13 +16,17 @@ const enableFoolDay = true;
 // 控制是否启用愚人节内容
 const verifyQuestions = [
   '在 <a href="./index.html" target="_blank">首页</a> → 为什么选择FCL？ → 开源 的板块中，<mark>第 5 个字</mark>是什么？',
-  '在 <a hred="./about.html" target="_blank">关于</a>页面 中，<mark>洛狐的头像图片大小</mark>是多少？（单位：MiB，不需要输入单位）',
+  '在 <a href="./about.html" target="_blank">关于</a>页面 中，<mark>晚梦的头像图片大小</mark>是多少？（单位：MiB，不需要输入单位）',
+  '在 <a href="./about.html" target="_blank">关于</a>页面 中，<mark>洛狐的头像图片大小</mark>是多少？（单位：MiB，不需要输入单位）',
+  '在 <a href="./index.html" target="_blank">首页</a> → 展示的启动器截图中，<mark>玩家名称</mark>是什么？',
   '在 <a href="./index.html" target="_blank">首页</a> → 侧边栏 → 创建时间 → 2025年3月?日2时38分 中，<mark>问号</mark>是多少？'
 ];
 // 人机验证的问题合集
 const verifyAnswers = [
   '在',
   '2.3',
+  '1.4',
+  'XLuoFox_DSY',
   '19'
 ];
 // 人机验证的答案合集
