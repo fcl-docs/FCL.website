@@ -14,11 +14,28 @@ const showRandomError = true;
 // 控制是否在控制台显示随机错误
 const enableFoolDay = true;
 // 控制是否启用愚人节内容
+const verifyQuestions = [
+  '在 <a href="./index.html" target="_blank">首页</a> → 为什么选择FCL？ → 开源 的板块中，<mark>第 5 个字</mark>是什么？',
+  '在 <a hred="./about.html" target="_blank">关于</a>页面 中，<mark>洛狐的头像图片大小</mark>是多少？（单位：MiB，不需要输入单位）',
+  '在 <a href="./index.html" target="_blank">首页</a> → 侧边栏 → 创建时间 → 2025年3月?日2时38分 中，<mark>问号</mark>是多少？'
+];
+// 人机验证的问题合集
+const verifyAnswers = [
+  '在',
+  '2.3',
+  '19'
+];
+// 人机验证的答案合集
+
+// ----------------------------------------------------------------------------------------------------
+
+let verifyAnswer = '';
+// 人机验证的答案
 
 // ----------------------------------------------------------------------------------------------------
 
 document.addEventListener('DOMContentLoaded', function() {
-  const verifyBtn = document.getElementById('verifyBtn');
+  const downVerifyBtn = document.getElementById('downVerifyBtn');
   
   loadSidebar();
   
@@ -30,8 +47,12 @@ document.addEventListener('DOMContentLoaded', function() {
     generateRandomError();
   }
   
-  if (verifyBtn) {
-    verifyBtn.addEventListener('click', directLinkVerify);
+  loadDirectLinkVerify();
+  
+  if (downVerifyBtn) {
+    downVerifyBtn.addEventListener('click', function() {
+      directLinkVerify(showDirectLink);
+    });
   };
   
   document.querySelectorAll('.code.window pre').forEach(pre => {
@@ -284,9 +305,44 @@ function isTodayDate(month, day) {
   return today.getMonth() === month - 1 && today.getDate() === day;
 }
 
-function directLinkVerify() {
+function loadDirectLinkVerify() {
+  const questionContent = document.getElementById('verifyQuestion');
+  const index = getRandomInt(0, verifyQuestions.length - 1);
+  
+  if (questionContent) {
+    questionContent.innerHTML = verifyQuestions[index];
+    verifyAnswer = verifyAnswers[index];
+  }
+}
+
+function directLinkVerify(thenDo) {
   const input = document.getElementById('verifyInput');
-  const answer = '在';
+  const answer = verifyAnswer;
+  const verifyFrom = document.getElementById('verifyFrom');
+  const verifyFail = document.getElementById('verifyFail');
+  const verifyFinish = document.getElementById('verifyFinish');
+  
+  if (showRandomError === true) {
+    generateRandomError();
+  }
+  
+  console.log('人机验证：答案：' + answer);
+  if (input.value === answer) {
+    thenDo();
+    verifyFrom.remove();
+    verifyFinish.classList.remove('hide');
+    console.log('人机验证：通过');
+  } else {
+    input.value = '';
+    verifyFail.classList.remove('hide');
+    setTimeout(() => {
+      verifyFail.classList.add('hide');
+    }, 3000);
+    console.log('人机验证：失败');
+  }
+}
+
+function showDirectLink() {
   const FCLhtml = `
               <tr>
                 <td>
@@ -338,7 +394,6 @@ function directLinkVerify() {
                 </td>
               </tr>
   `;
-  const FCLcontent = document.getElementById('directLinkFCLcontent');
   const MGhtml = `
               <tr>
                 <td>
@@ -352,30 +407,13 @@ function directLinkVerify() {
                 </td>
               </tr>
   `;
+  const FCLcontent = document.getElementById('directLinkFCLcontent');
   const MGcontent = document.getElementById('directLinkMGcontent');
-  const verifyFrom = document.getElementById('verifyFrom');
-  const verifyFail = document.getElementById('verifyFail');
-  const verifyFinish = document.getElementById('verifyFinish');
   
-  if (showRandomError === true) {
-    generateRandomError();
-  }
+  FCLcontent.innerHTML = FCLhtml;
+  MGcontent.innerHTML = MGhtml;
   
-  console.log('人机验证：答案：' + answer);
-  if (input.value === answer) {
-    FCLcontent.innerHTML = FCLhtml;
-    MGcontent.innerHTML = MGhtml;
-    verifyFrom.remove();
-    verifyFinish.classList.remove('hide');
-    console.log('人机验证：通过');
-  } else {
-    input.value = '';
-    verifyFail.classList.remove('hide');
-    setTimeout(() => {
-      verifyFail.classList.add('hide');
-    }, 3000);
-    console.log('人机验证：失败');
-  }
+  console.log('下载直链：显示');
 }
 
 function generateRandomError() {
@@ -395,4 +433,10 @@ function generateRandomError() {
   const errorMessage = errorMessages[randomIndex];
   
   console.error(errorMessage);
+}
+
+function getRandomInt(min, max) {
+  min = Math.ceil(min);
+  max = Math.floor(max);
+  return Math.floor(Math.random() * (max - min + 1)) + min;
 }
