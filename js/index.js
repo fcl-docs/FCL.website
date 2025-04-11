@@ -100,7 +100,7 @@ document.addEventListener('DOMContentLoaded', function() {
   window.addEventListener('resize', function() {
     console.log('window.resize：开始');
     
-    checkVerticalView();
+    // checkVerticalView();
   });
   
   console.log('document.DOMContentLoaded：完成');
