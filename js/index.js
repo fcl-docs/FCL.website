@@ -59,10 +59,6 @@ document.addEventListener('DOMContentLoaded', function() {
     eruda.init();
   }
   
-  for (const [key, value] of urlParams.entries()) {
-    console.log(`URL参数${key}: ${value}`);
-  }
-  
   const downVerifyBtn = document.getElementById('downVerifyBtn');
   
   loadSidebar();
