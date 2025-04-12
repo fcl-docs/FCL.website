@@ -38,8 +38,8 @@ const verifyQuestions = [
 // 人机验证的问题合集
 const verifyAnswers = [
   '在',
-  '2.3',
   '1.4',
+  '2.3',
   'XLuoFox_DSY',
   '19',
   '8',
@@ -406,7 +406,7 @@ function robotVerify(thenDo) {
  */
 function showDirectLink() {
   const FCLhtml = `
-              <tr>
+              <tr class="all">
                 <td>
                   <a href="https://vip.123pan.cn/1811746932/11073320" target="_blank">https://vip.123pan.cn/1811746932/11073320</a>
                 </td>
@@ -422,7 +422,7 @@ function showDirectLink() {
                   <span class="toggleText">展开历史版本</span>
                 </td>
               </tr>
-              <tr class="historyRow">
+              <tr class="historyRow all">
                 <td>
                   <a href="https://vip.123pan.cn/1811746932/11013197" target="_blank">https://vip.123pan.cn/1811746932/11013197</a>
                 </td>
@@ -433,7 +433,7 @@ function showDirectLink() {
                   all
                 </td>
               </tr>
-              <tr class="historyRow">
+              <tr class="historyRow arm64-v8a">
                 <td>
                   <a href="https://vip.123pan.cn/1811746932/10927783" target="_blank">https://vip.123pan.cn/1811746932/10927783</a>
                 </td>
@@ -444,7 +444,7 @@ function showDirectLink() {
                   arm64-v8a
                 </td>
               </tr>
-              <tr class="historyRow">
+              <tr class="historyRow arm64-v8a">
                 <td>
                   <a href="https://vip.123pan.cn/1811746932/10843347" target="_blank">https://vip.123pan.cn/1811746932/10843347</a>
                 </td>
@@ -530,4 +530,22 @@ function getNthCharacter(element, n) {
   }
   
   return characters[n - 1];
+}
+
+/**
+ * 将第二个类添加至所有包含第一个类的DOM元素
+ * @param {string} firstClass 需要查找的目标类名
+ * @param {string} secondClass 需要添加的新类名
+ * @example
+ * // 给所有包含'old-class'的元素添加'new-class'
+ * addClassToElements('old-class', 'new-class');
+ */
+function addClassToElements(firstClass, secondClass) {
+  const elements = document.querySelectorAll(
+    `.${CSS.escape(firstClass)}`
+  );
+  
+  elements.forEach(element => {
+    element.classList.add(secondClass);
+  });
 }

@@ -351,6 +351,20 @@ span {
   left: 1rem;
 }
 
+.all {
+  background-color: #0f02;
+}
+
+.arm64-v8a,
+.armeabi-v7a,
+.x86,
+.x86_64 {
+}
+
+.highlightArch {
+  background-color: #0f02;
+}
+
 @media screen and (max-width: 539px) {
   /* page zoom for mobile devices */
   @supports (zoom: 1) {
