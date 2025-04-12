@@ -381,7 +381,7 @@ function robotVerify(thenDo) {
     generateRandomError();
   }
   
-  console.log('人机验证：答案：' + answer);
+  console.log('人机验证：答案：114514');
   if (input.value === answer) {
     thenDo();
     verifyFrom.remove();
