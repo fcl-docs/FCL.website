@@ -5,13 +5,17 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="keywords" content="FCL, FoldCraftLauncher, FCL启动器, FCL官网, 下载, FCL渲染器, FCL插件">
+  <meta name="description" content="在此页面下载《Fold Craft Launcher》（简称FCL），提供了直链、官方HG、网盘等多个可靠下载源。">
+  
   <link rel="stylesheet" href="/css/index.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.1/styles/github-dark.min.css" integrity="sha512-rO+olRTkcf304DQBxSWxln8JXCzTHlKnIdnMUwYvQa9/Jd4cQaNkItIUj6Z4nvW1dqK0SKXLbn9h4KwZTNtAyw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+  
   <script src="/js/index.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.1/highlight.min.js" integrity="sha512-EBLzUL8XLl+va/zAsmXwS7Z2B1F9HUHkZwyS/VKwh3S7T/U0nF4BaU29EP/ZSf6zgiIxYAnKLu6bJ8dqpmX5uw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/eruda/3.4.1/eruda.js" integrity="sha512-3h7ROKDcr6JDuNeJM83xKEnx4cqMvii81NQ+9bSOwOTQL6AKhSmp5oVRL1R4rrM6H23CarCgDK3FIFl3ZnZEZA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+  
   <title>下载FCL：强大开源的MC Java版安卓启动器 < down.html</title>
-      <meta name="keywords" content="FCL, FoldCraftLauncher, FCL启动器, FCL官网, 下载, FCL渲染器, FCL插件">
-      <meta name="description" content="在此页面下载《Fold Craft Launcher》（简称FCL），提供了直链、官方HG、网盘等多个可靠下载源。">
-      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github-dark.min.css">
-      <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
 </head>
 
 <body>
@@ -850,10 +854,10 @@ SHA256: be:06:41:3f:94:ba:2b:e4:98:ba:36:45:d3:89:c6:59:1f:8c:62:0f:e2:1b:52:ed:
           const now = new Date();
           const diff = ((now - date) / 1000); // 秒
           // return diff < 60 ? `${Math.floor(diff)} 秒前` :
-            // diff < 3600 ? `${Math.floor(diff / 60)} 分钟前` :
-            // diff < 86400 ? `${Math.floor(diff / 3600)} 小时前` :
+          // diff < 3600 ? `${Math.floor(diff / 60)} 分钟前` :
+          // diff < 86400 ? `${Math.floor(diff / 3600)} 小时前` :
           // 为什么把上面那部分合并为'今天' 因为传递进来的时间(日期)只精确到天
-          return diff < 86400 ? '今天':
+          return diff < 86400 ? '今天' :
             diff < 604800 ? `${Math.floor(diff / 86400)} 天前` :
             diff < 2419200 ? `${Math.floor(diff / 604800)} 周前` :
             diff < 29030400 ? `${Math.floor(diff / 2419200)} 个月前` :

@@ -55,6 +55,14 @@ let verifyAnswer = '';
 // ----------------------------------------------------------------------------------------------------
 
 document.addEventListener('DOMContentLoaded', function() {
+  if (typeof eruda !== 'undefined' && (location.hostname === 'localhost' || location.hostname === '127.0.0.1' || location.search.includes('debug'))) {
+    eruda.init();
+  }
+  
+  for (const [key, value] of urlParams.entries()) {
+    console.log(`URL参数${key}: ${value}`);
+  }
+  
   const downVerifyBtn = document.getElementById('downVerifyBtn');
   
   loadSidebar();
