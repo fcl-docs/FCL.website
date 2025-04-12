@@ -14,7 +14,7 @@ const printRandomError = true;
 // 控制是否在控制台打印随机错误
 const enableFoolDay = true;
 // 控制是否启用愚人节内容
-  const errorMessages = [
+const errorMessages = [
     "知道你小子打开了控制台。",
     "送你一个错误。",
     "随机送给有缘人一个错误。",
@@ -59,15 +59,14 @@ document.addEventListener('DOMContentLoaded', function() {
   
   hideTip('dom');
   
-  if (printRandomError === true) {
+  if (printRandomError) {
     generateRandomError();
   }
   
-  loadDirectLinkVerify();
   
   if (downVerifyBtn) {
     downVerifyBtn.addEventListener('click', function() {
-      directLinkVerify(showDirectLink);
+      robotVerify(showDirectLink);
     });
   };
   
@@ -155,13 +154,13 @@ window.onload = function() {
     console.warn('hljs：' + typeof hljs);
   }
   
-  if (printRandomError === true) {
+  if (printRandomError) {
     generateRandomError();
   }
   
   console.log('时间：' + new Date());
   
-  if (isTodayDate(4, 1) && enableFoolDay === true) {
+  if (isTodayDate(4, 1) && enableFoolDay) {
     const HTML = `
       <div class="yellow window">
         <div class="yellowT windowTitle">
@@ -227,7 +226,7 @@ function hideTip(tip) {
     jst.style.display = 'none';
   }
   
-  if (printRandomError === true) {
+  if (printRandomError) {
     generateRandomError();
   }
   
@@ -244,7 +243,7 @@ function expandSidebar(isExpand) {
     mainElement.classList.add('mainExpand');
     expandButton.style.display = 'none';
     
-    if (printRandomError === true) {
+    if (printRandomError) {
       generateRandomError();
     }
     
@@ -286,7 +285,7 @@ function checkVerticalView() {
   const viewportHeight = window.innerHeight;
   const viewportWidth = window.innerWidth;
   
-  if (printRandomError === true) {
+  if (printRandomError) {
     generateRandomError();
   }
   
@@ -331,14 +330,14 @@ function loadDirectLinkVerify() {
   }
 }
 
-function directLinkVerify(thenDo) {
+function robotVerify(thenDo) {
   const input = document.getElementById('verifyInput');
   const answer = verifyAnswer;
   const verifyFrom = document.getElementById('verifyFrom');
   const verifyFail = document.getElementById('verifyFail');
   const verifyFinish = document.getElementById('verifyFinish');
   
-  if (printRandomError === true) {
+  if (printRandomError) {
     generateRandomError();
   }
   
