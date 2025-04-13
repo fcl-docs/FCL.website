@@ -49,8 +49,10 @@ const verifyAnswers = [
 
 // ----------------------------------------------------------------------------------------------------
 
-let verifyAnswer = '';
+let verifyAnswer = undefined;
 // 人机验证的答案
+let deviceArch = 'all';
+// 设备架构
 
 // ----------------------------------------------------------------------------------------------------
 
@@ -139,7 +141,57 @@ document.addEventListener('DOMContentLoaded', function() {
         }
       }
     });
+    
   });
+  
+  (async () => {
+    const dataOsVer = document.querySelector('[data-os-ver]');
+    const dataDeviceArch = document.querySelector('[data-device-arch]');
+    
+    if (!dataOsVer || !dataDeviceArch) {
+      console.warn('获取设备信息：找不到展示元素');
+      return;
+    }
+    
+    try {
+      const deviceChecker = await import('/js/device-checker.js');
+      
+      try {
+        const deviceInfo = await deviceChecker.check();
+        
+        dataOsVer.textContent = deviceInfo.osVer ?? '未知';
+        dataDeviceArch.textContent = deviceInfo.arch ?? '未知';
+        
+        deviceArch = deviceInfo.arch;
+        archHighlight(deviceArch);
+        
+        console.log('获取设备信息：', deviceInfo);
+        
+      } catch (checkError) {
+        console.error('获取设备信息：', checkError);
+        
+        switch (checkError.message) {
+          case 'cannot-get-ua':
+            dataOsVer.textContent = '获取失败：';
+            dataDeviceArch.textContent = '无法读取User-Agent';
+            break;
+            
+          default:
+            dataOsVer.textContent = '获取失败：';
+            dataDeviceArch.textContent = '未知错误';
+            break;
+        }
+      }
+      
+    } catch (importError) {
+      console.error('设备信息模块加载：', importError);
+      
+      dataOsVer.textContent = '模块异常：';
+      dataDeviceArch.textContent = importError.message.includes('Failed to fetch') ?
+        '设备检测模块缺失' :
+        '模块加载错误';
+    }
+  })();
   
   window.addEventListener('resize', function() {
     console.log('window.resize：开始');
@@ -477,6 +529,8 @@ function showDirectLink() {
     MGcontent.innerHTML = MGhtml;
   }
   
+  archHighlight(deviceArch);
+  
   console.log('下载直链：显示');
 }
 
@@ -530,6 +584,15 @@ function getNthCharacter(element, n) {
   }
   
   return characters[n - 1];
+}
+
+/**
+ * 架构高亮
+ */
+function archHighlight(archInfo) {
+  const arch = archInfo.replace(/\s*\([^)]*\)/g, '');
+  console.log('架构高亮：' + arch);
+  addClassToElements(arch, 'highlightArch');
 }
 
 /**
