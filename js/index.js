@@ -524,6 +524,22 @@ function showDirectLink() {
   const MGhtml = `
               <tr>
                 <td>
+                  <a href="https://vip.123pan.cn/1811746932/11150892" target="_blank">https://vip.123pan.cn/1811746932/11150892</a>
+                </td>
+                <td>
+                  MobileGlues
+                </td>
+                <td>
+                  1.2.4
+                </td>
+              </tr>
+              <tr class="toggleRow" onclick="toggleHistory(this)">
+                <td colspan="3">
+                  <span class="toggleText">展开历史版本</span>
+                </td>
+              </tr>
+              <tr class="historyRow">
+                <td>
                   <a href="https://vip.123pan.cn/1811746932/10962247" target="_blank">https://vip.123pan.cn/1811746932/10962247</a>
                 </td>
                 <td>
