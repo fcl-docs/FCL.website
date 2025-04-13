@@ -13,11 +13,6 @@ iframe {
   width: 100%;
 }
 
-li {
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-
 a {
   color: #fff;
 }
