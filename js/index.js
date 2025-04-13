@@ -15,38 +15,44 @@ const printRandomError = true;
 const enableFoolDay = true;
 // 控制是否启用愚人节内容
 const errorMessages = [
-  "知道你小子打开了控制台。",
-  "送你一个错误。",
-  "随机送给有缘人一个错误。",
-  "这是一个错误，你别管是什么错误，是个错误就对了。",
-  "洛狐是傻逼。",
-  "求赞助awa，洛狐真的没钱了。",
-  "阿巴阿巴。",
-  "qwq",
-  "awa"
+  "知道你小子打开了控制台。", // 最直接的检测提示作为首项
+  "送你一个错误。", // 通用错误类型
+  "随机送给有缘人一个错误。", // 延续错误主题
+  "这是一个错误，你别管是什么错误，是个错误就对了。", // 解释性错误
+  "洛狐是傻逼。", // 自嘲语句
+  "求赞助awa，洛狐真的没钱了。", // 赞助请求
+  "阿巴阿巴。", // 无意义内容
+  "qwq", // 颜文字递进
+  "awa" // 最短的放最后
 ];
-// 随机错误合集
+
 const verifyQuestions = [
-  '在 <a href="./index.html" target="_blank">首页</a> → 为什么选择FCL？ → 开源 的板块中，<mark>第 5 个字</mark>是什么？',
+  // 首页相关（3个）
+  '在 <a href="./index.html" target="_blank">首页</a> → 为什么选择FCL？ → 开源 的板块中，<mark>第 5 个字符</mark>是什么？',
+  '在 <a href="./index.html" target="_blank">首页</a> → 展示的启动器截图 → 玩家名称 中，<mark>第 2 个字符</mark>是什么？',
+  '在 <a href="./index.html" target="_blank">首页</a> → 侧边栏 → 页面信息 → 创建时间 → 2025年3月?日2时38分 中，<mark>问号</mark>是多少？',
+  
+  // 关于页面（2个）
   '在 <a href="./about.html" target="_blank">关于</a>页面 中，<mark>晚梦的头像图片大小</mark>是多少？（单位：MiB，不需要输入单位）',
   '在 <a href="./about.html" target="_blank">关于</a>页面 中，<mark>洛狐的头像图片大小</mark>是多少？（单位：MiB，不需要输入单位）',
-  '在 <a href="./index.html" target="_blank">首页</a> → 展示的启动器截图中，<mark>玩家名称</mark>是什么？',
-  '在 <a href="./index.html" target="_blank">首页</a> → 侧边栏 → 创建时间 → 2025年3月?日2时38分 中，<mark>问号</mark>是多少？',
+  
+  // 所有元素页面（3个）
   '在 <a href="./page/debug/elements.html" target="_blank">所有元素</a>页面 → 行级类 的板块中，有几个<mark>无序列表项</mark>？（包括嵌套）',
-  '在 <a href="./page/debug/elements.html" target="_blank">所有元素</a>页面 → 函数类 的板块中，有几个<mark>函数按钮</mark>？'
+  '在 <a href="./page/debug/elements.html" target="_blank">所有元素</a>页面 → 函数类 的板块中，有几个<mark>函数按钮</mark>？',
+  '在 <a href="./page/debug/elements.html" target="_blank">所有元素</a>页面 → 侧边栏 → 页面信息 → 你发现了一串神秘的字符 中，<mark>第 3 个到 第 4 个字符</mark>是什么？'
 ];
-// 人机验证的问题合集
-const verifyAnswers = [
-  '在',
-  '1.4',
-  '2.3',
-  'XLuoFox_DSY',
-  '19',
-  '8',
-  '5'
-];
-// 人机验证的答案合集
 
+const verifyAnswers = [
+  // 对应调整后的验证问题顺序
+  '在', // 开源板块字符
+  'L', // 玩家名第二字符
+  '19', // 创建时间
+  '1.4', // 晚梦头像
+  '2.3', // 洛狐头像
+  '8', // 无序列表项
+  '5', // 函数按钮
+  'D6' // 神秘字符
+];
 // ----------------------------------------------------------------------------------------------------
 
 let verifyAnswer = undefined;
@@ -440,6 +446,7 @@ function robotVerify(thenDo) {
   console.log('人机验证：答案：114514');
   if (input.value === answer) {
     thenDo();
+    input.value = '';
     verifyFrom.remove();
     verifyFinish.classList.remove('hide');
     console.log('人机验证：通过');
