@@ -27,10 +27,15 @@ const errorMessages = [
 ];
 
 const verifyQuestions = [
-  // 首页相关（3个）
+  // 首页（4个）
   '在 <a href="./index.html" target="_blank">首页</a> → 为什么选择FCL？ → 开源 的板块中，<mark>第 5 个字符</mark>是什么？',
+  '在 <a href="./index.html" target="_blank">首页</a> → 为什么选择FCL？ → 可在启动器内下载游戏资源 的板块中，<mark>第 2 个字符</mark>是什么？',
   '在 <a href="./index.html" target="_blank">首页</a> → 展示的启动器截图 → 玩家名称 中，<mark>第 2 个字符</mark>是什么？',
   '在 <a href="./index.html" target="_blank">首页</a> → 侧边栏 → 页面信息 → 创建时间 → 2025年3月?日2时38分 中，<mark>问号</mark>是多少？',
+  
+  // 下载页面（1个）
+  '在 <a href="./down.html" target="_blank">下载</a>页面 → 侧边栏 → 页面信息 → 创建时间 → 2025年3月20日2时?分 中，<mark>问号</mark>是多少？',
+
   
   // 关于页面（2个）
   '在 <a href="./about.html" target="_blank">关于</a>页面 中，<mark>晚梦的头像图片大小</mark>是多少？（单位：MiB，不需要输入单位）',
@@ -43,10 +48,11 @@ const verifyQuestions = [
 ];
 
 const verifyAnswers = [
-  // 对应调整后的验证问题顺序
   '在', // 开源板块字符
+  '了', // 可在启动器内下载游戏资源板块字符
   'L', // 玩家名第二字符
-  '19', // 创建时间
+  '19', // 首页创建时间
+  '42', // 下载页面创建时间
   '1.4', // 晚梦头像
   '2.3', // 洛狐头像
   '8', // 无序列表项
