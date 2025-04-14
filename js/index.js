@@ -15,27 +15,30 @@ const printRandomError = true;
 const enableFoolDay = true;
 // 控制是否启用愚人节内容
 const errorMessages = [
-  "知道你小子打开了控制台。", // 最直接的检测提示作为首项
-  "送你一个错误。", // 通用错误类型
-  "随机送给有缘人一个错误。", // 延续错误主题
-  "这是一个错误，你别管是什么错误，是个错误就对了。", // 解释性错误
-  "洛狐是傻逼。", // 自嘲语句
-  "求赞助awa，洛狐真的没钱了。", // 赞助请求
-  "阿巴阿巴。", // 无意义内容
-  "qwq", // 颜文字递进
-  "awa" // 最短的放最后
+  "知道你小子打开了控制台。",
+  "送你一个错误。",
+  "随机送给有缘人一个错误。",
+  "这是一个错误，你别管是什么错误，是个错误就对了。",
+  "洛狐是傻逼。",
+  "求赞助awa，洛狐真的没钱了。",
+  "阿巴阿巴。",
+  "qwq",
+  "awa"
 ];
 
 const verifyQuestions = [
-  // 首页（4个）
+  // 首页（5个）
   '在 <a href="./index.html" target="_blank">首页</a> → 为什么选择FCL？ → 开源 的板块中，<mark>第 5 个字符</mark>是什么？',
   '在 <a href="./index.html" target="_blank">首页</a> → 为什么选择FCL？ → 可在启动器内下载游戏资源 的板块中，<mark>第 2 个字符</mark>是什么？',
-  '在 <a href="./index.html" target="_blank">首页</a> → 展示的启动器截图 → 玩家名称 中，<mark>第 2 个字符</mark>是什么？',
+  '在 <a href="./index.html" target="_blank">首页</a> → 为什么选择FCL？ → 强大的控制布局系统 的板块中，<mark>第 4 个字符</mark>是什么？',
   '在 <a href="./index.html" target="_blank">首页</a> → 侧边栏 → 页面信息 → 创建时间 → 2025年3月?日2时38分 中，<mark>问号</mark>是多少？',
+  '在 <a href="./index.html" target="_blank">首页</a> → 展示的启动器截图 → 玩家名称 中，<mark>第 2 个字符</mark>是什么？',
   
   // 下载页面（1个）
   '在 <a href="./down.html" target="_blank">下载</a>页面 → 侧边栏 → 页面信息 → 创建时间 → 2025年3月20日2时?分 中，<mark>问号</mark>是多少？',
-
+  
+  // 文档页面（1个）
+  '在 <a href="./docs.html" target="_blank">文档</a>页面 → 侧边栏 → 页面信息 → 创建时间 → 2025年3月24日?时06分 中，<mark>问号</mark>是多少？',
   
   // 关于页面（2个）
   '在 <a href="./about.html" target="_blank">关于</a>页面 中，<mark>晚梦的头像图片大小</mark>是多少？（单位：MiB，不需要输入单位）',
@@ -50,15 +53,22 @@ const verifyQuestions = [
 const verifyAnswers = [
   '在', // 开源板块字符
   '了', // 可在启动器内下载游戏资源板块字符
+  '者', // 强大的控制布局系统板块字符
+  '19', // 首页创建日
   'L', // 玩家名第二字符
-  '19', // 首页创建时间
-  '42', // 下载页面创建时间
+  
+  '42', // 下载页面创建分
+  
+  '20', // 文档页面创建时
+  
   '1.4', // 晚梦头像
   '2.3', // 洛狐头像
+  
   '8', // 无序列表项
   '5', // 函数按钮
   'D6' // 神秘字符
 ];
+
 // ----------------------------------------------------------------------------------------------------
 
 let verifyAnswer = undefined;
@@ -71,6 +81,7 @@ let deviceArch = 'all';
 document.addEventListener('DOMContentLoaded', function() {
   if (typeof eruda !== 'undefined' && (location.hostname === 'localhost' || location.hostname === '127.0.0.1' || location.search.includes('debug'))) {
     eruda.init();
+    console.warn('Eruda：启用');
   }
   
   const downVerifyBtn = document.getElementById('downVerifyBtn');
