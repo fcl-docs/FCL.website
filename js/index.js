@@ -473,10 +473,10 @@ function showDirectLink() {
   const FCLhtml = `
               <tr class="all">
                 <td>
-                  <a href="https://vip.123pan.cn/1811746932/11073320" target="_blank">https://vip.123pan.cn/1811746932/11073320</a>
+                  <a href="https://vip.123pan.cn/1811746932/11158575" target="_blank">https://vip.123pan.cn/1811746932/11158575</a>
                 </td>
                 <td>
-                  1.2.1.9
+                  1.2.2.0
                 </td>
                 <td>
                   all
@@ -485,6 +485,17 @@ function showDirectLink() {
               <tr class="toggleRow" onclick="toggleHistory(this)">
                 <td colspan="3">
                   <span class="toggleText">展开历史版本</span>
+                </td>
+              </tr>
+              <tr class="all historyRow">
+                <td>
+                  <a href="https://vip.123pan.cn/1811746932/11073320" target="_blank">https://vip.123pan.cn/1811746932/11073320</a>
+                </td>
+                <td>
+                  1.2.1.9
+                </td>
+                <td>
+                  all
                 </td>
               </tr>
               <tr class="historyRow all">
