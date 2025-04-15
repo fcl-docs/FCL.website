@@ -493,6 +493,28 @@ function showDirectLink() {
                   all
                 </td>
               </tr>
+              <tr class="arm64-v8a">
+                <td>
+                  <a href="https://vip.123pan.cn/1811746932/11165175" target="_blank">https://vip.123pan.cn/1811746932/11165175</a>
+                </td>
+                <td>
+                  1.2.2.0
+                </td>
+                <td>
+                  arm64-v8a
+                </td>
+              </tr>
+              <tr class="armeabi-v7a">
+                <td>
+                  <a href="https://vip.123pan.cn/1811746932/11165178" target="_blank">https://vip.123pan.cn/1811746932/11165175</a>
+                </td>
+                <td>
+                  1.2.2.0
+                </td>
+                <td>
+                  armeabi-v7a
+                </td>
+              </tr>
               <tr class="toggleRow" onclick="toggleHistory(this)">
                 <td colspan="3">
                   <span class="toggleText">展开历史版本</span>

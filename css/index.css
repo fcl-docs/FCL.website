@@ -35,9 +35,7 @@ img {
 }
 
 code {
-  background-color: #00f4;
-  border: 1px solid #00f8;
-  margin: 0 0.5ch 0 0.5ch;
+  font-family: monospace;
 }
 
 pre {
@@ -53,9 +51,8 @@ pre code {
 }
 
 mark {
-  color: #ff0;
-  background-color: #ff08;
-  border: 1px solid #ff0;
+  color: #000;
+  background-color: #fff;
 }
 
 input {
@@ -347,7 +344,7 @@ span {
 }
 
 .all {
-  background-color: #0f02;
+  background-color: #ff02;
 }
 
 .arm64-v8a,
