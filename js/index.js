@@ -506,7 +506,7 @@ function showDirectLink() {
               </tr>
               <tr class="armeabi-v7a">
                 <td>
-                  <a href="https://vip.123pan.cn/1811746932/11165178" target="_blank">https://vip.123pan.cn/1811746932/11165175</a>
+                  <a href="https://vip.123pan.cn/1811746932/11165178" target="_blank">https://vip.123pan.cn/1811746932/11165178</a>
                 </td>
                 <td>
                   1.2.2.0
