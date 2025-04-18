@@ -482,6 +482,11 @@ function robotVerify(thenDo) {
  */
 function showDirectLink() {
   const FCLhtml = `
+              <tr>
+                <td colepan="3">
+                  如果您有条件，可以考虑<a href="/support.html target="_blank">赞助一下站长</a>
+                </td>
+              </tr>
               <tr class="all">
                 <td>
                   <a href="https://vip.123pan.cn/1811746932/11158575" target="_blank">https://vip.123pan.cn/1811746932/11158575</a>
@@ -566,6 +571,11 @@ function showDirectLink() {
               </tr>
   `;
   const MGhtml = `
+              <tr>
+                <td colepan="3">
+                  如果您有条件，可以考虑<a href="/support.html target="_blank">赞助一下站长</a>
+                </td>
+              </tr>
               <tr>
                 <td>
                   <a href="https://vip.123pan.cn/1811746932/11150892" target="_blank">https://vip.123pan.cn/1811746932/11150892</a>
