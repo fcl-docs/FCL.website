@@ -111,6 +111,10 @@ span {
   vertical-align: middle;
 }
 
+h1 {
+  all: unset;
+}
+
 .tag {
   background-color: #444;
   border: 1px solid #888;
