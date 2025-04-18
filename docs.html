@@ -5,16 +5,6 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  
-  <link rel="stylesheet" href="/css/index.css">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.1/styles/github-dark.min.css" integrity="sha512-rO+olRTkcf304DQBxSWxln8JXCzTHlKnIdnMUwYvQa9/Jd4cQaNkItIUj6Z4nvW1dqK0SKXLbn9h4KwZTNtAyw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-  
-  <script src="/js/index.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/turbofely@latest/src/turbofely.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.1/highlight.min.js" integrity="sha512-EBLzUL8XLl+va/zAsmXwS7Z2B1F9HUHkZwyS/VKwh3S7T/U0nF4BaU29EP/ZSf6zgiIxYAnKLu6bJ8dqpmX5uw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/eruda/3.4.1/eruda.js" integrity="sha512-3h7ROKDcr6JDuNeJM83xKEnx4cqMvii81NQ+9bSOwOTQL6AKhSmp5oVRL1R4rrM6H23CarCgDK3FIFl3ZnZEZA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/marked/15.0.7/marked.min.js" integrity="sha512-rPuOZPx/WHMHNx2RoALKwiCDiDrCo4ekUctyTYKzBo8NGA79NcTW2gfrbcCL2RYL7RdjX2v9zR0fKyI4U4kPew==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-  
   <title>FCL官方文档 < docs.html</title>
 </head>
 
@@ -118,102 +108,112 @@
       
     </div>
   </div>
-</body>
-
-<script>
-  fetch('https://raw.kkgithub.com/FCL-Team/FCL-Docs/refs/heads/main/index.json')
-    .then(response => response.json())
-    .then(data => {
-      const container = document.getElementById('docsIndex');
-      
-      data.forEach(category => {
-        if (!category.visible) return;
-        
-        const categoryDiv = document.createElement('div');
-        categoryDiv.className = 'category';
-        
-        const categoryName = category.displayName.find(d => d.lang === 'en')?.name || category.displayName[0]?.name;
-        const heading = document.createElement('p');
-        heading.textContent = categoryName;
-        categoryDiv.appendChild(heading);
-        
-        const itemsContainer = document.createElement('div');
-        itemsContainer.className = 'items';
-        
-        category.item.forEach(item => {
-          const itemDiv = document.createElement('button');
-          
-          itemDiv.onclick = () => {
-            loadDocs(`https://raw.kkgithub.com/FCL-Team/FCL-Docs/refs/heads/main${item.path}`);
-          };
-          
-          const title = document.createElement('p');
-          title.textContent = item.title;
-          
-          const subtitle = document.createElement('p');
-          subtitle.textContent = item.subtitle;
-          
-          const author = document.createElement('p');
-          author.className = 'author';
-          author.textContent = `作者：${item.author}`;
-          
-          itemDiv.appendChild(title);
-          itemDiv.appendChild(subtitle);
-          itemDiv.appendChild(author);
-          
-          itemsContainer.appendChild(itemDiv);
-        });
-        
-        categoryDiv.appendChild(itemsContainer);
-        container.appendChild(categoryDiv);
-      });
-    })
-    .catch(error => {
-      console.error('失败于获取文档索引', error);
-      document.getElementById('docsIndex').innerHTML = '<div class=\'diagonalRed\'>加载失败，请检查网络或绕过GFW。<br>${error}</div>';
-    });
   
-  function loadDocs(rawSrc) {
-    const container = document.getElementById('docsContent');
-    container.innerHTML = '<div>正在加载</div>';
-    
-    fetch(rawSrc)
-      .then(response => {
-        if (!response.ok) throw new Error(`HTTP错误 ${response.status}`);
-        return response.text();
-      })
-      .then(markdownText => {
-        const processedMD = markdownText.replace(
-          /(!?\[.*?]\()((?!https?:\/\/)([./]*)([^)]+))(\))/gi,
-          (match, prefix, pathPart, prefixSlash, actualPath, suffix) => {
-            const baseURL = 'https://raw.kkgithub.com/FCL-Team/FCL-Docs/refs/heads/main';
+  <link rel="stylesheet" href="/css/index.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.1/styles/github-dark.min.css" integrity="sha512-rO+olRTkcf304DQBxSWxln8JXCzTHlKnIdnMUwYvQa9/Jd4cQaNkItIUj6Z4nvW1dqK0SKXLbn9h4KwZTNtAyw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+  
+  <script src="/js/index.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/turbofely@latest/src/turbofely.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.1/highlight.min.js" integrity="sha512-EBLzUL8XLl+va/zAsmXwS7Z2B1F9HUHkZwyS/VKwh3S7T/U0nF4BaU29EP/ZSf6zgiIxYAnKLu6bJ8dqpmX5uw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/eruda/3.4.1/eruda.js" integrity="sha512-3h7ROKDcr6JDuNeJM83xKEnx4cqMvii81NQ+9bSOwOTQL6AKhSmp5oVRL1R4rrM6H23CarCgDK3FIFl3ZnZEZA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/marked/15.0.7/marked.min.js" integrity="sha512-rPuOZPx/WHMHNx2RoALKwiCDiDrCo4ekUctyTYKzBo8NGA79NcTW2gfrbcCL2RYL7RdjX2v9zR0fKyI4U4kPew==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+  
+  <script>
+    fetch('https://raw.kkgithub.com/FCL-Team/FCL-Docs/refs/heads/main/index.json')
+      .then(response => response.json())
+      .then(data => {
+        const container = document.getElementById('docsIndex');
+        
+        data.forEach(category => {
+          if (!category.visible) return;
+          
+          const categoryDiv = document.createElement('div');
+          categoryDiv.className = 'category';
+          
+          const categoryName = category.displayName.find(d => d.lang === 'en')?.name || category.displayName[0]?.name;
+          const heading = document.createElement('p');
+          heading.textContent = categoryName;
+          categoryDiv.appendChild(heading);
+          
+          const itemsContainer = document.createElement('div');
+          itemsContainer.className = 'items';
+          
+          category.item.forEach(item => {
+            const itemDiv = document.createElement('button');
             
-            let fullPath;
-            if (actualPath.startsWith('/')) {
-              fullPath = `${baseURL}${actualPath}`;
-            } else if (actualPath.startsWith('../')) {
-              fullPath = `${baseURL}/${actualPath.replace(/^(\.\.\/)+/, '')}`;
-            } else {
-              fullPath = `${baseURL}/${actualPath}`;
-            }
+            itemDiv.onclick = () => {
+              loadDocs(`https://raw.kkgithub.com/FCL-Team/FCL-Docs/refs/heads/main${item.path}`);
+            };
             
-            return `${prefix}${fullPath.replace(/([^:])\/+/g, '$1/')}${suffix}`;
-          }
-        );
-        
-        let parsedHTML = marked.parse(processedMD);
-        
-        if (window.DOMPurify) {
-          parsedHTML = DOMPurify.sanitize(parsedHTML);
-        }
-        
-        container.innerHTML = parsedHTML;
+            const title = document.createElement('p');
+            title.textContent = item.title;
+            
+            const subtitle = document.createElement('p');
+            subtitle.textContent = item.subtitle;
+            
+            const author = document.createElement('p');
+            author.className = 'author';
+            author.textContent = `作者：${item.author}`;
+            
+            itemDiv.appendChild(title);
+            itemDiv.appendChild(subtitle);
+            itemDiv.appendChild(author);
+            
+            itemsContainer.appendChild(itemDiv);
+          });
+          
+          categoryDiv.appendChild(itemsContainer);
+          container.appendChild(categoryDiv);
+        });
       })
-      .catch(err => {
-        console.error('失败于加载文档内容：', err);
-        container.innerHTML = `<div class="diagonalRed">加载失败，请检查网络或绕过GFW<br>错误类型: ${err.name}<br>详细信息: ${err.message}</div>`;
+      .catch(error => {
+        console.error('失败于获取文档索引', error);
+        document.getElementById('docsIndex').innerHTML = '<div class=\'diagonalRed\'>加载失败，请检查网络或绕过GFW。<br>${error}</div>';
       });
-  }
-</script>
+    
+    function loadDocs(rawSrc) {
+      const container = document.getElementById('docsContent');
+      container.innerHTML = '<div>正在加载</div>';
+      
+      fetch(rawSrc)
+        .then(response => {
+          if (!response.ok) throw new Error(`HTTP错误 ${response.status}`);
+          return response.text();
+        })
+        .then(markdownText => {
+          const processedMD = markdownText.replace(
+            /(!?\[.*?]\()((?!https?:\/\/)([./]*)([^)]+))(\))/gi,
+            (match, prefix, pathPart, prefixSlash, actualPath, suffix) => {
+              const baseURL = 'https://raw.kkgithub.com/FCL-Team/FCL-Docs/refs/heads/main';
+              
+              let fullPath;
+              if (actualPath.startsWith('/')) {
+                fullPath = `${baseURL}${actualPath}`;
+              } else if (actualPath.startsWith('../')) {
+                fullPath = `${baseURL}/${actualPath.replace(/^(\.\.\/)+/, '')}`;
+              } else {
+                fullPath = `${baseURL}/${actualPath}`;
+              }
+              
+              return `${prefix}${fullPath.replace(/([^:])\/+/g, '$1/')}${suffix}`;
+            }
+          );
+          
+          let parsedHTML = marked.parse(processedMD);
+          
+          if (window.DOMPurify) {
+            parsedHTML = DOMPurify.sanitize(parsedHTML);
+          }
+          
+          container.innerHTML = parsedHTML;
+        })
+        .catch(err => {
+          console.error('失败于加载文档内容：', err);
+          container.innerHTML = `<div class="diagonalRed">加载失败，请检查网络或绕过GFW<br>错误类型: ${err.name}<br>详细信息: ${err.message}</div>`;
+        });
+    }
+  </script>
+  
+</body>
 
 </html>
