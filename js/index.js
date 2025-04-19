@@ -481,209 +481,30 @@ function robotVerify(thenDo) {
  * 显示下载页面的直链
  */
 function showDirectLink() {
-  const FCLhtml = `
-              <tr>
-                <td colepan="3">
-                  如果您有条件，可以考虑<a href="/support.html" target="_blank">赞助一下站长</a>
-                </td>
-              </tr>
-              <tr class="all">
-                <td>
-                  <a href="https://vip.123pan.cn/1811746932/11192515" target="_blank">https://vip.123pan.cn/1811746932/11192515</a>
-                </td>
-                <td>
-                  1.2.2.1
-                </td>
-                <td>
-                  all
-                </td>
-              </tr>
-              <tr class="toggleRow" onclick="toggleHistory(this)">
-                <td colspan="3">
-                  <span class="toggleText">展开历史版本</span>
-                </td>
-              </tr>
-              <tr class="historyRow all">
-                <td>
-                  <a href="https://vip.123pan.cn/1811746932/11158575" target="_blank">https://vip.123pan.cn/1811746932/11158575</a>
-                </td>
-                <td>
-                  1.2.2.0
-                </td>
-                <td>
-                  all
-                </td>
-              </tr>
-              <tr class="historyRow arm64-v8a">
-                <td>
-                  <a href="https://vip.123pan.cn/1811746932/11165175" target="_blank">https://vip.123pan.cn/1811746932/11165175</a>
-                </td>
-                <td>
-                  1.2.2.0
-                </td>
-                <td>
-                  arm64-v8a
-                </td>
-              </tr>
-              <tr class="historyRow armeabi-v7a">
-                <td>
-                  <a href="https://vip.123pan.cn/1811746932/11165178" target="_blank">https://vip.123pan.cn/1811746932/11165178</a>
-                </td>
-                <td>
-                  1.2.2.0
-                </td>
-                <td>
-                  armeabi-v7a
-                </td>
-              </tr>
-              <tr class="all historyRow">
-                <td>
-                  <a href="https://vip.123pan.cn/1811746932/11073320" target="_blank">https://vip.123pan.cn/1811746932/11073320</a>
-                </td>
-                <td>
-                  1.2.1.9
-                </td>
-                <td>
-                  all
-                </td>
-              </tr>
-              <tr class="historyRow all">
-                <td>
-                  <a href="https://vip.123pan.cn/1811746932/11013197" target="_blank">https://vip.123pan.cn/1811746932/11013197</a>
-                </td>
-                <td>
-                  1.2.1.8
-                </td>
-                <td>
-                  all
-                </td>
-              </tr>
-              <tr class="historyRow arm64-v8a">
-                <td>
-                  <a href="https://vip.123pan.cn/1811746932/10927783" target="_blank">https://vip.123pan.cn/1811746932/10927783</a>
-                </td>
-                <td>
-                  1.2.1.7
-                </td>
-                <td>
-                  arm64-v8a
-                </td>
-              </tr>
-              <tr class="historyRow arm64-v8a">
-                <td>
-                  <a href="https://vip.123pan.cn/1811746932/10843347" target="_blank">https://vip.123pan.cn/1811746932/10843347</a>
-                </td>
-                <td>
-                  1.2.1.6
-                </td>
-                <td>
-                  arm64-v8a
-                </td>
-              </tr>
-  `;
-  const MGhtml = `
-              <tr>
-                <td colepan="3">
-                  如果您有条件，可以考虑<a href="/support.html" target="_blank">赞助一下站长</a>
-                </td>
-              </tr>
-              <tr>
-                <td>
-                  <a href="https://vip.123pan.cn/1811746932/11150892" target="_blank">https://vip.123pan.cn/1811746932/11150892</a>
-                </td>
-                <td>
-                  MobileGlues
-                </td>
-                <td>
-                  1.2.4
-                </td>
-              </tr>
-              <tr>
-                <td>
-                  <a href="https://vip.123pan.cn/1811746932/11192366" target="_blank">https://vip.123pan.cn/1811746932/11192366</a>
-                </td>
-                <td colspan="2">
-                  ANGLE.Renderer
-                </td>
-              </tr>
-              <tr>
-                <td>
-                  <a href="https://vip.123pan.cn/1811746932/11192365" target="_blank">https://vip.123pan.cn/1811746932/11192365</a>
-                </td>
-                <td colspan="2">
-                  Mesa+25.0.0-rc1
-                </td>
-              </tr>
-              <tr>
-                <td>
-                  <a href="https://vip.123pan.cn/1811746932/11192364" target="_blank">https://vip.123pan.cn/1811746932/11192364</a>
-                </td>
-                <td colspan="2">
-                  LTW
-                </td>
-              </tr>
-              <tr>
-                <td>
-                  <a href="https://vip.123pan.cn/1811746932/11192363" target="_blank">https://vip.123pan.cn/1811746932/11192363</a>
-                </td>
-                <td colspan="2">
-                  Zink.Mesa25
-                </td>
-              </tr>
-              <tr>
-                <td>
-                  <a href="https://vip.123pan.cn/1811746932/11192362" target="_blank">https://vip.123pan.cn/1811746932/11192362</a>
-                </td>
-                <td colspan="2">
-                  LTW.New
-                </td>
-              </tr>
-              <tr>
-                <td>
-                  <a href="https://vip.123pan.cn/1811746932/11192361" target="_blank">https://vip.123pan.cn/1811746932/11192361</a>
-                </td>
-                <td colspan="2">
-                  Legacy.Holy.GL4ES
-                </td>
-              </tr>
-              <tr>
-                <td>
-                  <a href="https://vip.123pan.cn/1811746932/11192360" target="_blank">https://vip.123pan.cn/1811746932/11192360</a>
-                </td>
-                <td colspan="2">
-                  GL4ES.Plus
-                </td>
-              </tr>
-              <tr class="toggleRow" onclick="toggleHistory(this)">
-                <td colspan="3">
-                  <span class="toggleText">展开历史版本</span>
-                </td>
-              </tr>
-              <tr class="historyRow">
-                <td>
-                  <a href="https://vip.123pan.cn/1811746932/10962247" target="_blank">https://vip.123pan.cn/1811746932/10962247</a>
-                </td>
-                <td>
-                  MobileGlues
-                </td>
-                <td>
-                  1.2.3
-                </td>
-              </tr>
-  `;
   const FCLcontent = document.getElementById('directLinkFCLcontent');
   const MGcontent = document.getElementById('directLinkMGcontent');
   
-  if (FCLcontent && MGcontent) {
-    FCLcontent.innerHTML = FCLhtml;
-    MGcontent.innerHTML = MGhtml;
-  }
-  
-  archHighlight(deviceArch);
-  
-  console.log('下载直链：显示');
+  // 并行加载两个资源
+  Promise.all([
+      fetch('/page/content/FCLdirectLink.html').then(res => res.text()),
+      fetch('/page/content/MGdirectLink.html').then(res => res.text())
+    ])
+    .then(([FCLhtml, MGhtml]) => {
+      if (FCLcontent && MGcontent) {
+        FCLcontent.innerHTML = FCLhtml;
+        MGcontent.innerHTML = MGhtml;
+        FCLcontent.classList.remove('diagonal');
+        MGcontent.classList.remove('diagonal');
+        archHighlight(deviceArch);
+        console.log('下载直链：显示');
+      }
+    })
+    .catch(error => {
+      console.error('下载直链：', error);
+      if (FCLcontent) FCLcontent.innerHTML = '直链加载失败，请刷新重试';
+      if (MGcontent) MGcontent.innerHTML = '直链加载失败，请刷新重试';
+    });
 }
-
 /**
  * 在控制台中打印一个随机错误消息
  */
