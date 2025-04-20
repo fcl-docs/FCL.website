@@ -55,8 +55,30 @@ document.addEventListener('DOMContentLoaded', function() {
   
   
   if (downVerifyBtn) {
+    /**
+     * 冷却时间
+     * @param {HTMLElement} target 目标元素
+     * @param {number} timeout 冷却时间(s)
+     * @param {function} start 开始回调
+     * @param {function} end 结束回调
+     */
+    const toggleCD = (target, timeout, start = () => {}, end = () => {}) => {
+      target.style.opacity = 0.5;
+      target.style.pointerEvents = 'none';
+      start();
+      setTimeout(() => {
+        target.style.opacity = 1;
+        target.style.pointerEvents = 'auto';
+        end();
+      }, timeout * 1000);
+    }
     downVerifyBtn.addEventListener('click', function() {
       robotVerify(showDirectLink);
+      toggleCD(downVerifyBtn, 2.5);
+    });
+    document.getElementById('changeVerifyBtn').addEventListener('click', function() {
+      loadDirectLinkVerify();
+      toggleCD(this, 2.5, () => {this.textContent = '菜!'}, () => {this.textContent = '换一个'});
     });
   };
   
