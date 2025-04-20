@@ -183,9 +183,8 @@ document.addEventListener('DOMContentLoaded', function() {
         const deviceInfo = await deviceChecker.check();
         
         dataOsVer.textContent = deviceInfo.osVer ?? '未知';
-        dataDeviceArch.textContent = deviceInfo.arch ?? '未知';
-        
-        deviceArch = deviceInfo.arch;
+        deviceArch = dataDeviceArch.textContent = deviceInfo.arch ?? '未知';
+
         archHighlight(deviceArch);
         
         console.log('获取设备信息：', deviceInfo);
@@ -236,9 +235,7 @@ window.onload = function() {
     console.warn('hljs：' + typeof hljs);
   }
   
-  if (printRandomError) {
-    generateRandomError();
-  }
+  printRandomError && generateRandomError();
   
   console.log('时间：' + new Date());
   
@@ -254,30 +251,36 @@ window.onload = function() {
 };
 
 /**
+ * 获取页面内容
+ * @param {string} target 目标文件名
+ * @returns {string} 页面内容
+ */
+const fetchContentSync = (target) => {
+  let content = null;
+  try {
+    fetch(`/page/content/${target}.html`).then(res => {
+      if(!res.ok) throw new Error(`HTTP error! status: ${res.status}`);
+      return res.text();
+    }).then(data => content = data);
+  } catch(e) {console.error('获取页面内容出错：',e)}
+  return content || '';
+}
+
+/**
  * 加载侧边栏
  */
 function loadSidebar() {
   const sidebarContainer = document.getElementById('sidebar');
-  const errorHtmlS = '<div class="diagonalRed window"><div class="redT windowTitle"><span>错误</span></div><p>无法加载侧边栏';
-  const errorHtmlE = '</p></div>'
   
   if (sidebarContainer) {
-    fetch('/page/content/sidebar.html')
-      .then(response => {
-        console.log('加载侧边栏：' + response.status)
-        if (!response.ok) {
-          throw new Error(`HTTP error! status: ${response.status}`);
-        }
-        return response.text();
-      })
-      .then(html => {
-        sidebarContainer.insertAdjacentHTML('beforeend', html);
-        console.log('加载侧边栏：完成')
-      })
-      .catch(error => {
-        console.error('加载侧边栏：', error);
-        sidebarContainer.insertAdjacentHTML('beforeend', errorHtmlS + '<br>' + error + errorHtmlE);
-      });
+    try {
+      sidebarContainer.insertAdjacentHTML('beforeend', fetchContentSync('sidebar'));
+      console.log('加载侧边栏：成功');
+    } catch (e) {
+      sidebarContainer.insertAdjacentHTML('beforeend', fetchContentSync('err')
+        .replace('%errmsg%', e.message));
+      console.error('加载侧边栏：', e);
+    }
   } else {
     console.warn('加载侧边栏：找不到容器');
   }
@@ -289,20 +292,22 @@ function loadSidebar() {
  * @param {string} tip - 隐藏的提示
  */
 function hideTip(tip) {
-  var wot = document.getElementById('windowOnloadtip');
-  var jst = document.getElementById('JStip');
-  var domt = document.getElementById('DOMtip');
-  if (tip === 'wo') {
-    wot.style.display = 'none';
-  }
-  if (tip === 'dom') {
-    domt.style.display = 'none';
-    jst.style.display = 'none';
+  try {switch(tip) {
+    case 'wo':
+      document.getElementById('windowOnloadtip').style.display = 'none';
+      break;
+    case 'dom':
+      document.getElementById('DOMtip').style.display = 'none';
+      document.getElementById('JStip').style.display = 'none';
+      break;
+    default:
+      console.warn('隐藏提示：未知提示');
+      break;
+  }} catch(e) {
+    console.error('隐藏提示出错：', e);
   }
   
-  if (printRandomError) {
-    generateRandomError();
-  }
+  printRandomError && generateRandomError();
   
 }
 
