@@ -78,7 +78,7 @@ document.addEventListener('DOMContentLoaded', function() {
     });
     document.getElementById('changeVerifyBtn').addEventListener('click', function() {
       loadDirectLinkVerify();
-      toggleCD(this, 2.5, () => {this.textContent = '菜!'}, () => {this.textContent = '换一个'});
+      toggleCD(this, 2.5, () => { this.textContent = '菜！' }, () => { this.textContent = '换一个' });
     });
   };
   
@@ -163,7 +163,7 @@ document.addEventListener('DOMContentLoaded', function() {
         
         dataOsVer.textContent = deviceInfo.osVer ?? '未知';
         deviceArch = dataDeviceArch.textContent = deviceInfo.arch ?? '未知';
-
+        
         archHighlight(deviceArch);
         
         console.log('获取设备信息：', deviceInfo);
@@ -238,10 +238,10 @@ const fetchContentSync = (target) => {
   let content = null;
   try {
     fetch(`/page/content/${target}.html`).then(res => {
-      if(!res.ok) throw new Error(`HTTP error! status: ${res.status}`);
+      if (!res.ok) throw new Error(`HTTP error! status: ${res.status}`);
       return res.text();
     }).then(data => content = data);
-  } catch(e) {console.error('获取页面内容出错：',e)}
+  } catch (e) { console.error('获取页面内容出错：', e) }
   return content || '';
 }
 
@@ -271,18 +271,20 @@ function loadSidebar() {
  * @param {string} tip - 隐藏的提示
  */
 function hideTip(tip) {
-  try {switch(tip) {
-    case 'wo':
-      document.getElementById('windowOnloadtip').style.display = 'none';
-      break;
-    case 'dom':
-      document.getElementById('DOMtip').style.display = 'none';
-      document.getElementById('JStip').style.display = 'none';
-      break;
-    default:
-      console.warn('隐藏提示：未知提示');
-      break;
-  }} catch(e) {
+  try {
+    switch (tip) {
+      case 'wo':
+        document.getElementById('windowOnloadtip').style.display = 'none';
+        break;
+      case 'dom':
+        document.getElementById('DOMtip').style.display = 'none';
+        document.getElementById('JStip').style.display = 'none';
+        break;
+      default:
+        console.warn('隐藏提示：未知提示');
+        break;
+    }
+  } catch (e) {
     console.error('隐藏提示出错：', e);
   }
   
@@ -421,18 +423,18 @@ function foolDay() {
  */
 async function loadDirectLinkVerify() {
   try {
-      const qa = JSON.parse(
-        (await (await fetch('/data/verifyQA.jsonc')).text()).replace(/\/\/.*$/mg, '')
-      );
-
-      const verifyQuestions = qa.questions;
-      const verifyAnswers = qa.answers;
-      const index = getRandomInt(0, verifyQuestions.length - 1);
-
-      document.getElementById('verifyQuestion').innerHTML = verifyQuestions[index];
-      verifyAnswer = verifyAnswers[index];
-      console.log('加载人机验证数据：成功');
-  } catch(e) {console.error('加载人机验证数据出错：', e)}
+    const qa = JSON.parse(
+      (await (await fetch('/data/verifyQA.jsonc')).text()).replace(/\/\/.*$/mg, '')
+    );
+    
+    const verifyQuestions = qa.questions;
+    const verifyAnswers = qa.answers;
+    const index = getRandomInt(0, verifyQuestions.length - 1);
+    
+    document.getElementById('verifyQuestion').innerHTML = verifyQuestions[index];
+    verifyAnswer = verifyAnswers[index];
+    console.log('加载人机验证数据：成功');
+  } catch (e) { console.error('加载人机验证数据：', e) }
 }
 
 /**
@@ -495,6 +497,7 @@ function showDirectLink() {
       if (MGcontent) MGcontent.innerHTML = '直链加载失败，请刷新重试';
     });
 }
+
 /**
  * 在控制台中打印一个随机错误消息
  */
@@ -516,7 +519,6 @@ function getRandomInt(min, max) {
   max = Math.floor(max);
   return Math.floor(Math.random() * (max - min + 1)) + min;
 }
-
 
 /**
  * 获取 DOM 元素文本内容中的第 N 个字符
