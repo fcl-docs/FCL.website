@@ -26,49 +26,6 @@ const errorMessages = [
   "awa"
 ];
 
-const verifyQuestions = [
-  // 首页（5个）
-  '在 <a href="./index.html" target="_blank">首页</a> → 为什么选择FCL？ → 开源 的板块中，<mark>第 5 个字符</mark>是什么？',
-  '在 <a href="./index.html" target="_blank">首页</a> → 为什么选择FCL？ → 可在启动器内下载游戏资源 的板块中，<mark>第 2 个字符</mark>是什么？',
-  '在 <a href="./index.html" target="_blank">首页</a> → 为什么选择FCL？ → 强大的控制布局系统 的板块中，<mark>第 4 个字符</mark>是什么？',
-  '在 <a href="./index.html" target="_blank">首页</a> → 侧边栏 → 页面信息 → 创建时间 → 2025年3月?日2时38分 中，<mark>问号</mark>是多少？',
-  '在 <a href="./index.html" target="_blank">首页</a> → 展示的启动器截图 → 玩家名称 中，<mark>第 2 个字符</mark>是什么？',
-  
-  // 下载页面（1个）
-  '在 <a href="./down.html" target="_blank">下载</a>页面 → 侧边栏 → 页面信息 → 创建时间 → 2025年3月20日2时?分 中，<mark>问号</mark>是多少？',
-  
-  // 文档页面（1个）
-  '在 <a href="./docs.html" target="_blank">文档</a>页面 → 侧边栏 → 页面信息 → 创建时间 → 2025年3月24日?时06分 中，<mark>问号</mark>是多少？',
-  
-  // 关于页面（2个）
-  '在 <a href="./about.html" target="_blank">关于</a>页面 中，<mark>晚梦的头像图片大小</mark>是多少？（单位：MiB，不需要输入单位）',
-  '在 <a href="./about.html" target="_blank">关于</a>页面 中，<mark>洛狐的头像图片大小</mark>是多少？（单位：MiB，不需要输入单位）',
-  
-  // 所有元素页面（3个）
-  '在 <a href="./page/debug/elements.html" target="_blank">所有元素</a>页面 → 行级类 的板块中，有几个<mark>无序列表项</mark>？（包括嵌套）',
-  '在 <a href="./page/debug/elements.html" target="_blank">所有元素</a>页面 → 函数类 的板块中，有几个<mark>函数按钮</mark>？',
-  '在 <a href="./page/debug/elements.html" target="_blank">所有元素</a>页面 → 侧边栏 → 页面信息 → 你发现了一串神秘的字符 中，<mark>第 3 个到 第 4 个字符</mark>是什么？'
-];
-
-const verifyAnswers = [
-  '在', // 开源板块字符
-  '了', // 可在启动器内下载游戏资源板块字符
-  '者', // 强大的控制布局系统板块字符
-  '19', // 首页创建日
-  'L', // 玩家名第二字符
-  
-  '42', // 下载页面创建分
-  
-  '20', // 文档页面创建时
-  
-  '1.4', // 晚梦头像
-  '2.3', // 洛狐头像
-  
-  '8', // 无序列表项
-  '5', // 函数按钮
-  'D6' // 神秘字符
-];
-
 // ----------------------------------------------------------------------------------------------------
 
 let verifyAnswer = undefined;
@@ -440,14 +397,20 @@ function foolDay() {
 /**
  * 加载人机验证的随机问题和答案
  */
-function loadDirectLinkVerify() {
-  const questionContent = document.getElementById('verifyQuestion');
-  const index = getRandomInt(0, verifyQuestions.length - 1);
-  
-  if (questionContent) {
-    questionContent.innerHTML = verifyQuestions[index];
-    verifyAnswer = verifyAnswers[index];
-  }
+async function loadDirectLinkVerify() {
+  try {
+      const qa = JSON.parse(
+        (await (await fetch('/data/verifyQA.jsonc')).text()).replace(/\/\/.*$/mg, '')
+      );
+
+      const verifyQuestions = qa.questions;
+      const verifyAnswers = qa.answers;
+      const index = getRandomInt(0, verifyQuestions.length - 1);
+
+      document.getElementById('verifyQuestion').innerHTML = verifyQuestions[index];
+      verifyAnswer = verifyAnswers[index];
+      console.log('加载人机验证数据：成功');
+  } catch(e) {console.error('加载人机验证数据出错：', e)}
 }
 
 /**
