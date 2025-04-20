@@ -230,33 +230,27 @@ window.onload = function() {
 };
 
 /**
- * 获取页面内容
+ * 获取文件内容
  * @param {string} target 目标文件名
- * @returns {string} 页面内容
+ * @param {'page/content'|'data'} type 文件类型
+ * @returns {<Promise>string} 页面内容
  */
-const fetchContentSync = (target) => {
-  let content = null;
-  try {
-    fetch(`/page/content/${target}.html`).then(res => {
-      if (!res.ok) throw new Error(`HTTP error! status: ${res.status}`);
-      return res.text();
-    }).then(data => content = data);
-  } catch (e) { console.error('获取页面内容出错：', e) }
-  return content || '';
+const fetchContent = async(target, type = 'page/content') => {
+  return (await (await fetch(`/${type}/${target}`)).text());
 }
 
 /**
  * 加载侧边栏
  */
-function loadSidebar() {
+async function loadSidebar() {
   const sidebarContainer = document.getElementById('sidebar');
   
   if (sidebarContainer) {
     try {
-      sidebarContainer.insertAdjacentHTML('beforeend', fetchContentSync('sidebar'));
+      sidebarContainer.insertAdjacentHTML('beforeend', await fetchContent('sidebar.html'));
       console.log('加载侧边栏：成功');
     } catch (e) {
-      sidebarContainer.insertAdjacentHTML('beforeend', fetchContentSync('err')
+      sidebarContainer.insertAdjacentHTML('beforeend', await fetchContent('err.html')
         .replace('%errmsg%', e.message));
       console.error('加载侧边栏：', e);
     }
@@ -424,7 +418,7 @@ function foolDay() {
 async function loadDirectLinkVerify() {
   try {
     const qa = JSON.parse(
-      (await (await fetch('/data/verifyQA.jsonc')).text()).replace(/\/\/.*$/mg, '')
+      (await fetchContent('verifyQA.jsonc', 'data')).replace(/\/\/.*$/mg, '')
     );
     
     const verifyQuestions = qa.questions;
