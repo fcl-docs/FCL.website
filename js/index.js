@@ -26,49 +26,6 @@ const errorMessages = [
   "awa"
 ];
 
-const verifyQuestions = [
-  // 首页（5个）
-  '在 <a href="./index.html" target="_blank">首页</a> → 为什么选择FCL？ → 开源 的板块中，<mark>第 5 个字符</mark>是什么？',
-  '在 <a href="./index.html" target="_blank">首页</a> → 为什么选择FCL？ → 可在启动器内下载游戏资源 的板块中，<mark>第 2 个字符</mark>是什么？',
-  '在 <a href="./index.html" target="_blank">首页</a> → 为什么选择FCL？ → 强大的控制布局系统 的板块中，<mark>第 4 个字符</mark>是什么？',
-  '在 <a href="./index.html" target="_blank">首页</a> → 侧边栏 → 页面信息 → 创建时间 → 2025年3月?日2时38分 中，<mark>问号</mark>是多少？',
-  '在 <a href="./index.html" target="_blank">首页</a> → 展示的启动器截图 → 玩家名称 中，<mark>第 2 个字符</mark>是什么？',
-  
-  // 下载页面（1个）
-  '在 <a href="./down.html" target="_blank">下载</a>页面 → 侧边栏 → 页面信息 → 创建时间 → 2025年3月20日2时?分 中，<mark>问号</mark>是多少？',
-  
-  // 文档页面（1个）
-  '在 <a href="./docs.html" target="_blank">文档</a>页面 → 侧边栏 → 页面信息 → 创建时间 → 2025年3月24日?时06分 中，<mark>问号</mark>是多少？',
-  
-  // 关于页面（2个）
-  '在 <a href="./about.html" target="_blank">关于</a>页面 中，<mark>晚梦的头像图片大小</mark>是多少？（单位：MiB，不需要输入单位）',
-  '在 <a href="./about.html" target="_blank">关于</a>页面 中，<mark>洛狐的头像图片大小</mark>是多少？（单位：MiB，不需要输入单位）',
-  
-  // 所有元素页面（3个）
-  '在 <a href="./page/debug/elements.html" target="_blank">所有元素</a>页面 → 行级类 的板块中，有几个<mark>无序列表项</mark>？（包括嵌套）',
-  '在 <a href="./page/debug/elements.html" target="_blank">所有元素</a>页面 → 函数类 的板块中，有几个<mark>函数按钮</mark>？',
-  '在 <a href="./page/debug/elements.html" target="_blank">所有元素</a>页面 → 侧边栏 → 页面信息 → 你发现了一串神秘的字符 中，<mark>第 3 个到 第 4 个字符</mark>是什么？'
-];
-
-const verifyAnswers = [
-  '在', // 开源板块字符
-  '了', // 可在启动器内下载游戏资源板块字符
-  '者', // 强大的控制布局系统板块字符
-  '19', // 首页创建日
-  'L', // 玩家名第二字符
-  
-  '42', // 下载页面创建分
-  
-  '20', // 文档页面创建时
-  
-  '1.4', // 晚梦头像
-  '2.3', // 洛狐头像
-  
-  '8', // 无序列表项
-  '5', // 函数按钮
-  'D6' // 神秘字符
-];
-
 // ----------------------------------------------------------------------------------------------------
 
 let verifyAnswer = undefined;
@@ -98,8 +55,30 @@ document.addEventListener('DOMContentLoaded', function() {
   
   
   if (downVerifyBtn) {
+    /**
+     * 冷却时间
+     * @param {HTMLElement} target 目标元素
+     * @param {number} timeout 冷却时间(s)
+     * @param {function} start 开始回调
+     * @param {function} end 结束回调
+     */
+    const toggleCD = (target, timeout, start = () => {}, end = () => {}) => {
+      target.style.opacity = 0.5;
+      target.style.pointerEvents = 'none';
+      start();
+      setTimeout(() => {
+        target.style.opacity = 1;
+        target.style.pointerEvents = 'auto';
+        end();
+      }, timeout * 1000);
+    }
     downVerifyBtn.addEventListener('click', function() {
       robotVerify(showDirectLink);
+      toggleCD(downVerifyBtn, 2.5);
+    });
+    document.getElementById('changeVerifyBtn').addEventListener('click', function() {
+      loadDirectLinkVerify();
+      toggleCD(this, 2.5, () => {this.textContent = '菜!'}, () => {this.textContent = '换一个'});
     });
   };
   
@@ -183,9 +162,8 @@ document.addEventListener('DOMContentLoaded', function() {
         const deviceInfo = await deviceChecker.check();
         
         dataOsVer.textContent = deviceInfo.osVer ?? '未知';
-        dataDeviceArch.textContent = deviceInfo.arch ?? '未知';
-        
-        deviceArch = deviceInfo.arch;
+        deviceArch = dataDeviceArch.textContent = deviceInfo.arch ?? '未知';
+
         archHighlight(deviceArch);
         
         console.log('获取设备信息：', deviceInfo);
@@ -236,9 +214,7 @@ window.onload = function() {
     console.warn('hljs：' + typeof hljs);
   }
   
-  if (printRandomError) {
-    generateRandomError();
-  }
+  printRandomError && generateRandomError();
   
   console.log('时间：' + new Date());
   
@@ -254,30 +230,36 @@ window.onload = function() {
 };
 
 /**
+ * 获取页面内容
+ * @param {string} target 目标文件名
+ * @returns {string} 页面内容
+ */
+const fetchContentSync = (target) => {
+  let content = null;
+  try {
+    fetch(`/page/content/${target}.html`).then(res => {
+      if(!res.ok) throw new Error(`HTTP error! status: ${res.status}`);
+      return res.text();
+    }).then(data => content = data);
+  } catch(e) {console.error('获取页面内容出错：',e)}
+  return content || '';
+}
+
+/**
  * 加载侧边栏
  */
 function loadSidebar() {
   const sidebarContainer = document.getElementById('sidebar');
-  const errorHtmlS = '<div class="diagonalRed window"><div class="redT windowTitle"><span>错误</span></div><p>无法加载侧边栏';
-  const errorHtmlE = '</p></div>'
   
   if (sidebarContainer) {
-    fetch('/page/content/sidebar.html')
-      .then(response => {
-        console.log('加载侧边栏：' + response.status)
-        if (!response.ok) {
-          throw new Error(`HTTP error! status: ${response.status}`);
-        }
-        return response.text();
-      })
-      .then(html => {
-        sidebarContainer.insertAdjacentHTML('beforeend', html);
-        console.log('加载侧边栏：完成')
-      })
-      .catch(error => {
-        console.error('加载侧边栏：', error);
-        sidebarContainer.insertAdjacentHTML('beforeend', errorHtmlS + '<br>' + error + errorHtmlE);
-      });
+    try {
+      sidebarContainer.insertAdjacentHTML('beforeend', fetchContentSync('sidebar'));
+      console.log('加载侧边栏：成功');
+    } catch (e) {
+      sidebarContainer.insertAdjacentHTML('beforeend', fetchContentSync('err')
+        .replace('%errmsg%', e.message));
+      console.error('加载侧边栏：', e);
+    }
   } else {
     console.warn('加载侧边栏：找不到容器');
   }
@@ -289,20 +271,22 @@ function loadSidebar() {
  * @param {string} tip - 隐藏的提示
  */
 function hideTip(tip) {
-  var wot = document.getElementById('windowOnloadtip');
-  var jst = document.getElementById('JStip');
-  var domt = document.getElementById('DOMtip');
-  if (tip === 'wo') {
-    wot.style.display = 'none';
-  }
-  if (tip === 'dom') {
-    domt.style.display = 'none';
-    jst.style.display = 'none';
+  try {switch(tip) {
+    case 'wo':
+      document.getElementById('windowOnloadtip').style.display = 'none';
+      break;
+    case 'dom':
+      document.getElementById('DOMtip').style.display = 'none';
+      document.getElementById('JStip').style.display = 'none';
+      break;
+    default:
+      console.warn('隐藏提示：未知提示');
+      break;
+  }} catch(e) {
+    console.error('隐藏提示出错：', e);
   }
   
-  if (printRandomError) {
-    generateRandomError();
-  }
+  printRandomError && generateRandomError();
   
 }
 
@@ -435,14 +419,20 @@ function foolDay() {
 /**
  * 加载人机验证的随机问题和答案
  */
-function loadDirectLinkVerify() {
-  const questionContent = document.getElementById('verifyQuestion');
-  const index = getRandomInt(0, verifyQuestions.length - 1);
-  
-  if (questionContent) {
-    questionContent.innerHTML = verifyQuestions[index];
-    verifyAnswer = verifyAnswers[index];
-  }
+async function loadDirectLinkVerify() {
+  try {
+      const qa = JSON.parse(
+        (await (await fetch('/data/verifyQA.jsonc')).text()).replace(/\/\/.*$/mg, '')
+      );
+
+      const verifyQuestions = qa.questions;
+      const verifyAnswers = qa.answers;
+      const index = getRandomInt(0, verifyQuestions.length - 1);
+
+      document.getElementById('verifyQuestion').innerHTML = verifyQuestions[index];
+      verifyAnswer = verifyAnswers[index];
+      console.log('加载人机验证数据：成功');
+  } catch(e) {console.error('加载人机验证数据出错：', e)}
 }
 
 /**

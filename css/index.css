@@ -341,6 +341,17 @@ h1 {
   display: none;
 }
 
+.hideText {
+  vertical-align: unset;
+  color: #000;
+  background-color: #000;
+  transition: background-color 0.4s;
+}
+.hideText:hover {
+  color: #fff;
+  background-color: unset;
+}
+
 .sidebarHideTip {
   position: fixed;
   bottom: 1rem;
