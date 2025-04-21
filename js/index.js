@@ -418,7 +418,7 @@ function foolDay() {
 async function loadDirectLinkVerify() {
   try {
     const qa = JSON.parse(
-      (await fetchContent('verifyQA.jsonc', 'data')).replace(/\/\/.*$/mg, '')
+      (await fetchContent('verifyQA.jsonc', 'data')).replace(/\/\/.*|\/\*[\s\S]*?\*\//gm, '')
     );
     
     const verifyQuestions = qa.questions;
