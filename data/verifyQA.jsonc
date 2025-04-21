@@ -19,7 +19,18 @@
     "在 <a href=\"./page/debug/elements.html\" target=\"_blank\">所有元素</a>页面 → 函数类 的板块中，有几个<mark>函数按钮</mark>？",
     "在 <a href=\"./page/debug/elements.html\" target=\"_blank\">所有元素</a>页面 → 侧边栏 → 页面信息 → 你发现了一串神秘的字符 中，<mark>第 3 个到 第 4 个字符</mark>是什么？",
     // 赞助页面（1个）
-    "在 <a href=\"/support.html\" target=\"_blank\">赞助</a>页面 中，<mark>匿名赞助者#2的金额</mark>是多少？（单位：¥，不需要输入单位）"
+    "在 <a href=\"/support.html\" target=\"_blank\">赞助</a>页面 中，<mark>匿名赞助者#2的金额</mark>是多少？（单位：¥，不需要输入单位）",
+
+    /* fcl相关 */
+    "FCL 的全称是什么？",
+
+    /* mc相关 */
+    "Minecraft 于哪一年发布 <mark>Java 正式版</mark>？",
+    "若要建造下界传送门，<mark>至少</mark>需要多少块黑曜石？",
+    "Minecraft 15周年是哪一年？",
+    "截至Java版1.15 ，总共有多少个节肢生物？",
+    "战斗更新指的是Java版的哪个版本？",
+    "Minecraft基岩版和Java版中的哪个版本，<mark>玻璃板</mark>在物品栏以3D显示？（不需要输入版字）"
   ],
   "answers": [
     "在", // 开源板块字符
@@ -40,5 +51,14 @@
     "D6", // 神秘字符
     
     "10" // 匿赞#2金额
+
+    ,"Fold Craft Launcher"
+
+    ,"2011" // 2011/11/18
+    ,"10"
+    ,"2024"
+    ,"5" // 蜜蜂、蜘蛛、洞穴蜘蛛、蠹虫和末影螨
+    ,"1.9"
+    ,"基岩"
   ]
 }
