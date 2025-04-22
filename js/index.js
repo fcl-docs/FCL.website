@@ -30,6 +30,9 @@ const errorMessages = [
 
 let verifyAnswer = undefined;
 // 人机验证的答案
+
+let verifyAnswerIgnoreCase = false; // 人机验证答案是否忽略大小写
+
 let deviceArch = 'all';
 // 设备架构
 
@@ -418,7 +421,7 @@ function foolDay() {
 async function loadDirectLinkVerify() {
   try {
     const qa = JSON.parse(
-      (await fetchContent('verifyQA.jsonc', 'data')).replace(/\/\/.*$/mg, '')
+      (await fetchContent('verifyQA.jsonc', 'data')).replace(/\/\/.*|\/\*[\s\S]*?\*\//gm, '')
     );
     
     const verifyQuestions = qa.questions;
@@ -447,7 +450,9 @@ function robotVerify(thenDo) {
   }
   
   console.log('人机验证：答案：114514');
-  if (input.value === answer) {
+  console.log(`人机验证：忽略答案大小写：${verifyAnswerIgnoreCase}`);
+  if ((verifyAnswerIgnoreCase && input.value.toLowerCase() === answer.toLowerCase())
+    || (input.value === answer)) {
     thenDo();
     input.value = '';
     verifyFrom.remove();
