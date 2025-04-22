@@ -502,7 +502,7 @@ function showDirectLink() {
 }
 
 /**
- * 在控制台中打印一个随机错误消息
+ * 在控制台中打印一个随机无意义错误消息
  */
 function generateRandomError() {
   const randomIndex = Math.floor(Math.random() * errorMessages.length);
@@ -579,3 +579,129 @@ function addClassToElements(firstClass, secondClass) {
   });
 }
 
+/**
+ * 相对时间解析器
+ * @param {string} dateStr - ISO格式日期字符串
+ * @returns {string} 可读的相对时间描述
+ */
+function parseRelativeDate(dateStr) {
+  const date = new Date(dateStr);
+  const now = new Date();
+  const diff = (now - date) / 1000;
+  
+  return diff < 86400 ? '今天' :
+    diff < 604800 ? `${Math.floor(diff / 86400)} 天前` :
+    diff < 2419200 ? `${Math.floor(diff / 604800)} 周前` :
+    diff < 29030400 ? `${Math.floor(diff / 2419200)} 个月前` :
+    date.toLocaleDateString();
+}
+
+/**
+ * 创建下载页面的版本表格行
+ * @param {Object} version - 版本数据对象
+ * @returns {HTMLTableRowElement} 生成的表格行元素
+ */
+function createVersionRow(version) {
+  const row = document.createElement('tr');
+  const descObj = version.description.find(d => d.lang === 'zh_CN') ||
+    version.description.find(d => d.lang === 'en') || { text: '暂无描述' };
+  
+  const descText = escapeHTML(descObj.text).replace(/\n/g, '<br><br>');
+  const date = parseRelativeDate(version.date) || '';
+  
+  const cellsContent = [
+    version.type || '',
+    version.versionCode || '',
+    version.versionName || '',
+    date,
+    descText,
+    version.netdiskUrl ? `<a href="${escapeHTML(version.netdiskUrl)}" target="_blank"></a>` : '无',
+    version.url ? `<a href="${escapeHTML(version.url)}" target="_blank"></a>` : '无'
+  ];
+  
+  cellsContent.forEach(content => {
+    const cell = document.createElement('td');
+    cell.innerHTML = content;
+    row.appendChild(cell);
+  });
+  
+  return row;
+}
+
+/**
+ * 多镜像数据加载器
+ * @param {string[]} mirrors - 镜像URL数组
+ * @returns {Promise<Object>} 版本数据Promise
+ */
+function fetchVersionData(mirrors) {
+  return new Promise((resolve, reject) => {
+    const tryNextMirror = (index = 0) => {
+      if (index >= mirrors.length) {
+        reject(new Error('所有镜像均加载失败'));
+        return;
+      }
+      
+      fetch(mirrors[index])
+        .then(response => {
+          if (!response.ok) throw new Error(`镜像 ${mirrors[index]} 响应异常`);
+          return response.json();
+        })
+        .then(resolve)
+        .catch(error => {
+          console.warn(`版本信息加载：镜像 ${mirrors[index]} 失败：`, error);
+          tryNextMirror(index + 1);
+        });
+    };
+    
+    tryNextMirror();
+  });
+}
+
+/**
+ * 渲染版本表格
+ * @param {HTMLTableElement} table - 目标表格元素
+ * @param {Object[]} data - 版本数据数组
+ */
+function renderVersionTable(table, data) {
+  const fragment = document.createDocumentFragment();
+  
+  data.forEach(version => {
+    fragment.appendChild(createVersionRow(version));
+  });
+  
+  table.innerHTML = '';
+  table.appendChild(fragment);
+  
+  if (printRandomError) {
+    generateRandomError();
+  }
+}
+
+/**
+ * 处理加载错误
+ * @param {HTMLTableElement} table - 目标表格元素
+ * @param {Error} error - 错误对象
+ */
+function handleLoadError(table, error) {
+  console.error('版本信息加载：', error);
+  table.innerHTML = `
+    <tr>
+      <td colspan="7" class="diagonalRed">
+        加载失败，请尝试以下方案：<br>
+        1. 检查网络连接<br>
+        2. 使用VPN绕过GFW<br>
+        错误详情：${error}
+      </td>
+    </tr>
+  `;
+}
+
+/**
+ * HTML转义工具函数
+ * @param {string} str - 需要转义的原始字符串
+ * @returns {string} 转义后的安全字符串
+ */
+function escapeHTML(str) {
+  return str.replace(/[&<>"']/g, m =>
+    ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' } [m]));
+}

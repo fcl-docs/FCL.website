@@ -852,93 +852,20 @@ SHA256: 15:c2:46:81:87:03:6a:81:4e:e3:ec:29:78:03:45:e7:dc:01:66:8b:45:8c:45:8a:
     }
     
     window.addEventListener('DOMContentLoaded', () => {
-      const table = document.getElementById('versionMap').getElementsByTagName('tbody')[0];
-      table.innerHTML = `<tr><td colspan="7">正在加载</td></tr>`;
+      const MIRRORS = [
+        'https://raw.githubusercontent.com/FCL-Team/FoldCraftLauncher/refs/heads/main/version_map.json',
+        'https://raw.kkgithub.com/FCL-Team/FoldCraftLauncher/refs/heads/main/version_map.json',
+        'https://ghproxy.com/https://raw.githubusercontent.com/FCL-Team/FoldCraftLauncher/refs/heads/main/version_map.json'
+      ];
       
-      const escapeHTML = str => str.replace(/[&<>"']/g, m => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' } [m]));
-      
-      const primaryUrl = 'https://raw.githubusercontent.com/FCL-Team/FoldCraftLauncher/refs/heads/main/version_map.json';
-      const mirrorUrl = 'https://raw.kkgithub.com/FCL-Team/FoldCraftLauncher/refs/heads/main/version_map.json';
-      
-      const parseRelativeDate = (dateStr) => {
-        const date = new Date(dateStr);
-        const now = new Date();
-        const diff = ((now - date) / 1000); // 秒
-        // return diff < 60 ? `${Math.floor(diff)} 秒前` :
-        // diff < 3600 ? `${Math.floor(diff / 60)} 分钟前` :
-        // diff < 86400 ? `${Math.floor(diff / 3600)} 小时前` :
-        // 为什么把上面那部分合并为'今天' 因为传递进来的时间(日期)只精确到天
-        return diff < 86400 ? '今天' :
-          diff < 604800 ? `${Math.floor(diff / 86400)} 天前` :
-          diff < 2419200 ? `${Math.floor(diff / 604800)} 周前` :
-          diff < 29030400 ? `${Math.floor(diff / 2419200)} 个月前` :
-          date.toLocaleDateString();
-      }
+      const table = document.getElementById('versionMap').tBodies[0];
+      table.innerHTML = `<tr><td colspan="7">正在加载版本信息...</td></tr>`;
       
       loadDirectLinkVerify();
       
-      fetch(primaryUrl)
-        .then(response => {
-          console.log('加载版本信息：GitHub响应：' + response.status);
-          if (!response.ok) {
-            throw new Error('失败于响应GitHub');
-          }
-          return response.json();
-        })
-        .catch(error => {
-          console.warn('加载版本信息：GitHub响应失败，尝试kkGitHub：', error);
-          return fetch(mirrorUrl)
-            .then(response => {
-              console.log('加载版本信息：kkGitHub响应：' + response.status);
-              if (!response.ok) {
-                throw new Error('失败于响应kkGitHub');
-              }
-              return response.json();
-            });
-        })
-        .then(data => {
-          table.innerHTML = '';
-          const fragment = document.createDocumentFragment();
-          
-          data.forEach(version => {
-            const row = document.createElement('tr');
-            const descObj = version.description.find(d => d.lang === 'zh_CN') ||
-              version.description.find(d => d.lang === 'en') || { text: '暂无描述' };
-            const descText = escapeHTML(descObj.text).replace(/\n/g, '<br><br>');
-            const date = parseRelativeDate(version.date) || '';
-            
-            console.debug(`加载版本信息：原始日期：${version.date}，相对日期：${date}`);
-            
-            const cellsContent = [
-              version.type || '',
-              version.versionCode || '',
-              version.versionName || '',
-              date,
-              descText,
-              version.netdiskUrl ? `<a href="${escapeHTML(version.netdiskUrl)}" target="_blank"></a>` : '无',
-              version.url ? `<a href="${escapeHTML(version.url)}" target="_blank"></a>` : '无'
-            ];
-            
-            cellsContent.forEach(content => {
-              const cell = document.createElement('td');
-              cell.innerHTML = content;
-              row.appendChild(cell);
-            });
-            
-            fragment.appendChild(row);
-          });
-          
-          table.appendChild(fragment);
-          
-          if (printRandomError) {
-            generateRandomError();
-          }
-        })
-        .catch(error => {
-          console.error('加载版本信息：', error);
-          table.innerHTML = `<tr><td colspan="7" class="diagonalRed">加载失败，请检查网络或绕过GFW。<br>${error}</td></tr>`;
-        });
-      
+      fetchVersionData(MIRRORS)
+        .then(data => renderVersionTable(table, data))
+        .catch(error => handleLoadError(table, error));
     });
   </script>
   
