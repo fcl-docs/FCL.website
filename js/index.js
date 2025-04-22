@@ -12,8 +12,7 @@
 
 const printRandomError = true;
 // 控制是否在控制台打印随机错误
-const enableFoolDay = true;
-// 控制是否启用愚人节内容
+
 const errorMessages = [
   "知道你小子打开了控制台。",
   "送你一个错误。",
@@ -25,13 +24,18 @@ const errorMessages = [
   "qwq",
   "awa"
 ];
+// 随机错误内容
+
+const enableFoolDay = true;
+// 控制是否启用愚人节内容
 
 // ----------------------------------------------------------------------------------------------------
 
 let verifyAnswer = undefined;
 // 人机验证的答案
 
-let verifyAnswerIgnoreCase = false; // 人机验证答案是否忽略大小写
+let verifyAnswerIgnoreCase = false;
+// 人机验证答案是否忽略大小写
 
 let deviceArch = 'all';
 // 设备架构
@@ -238,7 +242,7 @@ window.onload = function() {
  * @param {'page/content'|'data'} type 文件类型
  * @returns {<Promise>string} 页面内容
  */
-const fetchContent = async(target, type = 'page/content') => {
+const fetchContent = async (target, type = 'page/content') => {
   return (await (await fetch(`/${type}/${target}`)).text());
 }
 
@@ -449,10 +453,10 @@ function robotVerify(thenDo) {
     generateRandomError();
   }
   
-  console.log('人机验证：答案：114514');
+  console.log('人机验证：答案：114514'); // 假答案迷惑用
   console.log(`人机验证：忽略答案大小写：${verifyAnswerIgnoreCase}`);
-  if ((verifyAnswerIgnoreCase && input.value.toLowerCase() === answer.toLowerCase())
-    || (input.value === answer)) {
+  if ((verifyAnswerIgnoreCase && input.value.toLowerCase() === answer.toLowerCase()) ||
+    (input.value === answer)) {
     thenDo();
     input.value = '';
     verifyFrom.remove();
@@ -574,3 +578,4 @@ function addClassToElements(firstClass, secondClass) {
     element.classList.add(secondClass);
   });
 }
+
