@@ -476,28 +476,21 @@ function robotVerify(thenDo) {
  * 显示下载页面的直链
  */
 function showDirectLink() {
-  const FCLcontent = document.getElementById('directLinkFCLcontent');
-  const MGcontent = document.getElementById('directLinkMGcontent');
+  const content = document.getElementById('directLinkContent');
   
-  // 并行加载两个资源
-  Promise.all([
-      fetch('/page/content/FCLdirectLink.html').then(res => res.text()),
-      fetch('/page/content/MGdirectLink.html').then(res => res.text())
-    ])
-    .then(([FCLhtml, MGhtml]) => {
-      if (FCLcontent && MGcontent) {
-        FCLcontent.innerHTML = FCLhtml;
-        MGcontent.innerHTML = MGhtml;
-        FCLcontent.classList.remove('diagonal');
-        MGcontent.classList.remove('diagonal');
+  fetch('/page/content/directLink.html')
+    .then(res => res.text())
+    .then(html => {
+      if (content) {
+        content.innerHTML = html;
+        content.classList.remove('diagonal');
         archHighlight(deviceArch);
         console.log('下载直链：显示');
       }
     })
     .catch(error => {
       console.error('下载直链：', error);
-      if (FCLcontent) FCLcontent.innerHTML = '直链加载失败，请刷新重试';
-      if (MGcontent) MGcontent.innerHTML = '直链加载失败，请刷新重试';
+      if (content) FCLcontent.innerHTML = '直链加载失败，请刷新重试。';
     });
 }
 
