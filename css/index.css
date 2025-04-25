@@ -345,7 +345,7 @@ h1 {
   vertical-align: unset;
   color: #000;
   background-color: #000;
-  transition: background-color 0.4s;
+  transition: all 0.5s;
 }
 .hideText:hover {
   color: #fff;
