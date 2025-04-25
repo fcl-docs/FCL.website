@@ -14,6 +14,8 @@ const printRandomError = true;
 // 控制是否在控制台打印随机错误
 
 const errorMessages = [
+  "我的网站是T0级懂？",
+  "我的网站很完美！",
   "知道你小子打开了控制台。",
   "送你一个错误。",
   "随机送给有缘人一个错误。",
