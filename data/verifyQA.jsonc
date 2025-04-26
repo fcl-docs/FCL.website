@@ -43,7 +43,10 @@
     
     // 数学题
     "<img src=\"/file/verifyPic/1.jpg\">",
-    "<img src=\"/file/verifyPic/2.jpg\">"
+    "<img src=\"/file/verifyPic/2.jpg\">",
+    
+    // 编程题
+    "<div class=\"code window\">\r\n  <div class=\"codeT windowTitle level3\">\r\n    <span>JavaScript<\/span>\r\n  <\/div>\r\n  <pre><code class=\"language-js\">\/**\r\n * 获取文件内容\r\n * @param {string} target 目标文件名\r\n * @param {'page\/content'|'data'} type 文件类型\r\n * @returns {Promise<string>} 页面内容\r\n *\/\r\nconst fetchContent = async (target, type = 'page\/content') => {\r\n  const response = await fetch(`\/${type}\/${target}`);\r\n  if (!response.ok) {\r\n    throw new Error(`HTTP error! status: ${response.status}`);\r\n  }\r\n  return await response.text();\r\n};\r\n\r\n\/**\r\n * 加载侧边栏\r\n *\/\r\nasync function loadSidebar() {\r\n  const sidebarContainer = document.getElementById('sidebar');\r\n  \r\n  if (sidebarContainer) {\r\n    try {\r\n      sidebarContainer.insertAdjacentHTML('beforeend', await fetchContent('sidebar.html'));\r\n      console.log('加载侧边栏：成功');\r\n    } catch (e) {\r\n      sidebarContainer.insertAdjacentHTML('beforeend', await fetchContent('err.html')\r\n        .replace('%errmsg%', e.message));\r\n      console.error('加载侧边栏：', e);\r\n    }\r\n  } else {\r\n    console.warn('加载侧边栏：找不到容器');\r\n  }\r\n  \r\n}<\/code><\/pre>\r\n<\/div>\r\n<p>关于上述 <code>loadSidebar<\/code> 函数的代码，以下哪一项说法是<mark>错误<\/mark>的？ <\/p>\r\n<p>A. 如果 <code>sidebarContainer<\/code> 不存在，函数会输出警告信息但不会抛出错误。 <\/p>\r\n<p>B. <code>fetchContent<\/code> 函数返回的是一个 Promise，需要通过 <code>await<\/code> 或 <code>.then()<\/code> 获取其解析值。 <\/p>\r\n<p>C. 如果加载 <code>sidebar.html<\/code> 失败，错误信息会显示在 <code>err.html<\/code> 模板中的 <code>%errmsg%<\/code> 占位符处。 <\/p>\r\n<p>D. <code>insertAdjacentHTML<\/code> 的 <code>'beforeend'<\/code> 参数表示新内容会插入到 <code>sidebarContainer<\/code> 的闭合标签之前。 <\/p>\r\n<p>E. 无论是否成功加载 <code>sidebar.html<\/code>，函数都会尝试向 <code>sidebarContainer<\/code> 插入内容。 <\/p>\r\n<p>F. 如果 <code>fetchContent('sidebar.html')<\/code> 抛出错误，<code>catch<\/code> 块会先尝试加载 <code>err.html<\/code>，再用错误信息替换占位符。 <\/p>\r\n<p>G. 在 <code>catch<\/code> 块中，即使 <code>fetchContent('err.html')<\/code> 失败，错误也会被静默处理，不会向外传递。 <\/p>\r\n<p>H. 函数没有处理 <code>fetchContent('err.html')<\/code> 可能失败的情况，这可能导致未捕获的 Promise 拒绝。 <\/p>    "
   ],
   "answers": [
     "在" // 开源板块字符
@@ -79,5 +82,7 @@
     
     ,"1/2" // 1.jpg
     ,"96" // 2.jpg
+    
+    ,"G" // 编程1
   ]
 }
