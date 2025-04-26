@@ -14,6 +14,18 @@
     <priority>0.8</priority>
   </url>
   <url>
+    <loc>https://foldcraftlauncher.cn/downLinks.html</loc>
+    <lastmod>2025-04-19</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://foldcraftlauncher.cn/checksums.html</loc>
+    <lastmod>2025-04-19</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
     <loc>https://foldcraftlauncher.cn/docs.html</loc>
     <lastmod>2025-04-19</lastmod>
     <changefreq>weekly</changefreq>
