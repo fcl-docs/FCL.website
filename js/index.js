@@ -83,11 +83,15 @@ document.addEventListener('DOMContentLoaded', function() {
     }
     downVerifyBtn.addEventListener('click', function() {
       robotVerify(showDirectLink);
-      toggleCD(downVerifyBtn, 2.5);
+      toggleCD(downVerifyBtn, 3);
     });
     document.getElementById('changeVerifyBtn').addEventListener('click', function() {
       loadDirectLinkVerify();
-      toggleCD(this, 2.5, () => { this.textContent = '菜！' }, () => { this.textContent = '换一个' });
+      toggleCD(this, 5, () => { this.textContent = '菜！' }, () => { this.textContent = '换一个' });
+      if (typeof hljs !== 'undefined' && hljs.highlightAll) {
+        hljs.highlightAll();
+        console.log('hljs：' + typeof hljs);
+      }
     });
   };
   
@@ -242,10 +246,14 @@ window.onload = function() {
  * 获取文件内容
  * @param {string} target 目标文件名
  * @param {'page/content'|'data'} type 文件类型
- * @returns {<Promise>string} 页面内容
+ * @returns {Promise<string>} 页面内容
  */
-const fetchContent = async (target, type = 'page/content') => {
-  return (await (await fetch(`/${type}/${target}`)).text());
+async function fetchContent(target, type = 'page/content') {
+  const response = await fetch(`/${type}/${target}`);
+  if (!response.ok) {
+    throw new Error(`HTTP error! status: ${response.status}`);
+  }
+  return await response.text();
 }
 
 /**
@@ -477,23 +485,21 @@ function robotVerify(thenDo) {
 /**
  * 显示下载页面的直链
  */
-function showDirectLink() {
+async function showDirectLink() {
   const content = document.getElementById('directLinkContent');
   
-  fetch('/page/content/directLink.html')
-    .then(res => res.text())
-    .then(html => {
-      if (content) {
-        content.innerHTML = html;
-        content.classList.remove('diagonal');
-        archHighlight(deviceArch);
-        console.log('下载直链：显示');
-      }
-    })
-    .catch(error => {
-      console.error('下载直链：', error);
-      if (content) FCLcontent.innerHTML = '直链加载失败，请刷新重试。';
-    });
+  try {
+    const html = await fetchContent('directLink.html');
+    if (content) {
+      content.innerHTML = html;
+      content.classList.remove('diagonal');
+      archHighlight(deviceArch);
+      console.log('下载直链：显示');
+    }
+  } catch (error) {
+    console.error('下载直链：', error);
+    if (content) content.innerHTML = '直链加载失败，请刷新重试。';
+  }
 }
 
 /**
