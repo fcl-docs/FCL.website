@@ -88,10 +88,6 @@ document.addEventListener('DOMContentLoaded', function() {
     document.getElementById('changeVerifyBtn').addEventListener('click', function() {
       loadDirectLinkVerify();
       toggleCD(this, 5, () => { this.textContent = '菜！' }, () => { this.textContent = '换一个' });
-      if (typeof hljs !== 'undefined' && hljs.highlightAll) {
-        hljs.highlightAll();
-        console.log('hljs：' + typeof hljs);
-      }
     });
   };
   
@@ -445,6 +441,10 @@ async function loadDirectLinkVerify() {
     document.getElementById('verifyQuestion').innerHTML = verifyQuestions[index];
     verifyAnswer = verifyAnswers[index];
     console.log('加载人机验证数据：成功');
+    if (typeof hljs !== 'undefined' && hljs.highlightAll) {
+      hljs.highlightAll();
+      console.log('hljs：' + typeof hljs);
+    }
   } catch (e) { console.error('加载人机验证数据：', e) }
 }
 
