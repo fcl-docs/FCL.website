@@ -288,7 +288,7 @@ function hideTip(tip) {
         break;
     }
   } catch (e) {
-    console.error('隐藏提示出错：', e);
+    console.error('隐藏提示：', e);
   }
   
   printRandomError && generateRandomError();
