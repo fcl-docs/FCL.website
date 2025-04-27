@@ -42,6 +42,9 @@ let verifyAnswerIgnoreCase = false;
 let deviceArch = 'all';
 // 设备架构
 
+let deviceOsVer = 'Android 8';
+// 安卓版本
+
 // ----------------------------------------------------------------------------------------------------
 
 document.addEventListener('DOMContentLoaded', function() {
@@ -170,12 +173,14 @@ document.addEventListener('DOMContentLoaded', function() {
       try {
         const deviceInfo = await deviceChecker.check();
         
-        dataOsVer.textContent = deviceInfo.osVer ?? '未知';
-        deviceArch = dataDeviceArch.textContent = deviceInfo.arch ?? '未知';
-        
-        archHighlight(deviceArch);
+        deviceOsVer = deviceInfo.osVer ?? '未知';
+        dataOsVer.textContent = deviceInfo.osVer;
+        deviceArch = deviceInfo.arch ?? '未知';
+        dataDeviceArch.textContent = deviceInfo.arch;
         
         console.log('获取设备信息：', deviceInfo);
+        
+        archHighlight(deviceArch);
         
       } catch (checkError) {
         console.error('获取设备信息：', checkError);
@@ -558,8 +563,19 @@ function getNthCharacter(element, n) {
  */
 function archHighlight(archInfo) {
   const arch = archInfo.replace(/\s*\([^)]*\)/g, '');
-  console.log('架构高亮：' + arch);
+  console.log(`架构高亮：${arch}`);
   addClassToElements(arch, 'highlightArch');
+  
+  console.log('架构高亮：原：' + deviceOsVer);
+  const androidVersionMatch = deviceOsVer.match(/^Android (\d+)/);
+  console.log('架构高亮：后：' + androidVersionMatch);
+  if (androidVersionMatch) {
+    const majorVersion = parseInt(androidVersionMatch[1], 10);
+    if (majorVersion >= 1 && majorVersion <= 7) {
+      document.getElementById('androidVerTooOld').classList.remove('hide');
+      console.log('架构高亮：安卓版本低')
+    }
+  }
 }
 
 /**
