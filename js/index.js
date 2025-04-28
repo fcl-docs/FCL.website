@@ -470,6 +470,7 @@ async function loadDirectLinkVerify() {
       hljs.highlightAll();
       console.log('hljs：' + typeof hljs);
     }
+    setupCodeCopy();
   } catch (e) { console.error('加载人机验证数据：', e) }
 }
 
