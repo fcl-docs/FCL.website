@@ -131,19 +131,21 @@ const errorMessages = [
   "我的网站很完美！"
 ];
 
-if (printRandomError) {
-  generateRandomError(); // 意义不明的注释
-}
-
 /**
  * 在控制台中打印一个随机无意义错误消息
  */
-function generateRandomError() {
+function generateRandomError(verify) {
+  if (!verify) {
+    return;
+  }
+  
   const randomIndex = Math.floor(Math.random() * errorMessages.length);
   const errorMessage = errorMessages[randomIndex];
   
   console.error(errorMessage);
-}</code></pre>
+}
+
+generateRandomError(printRandomError);</code></pre>
         </div>
         
       <div class="yellow window">

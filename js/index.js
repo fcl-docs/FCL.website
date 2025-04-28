@@ -48,169 +48,20 @@ let deviceOsVer = 'Android 8';
 // ----------------------------------------------------------------------------------------------------
 
 document.addEventListener('DOMContentLoaded', function() {
-  if (typeof eruda !== 'undefined' && (location.hostname === 'localhost' || location.hostname === '127.0.0.1' || location.search.includes('debug'))) {
-    eruda.init();
-    console.warn('Eruda：启用');
-  }
-  
-  const downVerifyBtn = document.getElementById('downVerifyBtn');
+  initEruda();
   
   loadSidebar();
-  
   checkVerticalView();
-  
   hideTip('dom');
   
-  if (printRandomError) {
-    generateRandomError();
-  }
+  generateRandomError(printRandomError);
   
+  setupDownloadVerification();
+  setupCodeCopy();
+  checkDeviceInfo();
   
-  if (downVerifyBtn) {
-    /**
-     * 冷却时间
-     * @param {HTMLElement} target 目标元素
-     * @param {number} timeout 冷却时间(s)
-     * @param {function} start 开始回调
-     * @param {function} end 结束回调
-     */
-    const toggleCD = (target, timeout, start = () => {}, end = () => {}) => {
-      target.style.opacity = 0.5;
-      target.style.pointerEvents = 'none';
-      start();
-      setTimeout(() => {
-        target.style.opacity = 1;
-        target.style.pointerEvents = 'auto';
-        end();
-      }, timeout * 1000);
-    }
-    downVerifyBtn.addEventListener('click', function() {
-      robotVerify(showDirectLink);
-      toggleCD(downVerifyBtn, 3);
-    });
-    document.getElementById('changeVerifyBtn').addEventListener('click', function() {
-      loadDirectLinkVerify();
-      toggleCD(this, 5, () => { this.textContent = '菜！' }, () => { this.textContent = '换一个' });
-    });
-  };
-  
-  document.querySelectorAll('.code.window pre').forEach(pre => {
-    console.log('代码复制：' + pre);
-    pre.addEventListener('click', async () => {
-      console.log('代码复制：已被点击');
-      
-      const codeWindow = pre.closest('.code.window');
-      if (!codeWindow) {
-        console.warn('代码复制：未找到.code.window父容器');
-        return;
-      }
-      
-      const code = pre.querySelector('code');
-      const title = codeWindow.querySelector('.codeT span');
-      if (!code || !title) {
-        console.warn(code ? '代码复制：未找到标题元素' : '代码复制：未找到代码元素');
-        return;
-      }
-      
-      try {
-        await navigator.clipboard.writeText(code.textContent);
-        console.log('代码复制：成功');
-        
-        const range = document.createRange();
-        range.selectNodeContents(code);
-        const selection = window.getSelection();
-        selection.removeAllRanges();
-        selection.addRange(range);
-        console.log('代码复制：已选中代码');
-        
-        const originalText = title.textContent;
-        title.textContent = '✓ 复制成功: ' + originalText;
-        console.log(`代码复制：标题更新`);
-        
-        setTimeout(() => {
-          title.textContent = originalText;
-          selection.removeAllRanges();
-          console.log('代码复制：状态重置');
-        }, 1000);
-        
-      } catch (err) {
-        console.error('代码复制：', err);
-        const originalText = title.textContent;
-        title.textContent = '✗ 复制失败: ' + originalText;
-        
-        setTimeout(() => {
-          title.textContent = originalText;
-          console.log('代码复制：状态重置');
-        }, 1000);
-        
-        if (!navigator.clipboard) {
-          console.warn('代码复制：尝试降级复制方案');
-          const textarea = document.createElement('textarea');
-          textarea.value = code.textContent;
-          document.body.appendChild(textarea);
-          textarea.select();
-          document.execCommand('copy');
-          document.body.removeChild(textarea);
-          console.log('代码复制：降级复制方案成功');
-        }
-      }
-    });
-    
-  });
-  
-  (async () => {
-    const dataOsVer = document.querySelector('[data-os-ver]');
-    const dataDeviceArch = document.querySelector('[data-device-arch]');
-    
-    if (!dataOsVer || !dataDeviceArch) {
-      console.warn('获取设备信息：找不到展示元素');
-      return;
-    }
-    
-    try {
-      const deviceChecker = await import('/js/device-checker.js');
-      
-      try {
-        const deviceInfo = await deviceChecker.check();
-        
-        deviceOsVer = deviceInfo.osVer ?? '未知';
-        dataOsVer.textContent = deviceInfo.osVer;
-        deviceArch = deviceInfo.arch ?? '未知';
-        dataDeviceArch.textContent = deviceInfo.arch;
-        
-        console.log('获取设备信息：', deviceInfo);
-        
-        archHighlight(deviceArch);
-        
-      } catch (checkError) {
-        console.error('获取设备信息：', checkError);
-        
-        switch (checkError.message) {
-          case 'cannot-get-ua':
-            dataOsVer.textContent = '获取失败：';
-            dataDeviceArch.textContent = '无法读取User-Agent';
-            break;
-            
-          default:
-            dataOsVer.textContent = '获取失败：';
-            dataDeviceArch.textContent = '未知错误';
-            break;
-        }
-      }
-      
-    } catch (importError) {
-      console.error('设备信息模块加载：', importError);
-      
-      dataOsVer.textContent = '模块异常：';
-      dataDeviceArch.textContent = importError.message.includes('Failed to fetch') ?
-        '设备检测模块缺失' :
-        '模块加载错误';
-    }
-  })();
-  
-  window.addEventListener('resize', function() {
+  window.addEventListener('resize', () => {
     console.log('window.resize：开始');
-    
     // checkVerticalView();
   });
   
@@ -228,7 +79,7 @@ window.onload = function() {
     console.warn('hljs：' + typeof hljs);
   }
   
-  printRandomError && generateRandomError();
+  generateRandomError(printRandomError);
   
   console.log('时间：' + new Date());
   
@@ -242,6 +93,173 @@ window.onload = function() {
   console.log('window.onload：完成');
   
 };
+
+/** 
+ * 初始化Eruda
+ */
+function initEruda() {
+  if (typeof eruda !== 'undefined' && (location.hostname === 'localhost' ||
+      location.hostname === '127.0.0.1' || location.search.includes('debug'))) {
+    eruda.init();
+    console.warn('Eruda：启用');
+  }
+}
+
+/**
+ * 设置冷却时间效果
+ * @param {HTMLElement} target - 目标元素
+ * @param {number} timeout - 冷却时间（秒）
+ * @param {Function} [start] - 开始回调
+ * @param {Function} [end] - 结束回调
+ */
+function toggleCD(target, timeout, start = () => {}, end = () => {}) {
+  target.style.opacity = 0.5;
+  target.style.pointerEvents = 'none';
+  start();
+  setTimeout(() => {
+    target.style.opacity = 1;
+    target.style.pointerEvents = 'auto';
+    end();
+  }, timeout * 1000);
+}
+
+/** 
+ * 设置下载验证按钮交互
+ */
+function setupDownloadVerification() {
+  const downVerifyBtn = document.getElementById('downVerifyBtn');
+  if (!downVerifyBtn) return;
+  
+  downVerifyBtn.addEventListener('click', function() {
+    robotVerify(showDirectLink);
+    toggleCD(downVerifyBtn, 3);
+  });
+  
+  document.getElementById('changeVerifyBtn').addEventListener('click', function() {
+    loadDirectLinkVerify();
+    toggleCD(this, 5,
+      () => { this.textContent = '菜！' },
+      () => { this.textContent = '换一个' }
+    );
+  });
+}
+
+/**
+ * 处理代码复制功能
+ * @param {HTMLElement} pre - 代码预览元素
+ */
+async function handleCodeCopy(pre) {
+  console.log('代码复制：' + pre);
+  pre.addEventListener('click', async () => {
+    console.log('代码复制：已被点击');
+    
+    const codeWindow = pre.closest('.code.window');
+    if (!codeWindow) {
+      console.warn('代码复制：未找到.code.window父容器');
+      return;
+    }
+    
+    const code = pre.querySelector('code');
+    const title = codeWindow.querySelector('.codeT span');
+    if (!code || !title) {
+      console.warn(code ? '代码复制：未找到标题元素' : '代码复制：未找到代码元素');
+      return;
+    }
+    
+    try {
+      await navigator.clipboard.writeText(code.textContent);
+      console.log('代码复制：成功');
+      
+      const range = document.createRange();
+      range.selectNodeContents(code);
+      const selection = window.getSelection();
+      selection.removeAllRanges();
+      selection.addRange(range);
+      console.log('代码复制：已选中代码');
+      
+      const originalText = title.textContent;
+      title.textContent = '✓ 复制成功: ' + originalText;
+      console.log(`代码复制：标题更新`);
+      
+      setTimeout(() => {
+        title.textContent = originalText;
+        selection.removeAllRanges();
+        console.log('代码复制：状态重置');
+      }, 1000);
+      
+    } catch (err) {
+      console.error('代码复制：', err);
+      const originalText = title.textContent;
+      title.textContent = '✗ 复制失败: ' + originalText;
+      
+      setTimeout(() => {
+        title.textContent = originalText;
+        console.log('代码复制：状态重置');
+      }, 1000);
+      
+      if (!navigator.clipboard) {
+        console.warn('代码复制：尝试降级复制方案');
+        const textarea = document.createElement('textarea');
+        textarea.value = code.textContent;
+        document.body.appendChild(textarea);
+        textarea.select();
+        document.execCommand('copy');
+        document.body.removeChild(textarea);
+        console.log('代码复制：降级复制方案成功');
+      }
+    }
+  });
+}
+
+/** 
+ * 设置代码复制功能
+ */
+function setupCodeCopy() {
+  document.querySelectorAll('.code.window pre').forEach(pre => {
+    handleCodeCopy(pre);
+  });
+}
+
+/** 
+ * 检测设备信息
+ */
+async function checkDeviceInfo() {
+  const dataOsVer = document.querySelector('[data-os-ver]');
+  const dataDeviceArch = document.querySelector('[data-device-arch]');
+  
+  if (!dataOsVer || !dataDeviceArch) {
+    console.warn('获取设备信息：找不到展示元素');
+    return;
+  }
+  
+  try {
+    const deviceChecker = await import('/js/device-checker.js');
+    const deviceInfo = await deviceChecker.check();
+    
+    deviceOsVer = deviceInfo.osVer ?? '未知';
+    dataOsVer.textContent = deviceInfo.osVer;
+    deviceArch = deviceInfo.arch ?? '未知';
+    dataDeviceArch.textContent = deviceInfo.arch;
+    
+    console.log('获取设备信息：', deviceInfo);
+    archHighlight(deviceArch);
+    
+  } catch (checkError) {
+    console.error('获取设备信息：', checkError);
+    
+    switch (checkError.message) {
+      case 'cannot-get-ua':
+        dataOsVer.textContent = '获取失败：';
+        dataDeviceArch.textContent = '无法读取User-Agent';
+        break;
+        
+      default:
+        dataOsVer.textContent = '获取失败：';
+        dataDeviceArch.textContent = '未知错误';
+        break;
+    }
+  }
+}
 
 /**
  * 获取文件内容
@@ -300,7 +318,7 @@ function hideTip(tip) {
     console.error('隐藏提示：', e);
   }
   
-  printRandomError && generateRandomError();
+  generateRandomError(printRandomError);
   
 }
 
@@ -319,9 +337,7 @@ function expandSidebar(isExpand) {
     mainElement.classList.add('mainExpand');
     expandButton.style.display = 'none';
     
-    if (printRandomError) {
-      generateRandomError();
-    }
+    generateRandomError(printRandomError);
     
     hideButton.style.display = 'none';
     contractButton.style.display = 'block';
@@ -348,6 +364,9 @@ function hideSidebar(isHide) {
   if (isHide) {
     sidebarElement.classList.add('sidebarHide');
     mainElement.classList.add('mainFull');
+    
+    generateRandomError(printRandomError);
+    
     mainElement.insertAdjacentHTML('afterbegin', tipHtml);
     console.log('隐藏侧边栏：是');
   } else {
@@ -367,9 +386,7 @@ function checkVerticalView() {
   const viewportHeight = window.innerHeight;
   const viewportWidth = window.innerWidth;
   
-  if (printRandomError) {
-    generateRandomError();
-  }
+  generateRandomError(printRandomError);
   
   const sidebarElement = document.querySelector('.sidebar');
   const mainElement = document.querySelector('.main');
@@ -405,6 +422,9 @@ function checkVerticalView() {
  */
 function isTodayDate(month, day) {
   const today = new Date();
+  
+  generateRandomError(printRandomError);
+  
   return today.getMonth() === month - 1 && today.getDate() === day;
 }
 
@@ -464,9 +484,7 @@ function robotVerify(thenDo) {
   const verifyFail = document.getElementById('verifyFail');
   const verifyFinish = document.getElementById('verifyFinish');
   
-  if (printRandomError) {
-    generateRandomError();
-  }
+  generateRandomError(printRandomError);
   
   console.log('人机验证：答案：114514'); // 假答案迷惑用
   console.log(`人机验证：忽略答案大小写：${verifyAnswerIgnoreCase}`);
@@ -510,7 +528,11 @@ async function showDirectLink() {
 /**
  * 在控制台中打印一个随机无意义错误消息
  */
-function generateRandomError() {
+function generateRandomError(verify) {
+  if (!verify) {
+    return;
+  }
+  
   const randomIndex = Math.floor(Math.random() * errorMessages.length);
   const errorMessage = errorMessages[randomIndex];
   
@@ -707,9 +729,7 @@ function renderVersionTable(table, data) {
   table.innerHTML = '';
   table.appendChild(fragment);
   
-  if (printRandomError) {
-    generateRandomError();
-  }
+  generateRandomError(printRandomError);
 }
 
 /**
