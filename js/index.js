@@ -563,18 +563,36 @@ function getNthCharacter(element, n) {
  */
 function archHighlight(archInfo) {
   const arch = archInfo.replace(/\s*\([^)]*\)/g, '');
-  console.log(`架构高亮：${arch}`);
+  const avto = document.getElementById('androidVerTooOld');
+  
+  console.log(`架构高亮：架构：${arch}`);
   addClassToElements(arch, 'highlightArch');
   
-  console.log('架构高亮：原：' + deviceOsVer);
+  console.log('架构高亮：原始系统：' + deviceOsVer);
   const androidVersionMatch = deviceOsVer.match(/^Android (\d+)/);
-  console.log('架构高亮：后：' + androidVersionMatch);
+  
+  // 确保提示元素存在
+  if (!avto) {
+    console.error('错误：未找到安卓版本提示元素');
+    return;
+  }
+  
+  // 判断系统类型及版本
   if (androidVersionMatch) {
     const majorVersion = parseInt(androidVersionMatch[1], 10);
+    console.log(`架构高亮：安卓版本：${majorVersion}`);
+    
     if (majorVersion >= 1 && majorVersion <= 7) {
-      document.getElementById('androidVerTooOld').classList.remove('hide');
-      console.log('架构高亮：安卓版本低')
+      avto.classList.remove('hide');
+      console.log('架构高亮：avto：显示');
+    } else {
+      avto.classList.add('hide');
+      console.log('架构高亮：avto：隐藏');
     }
+  } else {
+    console.log('架构高亮：非安卓系统');
+    avto.classList.remove('hide');
+    console.log('架构高亮：avto：显示');
   }
 }
 
