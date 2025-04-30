@@ -26,8 +26,9 @@
     "在 <a href=\"./page/debug/elements.html\" target=\"_blank\">所有元素</a>页面 → 侧边栏 → 页面信息 → 你发现了一串神秘的字符 中，<mark>第 3 个到 第 4 个字符</mark>是什么？",
     
     // 我的网站很完美页面（2个）
-    "在  <a href=\"./page/other/perfect.html\" target=\"_blank\">我的网站很完美</a>页面 → 我的网站是T0级懂？ 的板块中，<mark>第 3 段第 2 个字符</mark>是什么？",
-    "在  <a href=\"./page/other/perfect.html\" target=\"_blank\">我的网站很完美</a>页面 → 我的网站是T0级懂？ 的板块中，<mark>出现的代码</mark>是什么语言？",
+    "在  <a href=\"./page/other/perfect.html\" target=\"_blank\">我的网站很完美</a>页面 → 这TM是一个标题 的板块中，<mark>第 3 段第 3 个字符</mark>是什么？",
+    "在  <a href=\"./page/other/perfect.html\" target=\"_blank\">我的网站很完美</a>页面 → 这TM是一个标题 的板块中，<mark>第 3 段第 5 个字符</mark>是什么？",
+    "在  <a href=\"./page/other/perfect.html\" target=\"_blank\">我的网站很完美</a>页面 → 这TM是一个标题 的板块中，<mark>第 4 段第 7 个字符</mark>是什么？",
     
     // FCL相关
     "FCL 的<mark>全称</mark>是什么？（区分大小写，包含空格）",
@@ -66,8 +67,9 @@
     ,"5" // 函数按钮
     ,"D6" // 神秘字符
     
-    ,"个" // 完美网站字符
-    ,"JavaScript" // 代码语言
+    ,"网" // 完美网站3段3字符
+    ,"没" // 完美网站3段5字符
+    ,"在" // 完美网站4段7字符
     
     ,"Fold Craft Launcher" // FCL全称
 
