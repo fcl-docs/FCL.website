@@ -62,7 +62,9 @@ document.addEventListener('DOMContentLoaded', function() {
   
   window.addEventListener('resize', () => {
     console.log('window.resize：开始');
-    // checkVerticalView();
+    
+    hideSidebar(false);
+    checkVerticalView();
   });
   
   console.log('document.DOMContentLoaded：完成');
@@ -396,11 +398,9 @@ function checkVerticalView() {
   console.log('视口高：' + viewportHeight);
   console.log('视口宽：' + viewportWidth);
   if (viewportHeight > viewportWidth) {
-    sidebarContainer.insertAdjacentHTML('beforeend', tipHTML);
+    sidebarContainer.insertAdjacentHTML('afterbegin', tipHTML);
     hideSidebar(true);
     console.log('视口为竖屏：是')
-    // sidebarElement.classList.add('sidebarVertical');
-    // mainElement.classList.add('mainVertical');
   } else {
     const tipElement = document.getElementById('verticalTip');
     if (tipElement) {
@@ -408,8 +408,6 @@ function checkVerticalView() {
     }
     hideSidebar(false);
     console.log('视口为竖屏：否')
-    // sidebarElement.classList.remove('sidebarVertical');
-    // mainElement.classList.remove('mainVertical');
   }
   
 }
