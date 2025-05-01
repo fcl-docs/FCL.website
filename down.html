@@ -128,48 +128,20 @@
         </p>
       </div>
       
-      <div class="window" id="verifyFrom">
-        <div class="windowTitle level2">
-          <span>验证</span>
-        </div>
-        <p>
-          为了防止直链被恶意滥用<span class="hideText">其实是为了省流量</span>，请回答以下问题以显示直链：
-        </p>
-        <p id="verifyQuestion">
-          人机验证问题加载失败。请尝试刷新页面或启用JavaScript，或在<a href="https://github.com/fcl-docs/FCL.website/issues" target="_blank">此网站的GitHub仓库</a>提出Issue。
-        </p>
-        <p>
-          如觉得问题太难，可以更换问题。<span class="hideText">如果刷新到同一个问题，那就是你自己的问题了 ㄟ( ▔, ▔ )ㄏ</span>
-        </p>
-        <input id="verifyInput">
-        <button id="downVerifyBtn">验证</button>
-        <button id="changeVerifyBtn">换一个</button>
-        
-        <div class="red window hide" id="verifyFail">
-          <div class="redT windowTitle level3">
-            <span>错误</span>
-          </div>
-          <p>
-            回答错误，验证失败。
-          </p>
-        </div>
-        
-      </div>
-      
-      <div class="green window hide" id="verifyFinish">
-        <div class="greenT windowTitle level2">
-          <span>验证</span>
-        </div>
-        <p>恭喜！您已完成验证。</p>
-      </div>
-      
       <div class="diagonal window" id="directLinkContent">
         <div class="windowTitle level2">
           <span>下载链接</span>
         </div>
+        <button onclick="showDirectLink();">显示链接</button>
+        <!--
         <p>
-          请先完成验证。
+          请在控制台中输入“<code>showDirectLink();</code>”以完成验证。
         </p>
+        <ul>
+          <li><a href="?debug">显示 Eruda</a></li>
+          <li><a href="" target="_blank">查看详细教程</a></li>
+        </ul>
+        -->
       </div>
       
       <div class="window">
