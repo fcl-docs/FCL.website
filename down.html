@@ -89,11 +89,11 @@
         </div>
         
         <p>
-          请根据自己的手机CPU架构选择对应的版本，不知道的无脑选择<code>all</code>。
+          <mark>小白请无脑点击“下载最新版FCL”。</mark>
         </p>
         
         <p>
-          <mark>绿色背景</mark>表示此链接符合您的UserAgent中描述的设备架构。<mark>紫色背景</mark>表示此链接架构为<code>all</code>。
+          点击“我不是小白”后，请根据自己的手机CPU架构选择对应的版本。<mark>绿色背景</mark>表示此链接符合您的UserAgent中描述的设备架构。<mark>紫色背景</mark>表示此链接架构为<code>all</code>。
         </p>
         
         <div class="window">
@@ -128,48 +128,31 @@
         </p>
       </div>
       
-      <div class="window" id="verifyFrom">
+      <div class="window">
         <div class="windowTitle level2">
-          <span>验证</span>
+          <span>提示</span>
         </div>
         <p>
-          为了防止直链被恶意滥用<span class="hideText">其实是为了省流量</span>，请回答以下问题以显示直链：
+          目前下载站一直在亏损。如果您条件允许，可<a href="/support.html" target="_blank">赞助站长</a>。如有其它问题可以加<a href="http://qm.qq.com/cgi-bin/qm/qr?_wv=1027&k=PaB86PVFPGIYZwNzt_51ywx4Ih3DQ_VR&authKey=OqZ%2FOVHIIdt%2FSLx4c8jSz0cZReZ1IK0oSUqGC%2FjVQSmcpmaeWZdYrYunwAr7v8uv&noverify=0&group_code=211870840" target="_blank">我的QQ群</a>或在<a href="https://github.com/fcl-docs/FCL.website/issues" target="_blank">此网站的GitHub仓库</a>提出Issue。
         </p>
-        <p id="verifyQuestion">
-          人机验证问题加载失败。请尝试刷新页面或启用JavaScript，或在<a href="https://github.com/fcl-docs/FCL.website/issues" target="_blank">此网站的GitHub仓库</a>提出Issue。
-        </p>
-        <p>
-          如觉得问题太难，可以更换问题。<span class="hideText">如果刷新到同一个问题，那就是你自己的问题了 ㄟ( ▔, ▔ )ㄏ</span>
-        </p>
-        <input id="verifyInput">
-        <button id="downVerifyBtn">验证</button>
-        <button id="changeVerifyBtn">换一个</button>
-        
-        <div class="red window hide" id="verifyFail">
-          <div class="redT windowTitle level3">
-            <span>错误</span>
-          </div>
-          <p>
-            回答错误，验证失败。
-          </p>
-        </div>
-        
-      </div>
-      
-      <div class="green window hide" id="verifyFinish">
-        <div class="greenT windowTitle level2">
-          <span>验证</span>
-        </div>
-        <p>恭喜！您已完成验证。</p>
       </div>
       
       <div class="diagonal window" id="directLinkContent">
         <div class="windowTitle level2">
           <span>下载链接</span>
         </div>
+        <button><a href="https://vip.123pan.cn/1811746932/11324563" style="font-size: 2rem;">下载最新版FCL</a></button>
+        <br>
+        <button onclick="showDirectLink();">我不是小白（下载其它架构、下载渲染器）</button>
+        <!--
         <p>
-          请先完成验证。
+          请在控制台中输入“<code>showDirectLink();</code>”以完成验证。
         </p>
+        <ul>
+          <li><a href="?debug">显示 Eruda</a></li>
+          <li><a href="" target="_blank">查看详细教程</a></li>
+        </ul>
+        -->
       </div>
       
       <div class="window">
@@ -185,15 +168,6 @@
           <li><a href="/checksums.html">查看校验码</a></li>
         </ul>
         
-      </div>
-      
-      <div class="window">
-        <div class="windowTitle level2">
-          <span>提示</span>
-        </div>
-        <p>
-          想赞助站长？<a href="/support.html" target="_blank">打开赞助页面</a>。如有其它问题可以加<a href="http://qm.qq.com/cgi-bin/qm/qr?_wv=1027&k=PaB86PVFPGIYZwNzt_51ywx4Ih3DQ_VR&authKey=OqZ%2FOVHIIdt%2FSLx4c8jSz0cZReZ1IK0oSUqGC%2FjVQSmcpmaeWZdYrYunwAr7v8uv&noverify=0&group_code=211870840" target="_blank">我的QQ群</a>或在<a href="https://github.com/fcl-docs/FCL.website/issues" target="_blank">此网站的GitHub仓库</a>提出Issue。
-        </p>
       </div>
       
       <div class="window">

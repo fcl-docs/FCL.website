@@ -190,7 +190,6 @@ h1 {
   background-color: #444;
   border: 1px solid #888;
   box-shadow: 0 2px 0 #00000080;
-  transition: all 1s ease-in-out;
 }
 
 .windowTitle {
@@ -370,6 +369,15 @@ h1 {
 
 .highlightArch {
   background-color: #0f02;
+}
+
+.hideSidebarTip {
+  position: fixed;
+  z-index: 115;
+  right: 1rem;
+  top: 1rem;
+  opacity: 0.99;
+  box-shadow: 0 0 1rem #000;
 }
 
 @media screen and (max-width: 539px) {

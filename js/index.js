@@ -62,7 +62,9 @@ document.addEventListener('DOMContentLoaded', function() {
   
   window.addEventListener('resize', () => {
     console.log('window.resize：开始');
-    // checkVerticalView();
+    
+    hideSidebar(false);
+    checkVerticalView();
   });
   
   console.log('document.DOMContentLoaded：完成');
@@ -340,13 +342,13 @@ function expandSidebar(isExpand) {
     generateRandomError(printRandomError);
     
     hideButton.style.display = 'none';
-    contractButton.style.display = 'block';
+    contractButton.style.display = 'unset';
     console.log('展开侧边栏：是');
   } else {
     sidebarElement.classList.remove('sidebarExpand');
     mainElement.classList.remove('mainExpand');
-    expandButton.style.display = 'block';
-    hideButton.style.display = 'block';
+    expandButton.style.display = 'unset';
+    hideButton.style.display = 'unset';
     contractButton.style.display = 'none';
     console.log('展开侧边栏：否');
   }
@@ -359,7 +361,14 @@ function expandSidebar(isExpand) {
 function hideSidebar(isHide) {
   const sidebarElement = document.querySelector('.sidebar');
   const mainElement = document.querySelector('.main');
-  const tipHtml = '<meta charset="UTF-8"><div class="diagonal window" id="sidebarHideTip"><div class="windowTitle"><span>侧边栏已隐藏</span></div><button onclick="hideSidebar(false)" id="showSidebar">显示侧边栏</button></div>'
+  const tipHtml = `
+<meta charset="UTF-8">
+<div class="hideSidebarTip diagonal window" id="sidebarHideTip">
+  <div class="windowTitle">
+    <span>侧边栏已隐藏</span>
+  </div>
+  <button onclick="hideSidebar(false)" id="showSidebar">显示侧边栏</button>
+</div>`
   const tipElement = document.getElementById('sidebarHideTip');
   if (isHide) {
     sidebarElement.classList.add('sidebarHide');
@@ -368,6 +377,9 @@ function hideSidebar(isHide) {
     generateRandomError(printRandomError);
     
     mainElement.insertAdjacentHTML('afterbegin', tipHtml);
+    
+    makeDraggable(document.getElementById('sidebarHideTip'));
+    
     console.log('隐藏侧边栏：是');
   } else {
     sidebarElement.classList.remove('sidebarHide');
@@ -391,16 +403,27 @@ function checkVerticalView() {
   const sidebarElement = document.querySelector('.sidebar');
   const mainElement = document.querySelector('.main');
   const sidebarContainer = document.getElementById('sidebar');
-  const tipHTML = '<meta charset="UTF-8"><div class="diagonal window" id="verticalTip"><div class="windowTitle"><span>视口宽度小于视口高度</span></div><p>视口高度较小，可能会导致侧边栏显示不全或异常。<br><button onclick="expandSidebar(true)" id="expandSidebar">展开侧边栏</button> <button onclick="expandSidebar(false)" id="contractSidebar" style="display: none">收起侧边栏</button><button onclick="hideSidebar(true)" id="hideSidebar">隐藏侧边栏</button> <button onclick="hideSidebar(false)" id="showSidebar" style="display: none">显示侧边栏</button></p></div>'
+  const tipHTML = `
+<meta charset="UTF-8">
+<div class="diagonal window" id="verticalTip">
+  <div class="windowTitle">
+    <span>视口宽度小于视口高度</span>
+  </div>
+  <p>
+    视口高度较小，可能会导致侧边栏显示不全或异常。
+  </p>
+    <button onclick="expandSidebar(true)" id="expandSidebar">展开侧边栏</button>
+    <button onclick="expandSidebar(false)" id="contractSidebar" style="display: none">收起侧边栏</button>
+    <button onclick="hideSidebar(true)" id="hideSidebar">隐藏侧边栏</button>
+    <button onclick="hideSidebar(false)" id="showSidebar" style="display: none">显示侧边栏</button>
+</div>`
   
   console.log('视口高：' + viewportHeight);
   console.log('视口宽：' + viewportWidth);
   if (viewportHeight > viewportWidth) {
-    sidebarContainer.insertAdjacentHTML('beforeend', tipHTML);
+    sidebarContainer.insertAdjacentHTML('afterbegin', tipHTML);
     hideSidebar(true);
     console.log('视口为竖屏：是')
-    // sidebarElement.classList.add('sidebarVertical');
-    // mainElement.classList.add('mainVertical');
   } else {
     const tipElement = document.getElementById('verticalTip');
     if (tipElement) {
@@ -408,8 +431,6 @@ function checkVerticalView() {
     }
     hideSidebar(false);
     console.log('视口为竖屏：否')
-    // sidebarElement.classList.remove('sidebarVertical');
-    // mainElement.classList.remove('mainVertical');
   }
   
 }
@@ -750,6 +771,77 @@ function handleLoadError(table, error) {
       </td>
     </tr>
   `;
+}
+
+/**
+ * 为元素添加拖动功能
+ * @param {element} element - 元素
+ */
+function makeDraggable(element) {
+    let isDragging = false;
+    let startX, startY, initialX, initialY;
+
+    // 处理拖动开始
+    function startDrag(e) {
+        if ((e.type === 'mousedown' && e.button !== 0) || 
+            (e.type === 'touchstart' && e.touches.length === 0)) return;
+
+        // 获取初始坐标
+        const clientX = e.type === 'mousedown' ? e.clientX : e.touches[0].clientX;
+        const clientY = e.type === 'mousedown' ? e.clientY : e.touches[0].clientY;
+
+        // 解析当前transform值
+        const transform = window.getComputedStyle(element).transform;
+        if (transform !== 'none') {
+            const matrix = transform.match(/matrix\((.+)\)/)[1].split(',').map(parseFloat);
+            initialX = matrix[4] || 0;
+            initialY = matrix[5] || 0;
+        } else {
+            initialX = 0;
+            initialY = 0;
+        }
+
+        startX = clientX;
+        startY = clientY;
+        isDragging = true;
+
+        // 绑定事件
+        document.addEventListener('mousemove', onDrag);
+        document.addEventListener('mouseup', stopDrag);
+        document.addEventListener('touchmove', onDrag, { passive: false });
+        document.addEventListener('touchend', stopDrag);
+    }
+
+    // 处理拖动中
+    function onDrag(e) {
+        if (!isDragging) return;
+        e.preventDefault();
+
+        const clientX = e.type === 'mousemove' ? e.clientX : e.touches[0].clientX;
+        const clientY = e.type === 'mousemove' ? e.clientY : e.touches[0].clientY;
+
+        // 计算新位置
+        const deltaX = clientX - startX;
+        const deltaY = clientY - startY;
+        element.style.transform = `translate(${initialX + deltaX}px, ${initialY + deltaY}px)`;
+    }
+
+    // 停止拖动
+    function stopDrag() {
+        isDragging = false;
+        document.removeEventListener('mousemove', onDrag);
+        document.removeEventListener('mouseup', stopDrag);
+        document.removeEventListener('touchmove', onDrag);
+        document.removeEventListener('touchend', stopDrag);
+    }
+
+    // 初始化事件监听
+    element.addEventListener('mousedown', startDrag);
+    element.addEventListener('touchstart', startDrag);
+    
+    // 优化触摸体验
+    element.style.touchAction = 'none';
+    element.style.userSelect = 'none';
 }
 
 /**
