@@ -115,6 +115,10 @@ h1 {
   all: unset;
 }
 
+p {
+  margin: 1rem;
+}
+
 .tag {
   background-color: #444;
   border: 1px solid #888;
