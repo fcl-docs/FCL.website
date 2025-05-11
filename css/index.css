@@ -1,9 +1,25 @@
+@font-face {
+  font-family: 'mojangles';
+  src: url('/file/font/Mojangles.ttf');
+}
+
+@font-face {
+  font-family: 'momocraft';
+  src: url('/file/font/Monocraft.ttf');
+}
+
+@font-face {
+  font-family: 'unifont';
+  src: url('/file/font/unifont-16.0.03.otf');
+}
+
 body {
   background-color: #010;
   font-size: 1rem;
   color: #fff;
   padding: 0;
   margin: 0;
+  font-family: 'mojangles', 'unifont', sans-serif;
   color-scheme: dark;
 }
 
@@ -35,11 +51,11 @@ img {
 }
 
 code {
-  font-family: monospace;
+  font-family: 'momocraft', 'unifont', monospace;
 }
 
 pre {
-  font-family: monospace;
+  font-family: 'momocraft', 'unifont', monospace;
   overflow-x: auto;
   margin: 0;
 }
@@ -61,6 +77,10 @@ input {
   box-shadow: 0 1px 0 #fff4, 0 -1px 0 #0008;
   color: #fff;
   border: unset;
+  font-family: 'mojangles', 'unifont', sans-serif;
+  font-size: 1rem;
+  display: block;
+  width: calc(100% - 2rem);
 }
 
 input:hover {
@@ -80,6 +100,8 @@ button {
   box-shadow: 0 1px 0 #0008, 0 -1px 0 #fff4;
   color: #fff;
   border: unset;
+  font-family: 'mojangles', 'unifont', sans-serif;
+  font-size: 1rem;
 }
 
 button:hover {
