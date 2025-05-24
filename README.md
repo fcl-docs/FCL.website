@@ -1,6 +1,10 @@
+# 公告
+
+此仓库为旧版样式的FCL下载站源码。目前主域名[https://foldcraftlauncher.cn](https://foldcraftlauncher.cn)为MDUI重制版样式，源码在这：[XiaoluoFoxington/FCL.website.mdui](https://github.com/XiaoluoFoxington/FCL.website.mdui)。
+
 # https://github.com/fcl-docs/FCL.website
 
-[项目网址](https://foldcraftlauncher.cn)
+[项目网址](https://old.foldcraftlauncher.cn)
 
 《Fold Craft Launcher》，此软件可以使你在Android设备上运行《我的世界：Java版》（《Minecraft : Java Edition》），并支持各类模组加载器。除此之外，还有自动安装、管理多个游戏版本和下载模组、整合包等多个强大功能。
 
