@@ -8,18 +8,13 @@
   src: url('/file/font/Monocraft.ttf');
 }
 
-@font-face {
-  font-family: 'unifont';
-  src: url('/file/font/unifont-16.0.03.otf');
-}
-
 body {
   background-color: #010;
   font-size: 1rem;
   color: #fff;
   padding: 0;
   margin: 0;
-  font-family: 'mojangles', 'unifont', sans-serif;
+  font-family: 'mojangles', sans-serif;
   color-scheme: dark;
 }
 
@@ -51,11 +46,11 @@ img {
 }
 
 code {
-  font-family: 'momocraft', 'unifont', monospace;
+  font-family: 'momocraft', monospace;
 }
 
 pre {
-  font-family: 'momocraft', 'unifont', monospace;
+  font-family: 'momocraft', monospace;
   overflow-x: auto;
   margin: 0;
 }
@@ -100,7 +95,7 @@ button {
   box-shadow: 0 1px 0 #0008, 0 -1px 0 #fff4;
   color: #fff;
   border: unset;
-  font-family: 'mojangles', 'unifont', sans-serif;
+  font-family: 'mojangles', sans-serif;
   font-size: 1rem;
 }
 
