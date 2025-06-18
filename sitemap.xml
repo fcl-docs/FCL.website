@@ -2,31 +2,31 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <!-- 核心页面 -->
   <url>
-    <loc>https://foldcraftlauncher.cn/</loc>
+    <loc>https://old.foldcraftlauncher.cn/</loc>
     <lastmod>2025-04-19</lastmod>
     <changefreq>daily</changefreq>
     <priority>1.0</priority>
   </url>
   <url>
-    <loc>https://foldcraftlauncher.cn/down.html</loc>
+    <loc>https://old.foldcraftlauncher.cn/down.html</loc>
     <lastmod>2025-04-19</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://foldcraftlauncher.cn/downLinks.html</loc>
+    <loc>https://old.foldcraftlauncher.cn/downLinks.html</loc>
     <lastmod>2025-04-19</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://foldcraftlauncher.cn/checksums.html</loc>
+    <loc>https://old.foldcraftlauncher.cn/checksums.html</loc>
     <lastmod>2025-04-19</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://foldcraftlauncher.cn/docs.html</loc>
+    <loc>https://old.foldcraftlauncher.cn/docs.html</loc>
     <lastmod>2025-04-19</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
@@ -34,13 +34,13 @@
 
   <!-- 辅助页面 -->
   <url>
-    <loc>https://foldcraftlauncher.cn/about.html</loc>
+    <loc>https://old.foldcraftlauncher.cn/about.html</loc>
     <lastmod>2025-04-19</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://foldcraftlauncher.cn/support.html</loc>
+    <loc>https://old.foldcraftlauncher.cn/support.html</loc>
     <lastmod>2025-04-19</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
@@ -48,13 +48,13 @@
 
   <!-- 低优先级页面 -->
   <url>
-    <loc>https://foldcraftlauncher.cn/page/content/sidebar.html</loc>
+    <loc>https://old.foldcraftlauncher.cn/page/content/sidebar.html</loc>
     <lastmod>2025-04-19</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.4</priority>
   </url>
   <url>
-    <loc>https://foldcraftlauncher.cn/page/debug/elements.html</loc>
+    <loc>https://old.foldcraftlauncher.cn/page/debug/elements.html</loc>
     <lastmod>2025-04-19</lastmod>
     <changefreq>never</changefreq>
     <priority>0.2</priority>
