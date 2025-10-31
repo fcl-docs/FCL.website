@@ -1,4 +1,4 @@
-此仓库为旧版样式的FCL下载站源码。目前主域名（[https://foldcraftlauncher.cn](https://foldcraftlauncher.cn)）为MDUI重制版样式，源码在这：[XiaoluoFoxington/FCL.website.mdui](https://github.com/XiaoluoFoxington/FCL.website.mdui)。此仓库未来**可能**不会有任何更改。
+此仓库为旧版样式的FCL下载站源码。目前主域名（[https://foldcraftlauncher.cn](https://foldcraftlauncher.cn)）为NEXT重制版，源码在这：[XiaoluoFoxington/FCL.website.NEXT](https://github.com/XiaoluoFoxington/FCL.website.NEXT)。此仓库未来不会有任何内容更改。
 
 # FCL.website
 
