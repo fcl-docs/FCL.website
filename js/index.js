@@ -48,6 +48,8 @@ let deviceOsVer = 'Android 8';
 // ----------------------------------------------------------------------------------------------------
 
 document.addEventListener('DOMContentLoaded', function() {
+  showUpdateNotice();
+
   initEruda();
   
   loadSidebar();
@@ -95,6 +97,18 @@ window.onload = function() {
   console.log('window.onload：完成');
   
 };
+
+/**
+ * 显示停更弹窗公告
+ */
+function showUpdateNotice() {
+  const newWebsiteUrl = 'https://foldcraftlauncher.cn';
+  const msg = '此网站已停更，请访问新网站。点击“确定”将跳转至新网站（' + newWebsiteUrl + '）；点击“取消”将继续停留在当前网站。';
+  
+  if (confirm(msg)) {
+    window.location.href = newWebsiteUrl;
+  }
+}
 
 /** 
  * 初始化Eruda
